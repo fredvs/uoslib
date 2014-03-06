@@ -1,4 +1,6 @@
-This is the Library version  of uos : United OpenLib of Sound. 
+This is the library version  of uos : United OpenLib of Sound.
+=> https://github.com/fredvs/uos
+ 
 uos unifies the best open-source audio libraries.
 
 With uos you can:
@@ -13,10 +15,10 @@ With uos you can:
 
 . Listen to multiple inputs and outputs.
 
-uos uses the PortAudio, SndFile and Mpg123 audio libraries.
+uos uses the SoundTouch, PortAudio, SndFile and Mpg123 audio libraries.
 
 Included in the package:
-. Examples fpGUI, LCL(Lazarus) and console.
+. Examples Pascal fpGUI, LCL(Lazarus) and console.
 
 Fred van Stappen
 fiens@hotmail.com
