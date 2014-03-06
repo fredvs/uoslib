@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+      <Title Value="uos"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1" Active="Default">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <Units Count="8">
+      <Unit0>
+        <Filename Value="uoslib.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uoslib"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="151"/>
+        <CursorPos X="107" Y="160"/>
+        <UsageCount Value="27"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="uos.pas"/>
+        <UnitName Value="uos"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="2" Y="2"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="uos_soundtouch.pas"/>
+        <UnitName Value="uos_soundtouch"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="154"/>
+        <CursorPos X="54" Y="174"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/inc/objpash.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="27"/>
+        <CursorPos X="23" Y="51"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/classes/classesh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1661"/>
+        <CursorPos X="14" Y="1673"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/sysutils/sysutilh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="300"/>
+        <CursorPos X="23" Y="312"/>
+        <UsageCount Value="11"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/sysutils/systhrdh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="54" Y="10"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="uoslib_h.pas"/>
+        <UnitName Value="uoslib_h"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="355"/>
+        <CursorPos X="60" Y="322"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit7>
+    </Units>
+    <JumpHistory Count="29" HistoryIndex="28">
+      <Position1>
+        <Filename Value="uos.pas"/>
+        <Caret Line="107" Column="24" TopLine="101"/>
+      </Position1>
+      <Position2>
+        <Filename Value="uos.pas"/>
+        <Caret Line="108" Column="24" TopLine="101"/>
+      </Position2>
+      <Position3>
+        <Filename Value="uos.pas"/>
+        <Caret Line="558" Column="24" TopLine="545"/>
+      </Position3>
+      <Position4>
+        <Filename Value="uos.pas"/>
+        <Caret Line="561" Column="24" TopLine="548"/>
+      </Position4>
+      <Position5>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3618" Column="30" TopLine="3606"/>
+      </Position5>
+      <Position6>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3652" Column="52" TopLine="3639"/>
+      </Position6>
+      <Position7>
+        <Filename Value="uos.pas"/>
+        <Caret Line="893" Column="4" TopLine="881"/>
+      </Position7>
+      <Position8>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2694" Column="47" TopLine="1"/>
+      </Position8>
+      <Position9>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2853" Column="51" TopLine="2846"/>
+      </Position9>
+      <Position10>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2681" Column="23" TopLine="2679"/>
+      </Position10>
+      <Position11>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3" Column="105" TopLine="1"/>
+      </Position11>
+      <Position12>
+        <Filename Value="uos.pas"/>
+        <Caret Line="893" Column="16" TopLine="887"/>
+      </Position12>
+      <Position13>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2681" Column="23" TopLine="2676"/>
+      </Position13>
+      <Position14>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2718" Column="60" TopLine="2713"/>
+      </Position14>
+      <Position15>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3657" Column="20" TopLine="3652"/>
+      </Position15>
+      <Position16>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3660" Column="20" TopLine="3656"/>
+      </Position16>
+      <Position17>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3637" Column="17" TopLine="1"/>
+      </Position17>
+      <Position18>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3482" Column="1" TopLine="3469"/>
+      </Position18>
+      <Position19>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3624" Column="63" TopLine="3613"/>
+      </Position19>
+      <Position20>
+        <Filename Value="uos.pas"/>
+        <Caret Line="5" Column="12" TopLine="1"/>
+      </Position20>
+      <Position21>
+        <Filename Value="uos.pas"/>
+        <Caret Line="86" Column="16" TopLine="70"/>
+      </Position21>
+      <Position22>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3647" Column="32" TopLine="3633"/>
+      </Position22>
+      <Position23>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3771" Column="17" TopLine="3755"/>
+      </Position23>
+      <Position24>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3773" Column="32" TopLine="3759"/>
+      </Position24>
+      <Position25>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3778" Column="30" TopLine="3764"/>
+      </Position25>
+      <Position26>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3906" Column="28" TopLine="3891"/>
+      </Position26>
+      <Position27>
+        <Filename Value="uos.pas"/>
+        <Caret Line="86" Column="16" TopLine="77"/>
+      </Position27>
+      <Position28>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3647" Column="3" TopLine="966"/>
+      </Position28>
+      <Position29>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="550" Column="54" TopLine="532"/>
+      </Position29>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <Target>
+      <Filename Value="uoslib"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="units"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+      <RelocatableUnit Value="True"/>
+      <SmallerCode Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <DebugInfoType Value="dsDwarf3"/>
+        <UseValgrind Value="True"/>
+        <StripSymbols Value="True"/>
+        <UseExternalDbgSyms Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
+      <Options>
+        <ExecutableType Value="Library"/>
+      </Options>
+    </Linking>
+    <Other>
+      <WriteFPCLogo Value="False"/>
+      <CompilerMessages>
+        <MsgFileName Value=""/>
+      </CompilerMessages>
+      <ConfigFile>
+        <CustomConfigFile Value="True"/>
+      </ConfigFile>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+  <EditorMacros Count="0"/>
+</CONFIG>

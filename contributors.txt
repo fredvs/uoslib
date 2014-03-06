@@ -1,0 +1,9 @@
+Here are the great contributors of uos library :
+
+Sandro Cumerlato : He knows everything and is the King of Digital Sound.
+
+Tomas Hajny : He find a big bug and help me to resolve it.
+
+And all the people who contribute to uos unit.
+
+Fred van Stappen : fiens@hotmail.com 
