@@ -1,8 +1,6 @@
 This is the Library version  of uos : United OpenLib of Sound. 
 uos unifies the best open-source audio libraries.
 
-For fpc, fpGUI, Lazarus and Delphi.
-
 With uos you can:
 
 . Listen to mp3, ogg, wav, flac,... audio files.
