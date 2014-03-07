@@ -1,1 +1,2 @@
 Compile uoslib.pas (or uoslib.lpi) in /src... with fpc (free pascal compiler).
+
