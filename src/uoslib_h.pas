@@ -138,6 +138,8 @@ var
   uos_InputGetLevelRight: function(PlayerIndex: Cardinal; InputIndex: cardinal): double; cdecl;
 
   uos_InputGetSampleRate: function(PlayerIndex: Cardinal; InputIndex: cardinal): integer; cdecl;
+ 
+  uos_InputGetChannels: function(PlayerIndex: Cardinal; InputIndex: cardinal): integer; cdecl;
 
   uos_Play: procedure(PlayerIndex: cardinal); cdecl;
 
@@ -321,7 +323,10 @@ begin
         Pointer(uos_InputGetSampleRate) :=
           GetProcAddress(LibHandle, 'uos_InputGetSampleRate');
 
-        Pointer(uos_Play) :=
+       Pointer(uos_InputGetChannels) :=
+          GetProcAddress(LibHandle, 'uos_InputGetChannels');
+
+       Pointer(uos_Play) :=
           GetProcAddress(LibHandle, 'uos_Play');
 
         Pointer(uos_RePlay) :=

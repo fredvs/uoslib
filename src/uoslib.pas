@@ -163,6 +163,13 @@ begin
  result :=  uos.uos_InputGetSampleRate(PlayerIndex, InputIndex) ;
 end;
 
+function uos_InputGetChannels(PlayerIndex: Cardinal; InputIndex: cardinal): integer; cdecl;
+                   ////////// InputIndex : InputIndex of existing input
+                  ////// result : default channels
+begin
+ result :=  uos.uos_InputGetChannels(PlayerIndex, InputIndex) ;
+end;
+
 function uos_AddFromDevInDef(PlayerIndex: Cardinal): cardinal ; cdecl;
               ////// Add a Input from Device Input with default parameters
               ///////// PlayerIndex : Index of a existing Player
@@ -548,6 +555,7 @@ uos_InputGetLevelRight name 'uos_InputGetLevelRight',
 uos_InputPositionSeconds name 'uos_InputPositionSeconds',
 uos_InputPositionTime name 'uos_InputPositionTime',
 uos_InputGetSampleRate name 'uos_InputGetSampleRate',
+uos_InputGetChannels name 'uos_InputGetChannels',
 uos_Play name 'uos_Play',
 uos_RePlay name 'uos_RePlay',
 uos_Stop name 'uos_Stop',

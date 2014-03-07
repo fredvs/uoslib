@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus64\fpc\2.6.2\bin\x86_64-win64\fpc.exe" Date="1146922573"/>
+  <Params Value=" -MObjFPC -Scghi -CX -WR -Os1 -Xs -XX -vewnhi @extrafpc.cfg -Fic:\uoslib\src\units -Fuc:\uoslib\src\ -FUc:\uoslib\src\units\ uoslib.pas"/>
+</CONFIG>

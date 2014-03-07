@@ -836,6 +836,9 @@ function uos_InputGetSampleRate(PlayerIndex: Cardinal; InputIndex: cardinal): in
                    ////////// InputIndex : InputIndex of existing input
                   ////// result : default sample rate
 
+function uos_InputGetChannels(PlayerIndex: Cardinal; InputIndex: cardinal): integer;
+                  ///////// InputIndex : InputIndex of existing input
+                  ////// result : default channels
 
 procedure uos_Play(PlayerIndex: Cardinal) ;        ///// Start playing
 
@@ -2982,6 +2985,18 @@ begin
   then
     if  uosPlayersStat[PlayerIndex] = 1 then
  result := uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.SamplerateRoot;
+end;
+
+function uos_InputGetChannels(PlayerIndex: Cardinal; InputIndex: cardinal): integer;
+                     ////////// InputIndex : InputIndex of existing input
+                     ////// result : default channels
+begin
+   result := 0;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) and
+  (length(uosPlayers[PlayerIndex].StreamIn) > 0) and (InputIndex +1 <= length(uosPlayers[PlayerIndex].StreamIn))
+  then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+ result := uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.Channels;
 end;
 
 function uos_InputGetLevelRight(PlayerIndex: Cardinal; InputIndex: cardinal): double;
