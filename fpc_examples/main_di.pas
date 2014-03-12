@@ -95,15 +95,15 @@ end;
 
 procedure TForm1.CheckInfos();
 begin
- memo1.Text := uos_GetInfoDeviceStr();
+memo1.Text := uos_GetInfoDeviceStr();    ;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // Load the library
-  // function uos_LoadLibs(uoslibFileName: string; PortAudioFileName: string; SndFileFileName: string; Mpg123FileName: string; SoundTouchFileName: string) : integer;
+  // function uos_LoadLibs(uoslibFileName: Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
 
-  if uos_LoadLibs(uoslibFilename, edit1.Text, '', '', '')  then
+  if uos_LoadLibs(Pchar(uoslibFilename), Pchar(edit1.Text), nil, nil, nil)  then
   begin
     form1.hide;
     button1.Caption := 'uos and PortAudio are loaded...';

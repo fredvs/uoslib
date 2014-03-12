@@ -209,8 +209,8 @@ procedure TForm1.Button1Click(Sender: TObject);
 
 begin
   // Load the libraries
-  // function uos_LoadLibs(uoslibFilename : string; PortAudioFileName: string; SndFileFileName: string; Mpg123FileName: string; SoundTouchFileName: string) : integer;
-  if uos_LoadLibs(uoslibFilename, edit1.Text, edit2.Text, edit3.Text, '') then
+  // function uos_LoadLibs(uoslibFilename : Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
+  if uos_LoadLibs(Pchar(uoslibFilename), Pchar(edit1.Text), Pchar(edit2.Text), Pchar(edit3.Text), nil) then
   begin
     form1.hide;
     form1.Position := podefault;
@@ -273,7 +273,7 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
 
-  uos_AddFromFile(PlayerIndex3, Edit7.Text, -1, 0, -1);
+  uos_AddFromFile(PlayerIndex3, Pchar(Edit7.Text), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
@@ -360,7 +360,7 @@ begin
   //////////// Device ( -1 is default Output device )
    //  result : -1 nothing created, otherwise Output Index in array
 
-  uos_AddFromFileDef(PlayerIndex0, Edit4.Text);
+  uos_AddFromFileDef(PlayerIndex0, Pchar(Edit4.Text));
   //// add input from audio file with default parameters
   //////////// PlayerIndex : Index of a existing Player
    ////////// FileName : filename of audio file
@@ -405,7 +405,7 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
 
-  uos_AddFromFile(PlayerIndex1, Edit5.Text, -1, 0, -1);
+  uos_AddFromFile(PlayerIndex1, Pchar(Edit5.Text), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
@@ -452,7 +452,7 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
 
-  uos_AddFromFile(PlayerIndex2, Edit6.Text, -1, 0, -1);
+  uos_AddFromFile(PlayerIndex2, Pchar(Edit6.Text), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player

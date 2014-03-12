@@ -216,8 +216,8 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject; var closeit :TCloseAction
   begin
     // Load the libraries
     // function uos_LoadLib(PortAudioFileName: string; SndFileFileName: string; Mpg123FileName: string; SoundTouchFileName: string) : integer;
-    if uos_LoadLibs(uoslibfilename, FilenameEdit1.FileName, FilenameEdit2.FileName,
-      FilenameEdit3.FileName, FilenameEdit5.FileName) then
+    if uos_LoadLibs(pchar(uoslibfilename), pchar(FilenameEdit1.FileName), pchar(FilenameEdit2.FileName),
+      pchar(FilenameEdit3.FileName), Pchar(FilenameEdit5.FileName)) then
     begin
       hide;
       Height := 403;
@@ -230,7 +230,9 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject; var closeit :TCloseAction
       UpdateWindowPosition;
       btnLoad.Text :=
         'uos, PortAudio, SndFile, Mpg123 and SoundTouch libraries are loaded...';
-      WindowPosition := wpScreenCenter;
+
+       WindowTitle := 'Simple Player.    uos version ' + inttostr(uos_GetVersion());
+       WindowPosition := wpScreenCenter;
       Show;
     end;
   end;
@@ -290,7 +292,7 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject; var closeit :TCloseAction
 
     // In1Index := uos_AddFromFile(PlayerIndex1, Edit4.Text);
     //// add input from audio file with default parameters
-    In1Index := uos_AddFromFile(PlayerIndex1, filenameEdit4.filename, -1, samformat, -1);
+    In1Index := uos_AddFromFile(PlayerIndex1, pchar(filenameEdit4.filename), -1, samformat, -1);
     //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     //////////// PlayerIndex : Index of a existing Player

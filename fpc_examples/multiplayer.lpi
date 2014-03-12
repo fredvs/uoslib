@@ -141,7 +141,7 @@ install:
         <Filename Value="multiplayer.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="multiplayer"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="3" Y="7"/>
@@ -155,10 +155,11 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_mp"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="293"/>
-        <CursorPos X="77" Y="298"/>
+        <TopLine Value="448"/>
+        <CursorPos X="50" Y="455"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -411,13 +412,10 @@ install:
       <Unit32>
         <Filename Value="uoslib_h.pas"/>
         <UnitName Value="uoslib_h"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="146"/>
-        <CursorPos X="3" Y="154"/>
+        <CursorPos X="43" Y="151"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit32>
     </Units>
   </ProjectOptions>

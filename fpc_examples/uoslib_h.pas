@@ -51,142 +51,143 @@ TProc = procedure of object ;
 
 var
 
-  uos_GetInfoDeviceStr: function(): String; cdecl;
+ // function uos_GetInfoDeviceStr(infos:PChar) : Longint ;    cdecl;
+  uos_GetInfoDeviceStr: function() : PChar ; cdecl;
 
-  uos_CreatePlayer: procedure(PlayerIndex: cardinal); cdecl;
+  uos_CreatePlayer: procedure(PlayerIndex: LongInt); cdecl;
 
-  uos_AddIntoDevOut: function(PlayerIndex: cardinal; Device: integer;
-  Latency: CDouble; SampleRate: integer; Channels: integer;
-  SampleFormat: shortint; FramesCount: integer): cardinal; cdecl;
+  uos_AddIntoDevOut: function(PlayerIndex: LongInt; Device: LongInt;
+  Latency: CDouble; SampleRate: LongInt; Channels: LongInt;
+  SampleFormat: shortint; FramesCount: LongInt): LongInt; cdecl;
 
-  uos_AddIntoDevOutDef: function(PlayerIndex: cardinal): cardinal; cdecl;
+  uos_AddIntoDevOutDef: function(PlayerIndex: LongInt): LongInt; cdecl;
 
-  uos_AddFromFile: function(PlayerIndex: cardinal; Filename: string;
-  OutputIndex: integer; SampleFormat: shortint; FramesCount: integer): cardinal; cdecl;
+  uos_AddFromFile: function(PlayerIndex: LongInt; Filename: Pchar;
+  OutputIndex: LongInt; SampleFormat: shortint; FramesCount: LongInt): LongInt; cdecl;
 
-  uos_AddFromFileDef: function(PlayerIndex: cardinal; Filename: string): cardinal; cdecl;
+  uos_AddFromFileDef: function(PlayerIndex: LongInt; Filename: Pchar): LongInt; cdecl;
 
-  uos_AddIntoFile: function(PlayerIndex: Cardinal; Filename: string; SampleRate: integer;
-        Channels: integer; SampleFormat: shortint ; FramesCount: integer): cardinal; cdecl;
+  uos_AddIntoFile: function(PlayerIndex: LongInt; Filename: Pchar; SampleRate: LongInt;
+        Channels: LongInt; SampleFormat: shortint ; FramesCount: LongInt): LongInt; cdecl;
 
-  uos_AddIntoFileDef: function(PlayerIndex: Cardinal; Filename: String): cardinal; cdecl;
+  uos_AddIntoFileDef: function(PlayerIndex: LongInt; Filename: PChar): LongInt; cdecl;
 
-  uos_AddFromDevIn: function(PlayerIndex: Cardinal; Device: integer; Latency: CDouble;
-             SampleRate: integer; Channels: integer; OutputIndex: integer;
-             SampleFormat: shortint; FramesCount : integer): cardinal; cdecl;
+  uos_AddFromDevIn: function(PlayerIndex: LongInt; Device: LongInt; Latency: CDouble;
+             SampleRate: LongInt; Channels: LongInt; OutputIndex: LongInt;
+             SampleFormat: shortint; FramesCount : LongInt): LongInt; cdecl;
 
-  uos_AddFromDevInDef: function(PlayerIndex: Cardinal): cardinal; cdecl;
+  uos_AddFromDevInDef: function(PlayerIndex: LongInt): LongInt; cdecl;
 
-  uos_AddDSPVolumeIn: procedure(PlayerIndex: Cardinal; InputIndex: cardinal; VolLeft: double;
+  uos_AddDSPVolumeIn: procedure(PlayerIndex: LongInt; InputIndex: LongInt; VolLeft: double;
                 VolRight: double); cdecl;
 
-  uos_AddDSPVolumeOut: procedure(PlayerIndex: Cardinal; OutputIndex: cardinal; VolLeft: double;
+  uos_AddDSPVolumeOut: procedure(PlayerIndex: LongInt; OutputIndex: LongInt; VolLeft: double;
                  VolRight: double); cdecl;
 
-  uos_SetDSPVolumeIn: procedure(PlayerIndex: Cardinal; InputIndex: cardinal;
+  uos_SetDSPVolumeIn: procedure(PlayerIndex: LongInt; InputIndex: LongInt;
                  VolLeft: double; VolRight: double; Enable: boolean); cdecl;
 
-  uos_SetDSPVolumeOut: procedure(PlayerIndex: Cardinal; OutputIndex: cardinal;
+  uos_SetDSPVolumeOut: procedure(PlayerIndex: LongInt; OutputIndex: LongInt;
                  VolLeft: double; VolRight: double; Enable: boolean); cdecl;
 
-  uos_AddFilterIn: function(PlayerIndex: Cardinal; InputIndex: cardinal; LowFrequency: integer;
-                    HighFrequency: integer; Gain: cfloat; TypeFilter: integer;
-                    AlsoBuf: boolean; LoopProc: TProc): cardinal; cdecl;
+  uos_AddFilterIn: function(PlayerIndex: LongInt; InputIndex: LongInt; LowFrequency: LongInt;
+                    HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
+                    AlsoBuf: boolean; LoopProc: TProc): LongInt; cdecl;
 
-  uos_SetFilterIn: procedure(PlayerIndex: Cardinal; InputIndex: cardinal; FilterIndex: cardinal;
-                    LowFrequency: integer; HighFrequency: integer; Gain: cfloat;
-                    TypeFilter: integer; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc); cdecl;
+  uos_SetFilterIn: procedure(PlayerIndex: LongInt; InputIndex: LongInt; FilterIndex: LongInt;
+                    LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
+                    TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc); cdecl;
 
-  uos_AddFilterOut: function(PlayerIndex: Cardinal; OutputIndex: cardinal; LowFrequency: integer;
-                    HighFrequency: integer; Gain: cfloat; TypeFilter: integer;
-                    AlsoBuf: boolean; LoopProc: TProc): cardinal; cdecl;
+  uos_AddFilterOut: function(PlayerIndex: LongInt; OutputIndex: LongInt; LowFrequency: LongInt;
+                    HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
+                    AlsoBuf: boolean; LoopProc: TProc): LongInt; cdecl;
 
-  uos_SetFilterOut: procedure(PlayerIndex: Cardinal; OutputIndex: cardinal; FilterIndex: cardinal;
-                    LowFrequency: integer; HighFrequency: integer; Gain: cfloat;
-                    TypeFilter: integer; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc); cdecl;
+  uos_SetFilterOut: procedure(PlayerIndex: LongInt; OutputIndex: LongInt; FilterIndex: LongInt;
+                    LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
+                    TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc); cdecl;
 
-  uos_AddPlugin: function(PlayerIndex: Cardinal; PlugName: string; SampleRate: integer;
-                       Channels: integer): cardinal; cdecl;
+  uos_AddPlugin: function(PlayerIndex: LongInt; PlugName: PChar; SampleRate: LongInt;
+                       Channels: LongInt): LongInt; cdecl;
 
-  uos_SetPluginSoundTouch: procedure(PlayerIndex: Cardinal; PluginIndex: cardinal; Tempo: cfloat;
+  uos_SetPluginSoundTouch: procedure(PlayerIndex: LongInt; PluginIndex: LongInt; Tempo: cfloat;
                        Pitch: cfloat; Enable: boolean); cdecl;
 
-  uos_GetStatus: function(PlayerIndex: Cardinal) : integer; cdecl;
+  uos_GetStatus: function(PlayerIndex: LongInt) : LongInt; cdecl;
 
-  uos_Seek: procedure(PlayerIndex: Cardinal; InputIndex: cardinal; pos: {$if defined(cpu64)} cint64 {$else} cint32 {$endif}); cdecl;
+  uos_Seek: procedure(PlayerIndex: LongInt; InputIndex: LongInt; pos: {$if defined(cpu64)} cint64 {$else} cint32 {$endif}); cdecl;
 
-  uos_SeekSeconds: procedure(PlayerIndex: Cardinal; InputIndex: cardinal; pos: cfloat); cdecl;
+  uos_SeekSeconds: procedure(PlayerIndex: LongInt; InputIndex: LongInt; pos: cfloat); cdecl;
 
-  uos_SeekTime: procedure(PlayerIndex: Cardinal; InputIndex: cardinal; pos: TTime); cdecl;
+  uos_SeekTime: procedure(PlayerIndex: LongInt; InputIndex: LongInt; pos: TTime); cdecl;
 
-  uos_InputLength: function(PlayerIndex: Cardinal; InputIndex: cardinal): longint; cdecl;
+  uos_InputLength: function(PlayerIndex: LongInt; InputIndex: LongInt): longint; cdecl;
 
-  uos_InputLengthSeconds: function(PlayerIndex: Cardinal; InputIndex: cardinal): cfloat; cdecl;
+  uos_InputLengthSeconds: function(PlayerIndex: LongInt; InputIndex: LongInt): cfloat; cdecl;
 
-  uos_InputLengthTime: function(PlayerIndex: Cardinal; InputIndex: cardinal): TTime; cdecl;
+  uos_InputLengthTime: function(PlayerIndex: LongInt; InputIndex: LongInt): TTime; cdecl;
 
-  uos_InputPosition: function(PlayerIndex: Cardinal; InputIndex: cardinal): longint; cdecl;
+  uos_InputPosition: function(PlayerIndex: LongInt; InputIndex: LongInt): longint; cdecl;
 
-  uos_InputPositionSeconds: function(PlayerIndex: Cardinal; InputIndex: cardinal): cfloat; cdecl;
+  uos_InputPositionSeconds: function(PlayerIndex: LongInt; InputIndex: LongInt): cfloat; cdecl;
 
-  uos_InputPositionTime: function(PlayerIndex: Cardinal; InputIndex: cardinal): TTime; cdecl;
+  uos_InputPositionTime: function(PlayerIndex: LongInt; InputIndex: LongInt): TTime; cdecl;
 
-  uos_InputSetLevelEnable: procedure(PlayerIndex: Cardinal; InputIndex: cardinal; Enable: boolean); cdecl;
+  uos_InputSetLevelEnable: procedure(PlayerIndex: LongInt; InputIndex: LongInt; Enable: boolean); cdecl;
 
-  uos_InputGetLevelLeft: function(PlayerIndex: Cardinal; InputIndex: cardinal): double; cdecl;
+  uos_InputGetLevelLeft: function(PlayerIndex: LongInt; InputIndex: LongInt): double; cdecl;
 
-  uos_InputGetLevelRight: function(PlayerIndex: Cardinal; InputIndex: cardinal): double; cdecl;
+  uos_InputGetLevelRight: function(PlayerIndex: LongInt; InputIndex: LongInt): double; cdecl;
 
-  uos_InputGetSampleRate: function(PlayerIndex: Cardinal; InputIndex: cardinal): integer; cdecl;
+  uos_InputGetSampleRate: function(PlayerIndex: LongInt; InputIndex: LongInt): LongInt; cdecl;
  
-  uos_InputGetChannels: function(PlayerIndex: Cardinal; InputIndex: cardinal): integer; cdecl;
+  uos_InputGetChannels: function(PlayerIndex: LongInt; InputIndex: LongInt): LongInt; cdecl;
 
-  uos_Play: procedure(PlayerIndex: cardinal); cdecl;
+  uos_Play: procedure(PlayerIndex: LongInt); cdecl;
 
-  uos_RePlay: procedure(PlayerIndex: Cardinal); cdecl;
+  uos_RePlay: procedure(PlayerIndex: LongInt); cdecl;
 
-  uos_Stop: procedure(PlayerIndex: Cardinal); cdecl;
+  uos_Stop: procedure(PlayerIndex: LongInt); cdecl;
 
-  uos_Pause: procedure(PlayerIndex:  Cardinal); cdecl;
+  uos_Pause: procedure(PlayerIndex:  LongInt); cdecl;
 
   uos_unloadlibCust: procedure(PortAudio : boolean; SndFile: boolean; Mpg123: boolean; SoundTouch: boolean); cdecl;
 
   ///// This functions should not be used, use uos_loadlibs and uos_unloadlibs instead...
-  uos_loadlib: function(PortAudioFileName: String; SndFileFileName: String;
-  Mpg123FileName: String; SoundTouchFileName: String): integer; cdecl;
+  uos_loadlib: function(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar): LongInt; cdecl;
   uos_unloadlib: procedure(); cdecl;
   ////////////////////////
 
+  uos_GetVersion:  function(): LongInt ; cdecl;  /// uos version
+
   LibHandle: TLibHandle = dynlibs.NilHandle; // this will hold our handle for the uoslib
-  ReferenceCounter: cardinal = 0;  // Reference counter
+  ReferenceCounter: LongInt = 0;  // Reference counter
 
 
 function uos_IsLoaded: boolean; inline;
-function uos_loadlibs(const uoslibfilename: String; PortAudioFileName: String;
-  SndFileFileName: String; Mpg123FileName: String; SoundTouchFileName: String): boolean;
+function uos_loadlibs(const uoslibfilename, PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar): boolean;
 // load the all the libraries (If filename = '' => do not load that library)
 
 procedure uos_unloadlibs();
 // unload and frees the lib from memory : do not forget to call it before close application.
 
 { TODO ...
-  uos_BeginProc: procedure(PlayerIndex: Cardinal; Proc: TProc); cdecl;
+  uos_BeginProc: procedure(PlayerIndex: LongInt; Proc: TProc); cdecl;
 
-  uos_EndProc: procedure(PlayerIndex: Cardinal; Proc: TProc); cdecl;
+  uos_EndProc: procedure(PlayerIndex: LongInt; Proc: TProc); cdecl;
 
-  uos_LoopProcIn: procedure(PlayerIndex: Cardinal; InIndex: Cardinal; Proc: TProc);  cdecl;
+  uos_LoopProcIn: procedure(PlayerIndex: LongInt; InIndex: LongInt; Proc: TProc);  cdecl;
 
-  uos_LoopProcOut: procedure(PlayerIndex: Cardinal; OutIndex: Cardinal; Proc: TProc); cdecl;
+  uos_LoopProcOut: procedure(PlayerIndex: LongInt; OutIndex: LongInt; Proc: TProc); cdecl;
 
-  uos_AddDSPin: function(PlayerIndex: Cardinal; InputIndex: cardinal; BeforeProc: TFunc;
-                  AfterProc: TFunc; LoopProc: TProc): integer; cdecl;
+  uos_AddDSPin: function(PlayerIndex: LongInt; InputIndex: LongInt; BeforeProc: TFunc;
+                  AfterProc: TFunc; LoopProc: TProc): LongInt; cdecl;
 
-  uos_SetDSPin: procedure(PlayerIndex: Cardinal; InputIndex: cardinal; DSPinIndex: cardinal; Enable: boolean); cdecl;
+  uos_SetDSPin: procedure(PlayerIndex: LongInt; InputIndex: LongInt; DSPinIndex: LongInt; Enable: boolean); cdecl;
 
-  uos_AddDSPout: function(PlayerIndex: Cardinal; OutputIndex: cardinal; BeforeProc: TFunc;
-                   AfterProc: TFunc; LoopProc: TProc): integer; cdecl;
+  uos_AddDSPout: function(PlayerIndex: LongInt; OutputIndex: LongInt; BeforeProc: TFunc;
+                   AfterProc: TFunc; LoopProc: TProc): LongInt; cdecl;
 
-  uos_SetDSPout: procedure(PlayerIndex: Cardinal; OutputIndex: cardinal; DSPoutIndex: cardinal; Enable: boolean); cdecl;
+  uos_SetDSPout: procedure(PlayerIndex: LongInt; OutputIndex: LongInt; DSPoutIndex: LongInt; Enable: boolean); cdecl;
 }
 
 implementation
@@ -196,8 +197,7 @@ begin
   Result := (LibHandle <> dynlibs.NilHandle);
 end;
 
-function uos_loadlibs(const uoslibfilename: String; PortAudioFileName: String;
-  SndFileFileName: String; Mpg123FileName: String; SoundTouchFileName: String): boolean;
+function uos_loadlibs(const uoslibfilename, PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar): boolean;
 begin
   Result := False;
   if LibHandle <> 0 then
@@ -338,6 +338,10 @@ begin
         Pointer(uos_Pause) :=
           GetProcAddress(LibHandle, 'uos_Pause');
 
+        Pointer(uos_GetVersion) :=
+          GetProcAddress(LibHandle, 'uos_GetVersion');
+
+
         { TODO ...
         Pointer(uos_BeginProc) :=
           GetProcAddress(LibHandle, 'uos_BeginProc');
@@ -367,7 +371,7 @@ begin
         ReferenceCounter := 1;
 
         ///// load the audio libraries
-        uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName);
+        uos_loadlib(pchar(PortAudioFileName), pchar(SndFileFileName), pchar(Mpg123FileName), pchar(SoundTouchFileName));
 
         Result := uos_IsLoaded;
       except

@@ -39,7 +39,12 @@ uses
   ctypes, uos;
  /////////// General public procedure/function
 
-function uos_loadlib(PortAudioFileName: String; SndFileFileName: String; Mpg123FileName: String; SoundTouchFileName: String) : integer; cdecl;
+function uos_GetVersion() : LongInt ; cdecl;
+begin
+result := uos.uos_GetVersion() ;
+end;
+
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar) : LongInt; cdecl;
 ////// load libraries... if libraryfilename = '' =>  do not load it...
 begin
  result := uos.uos_loadlib(PortAudioFileName , SndFileFileName, Mpg123FileName, SoundTouchFileName) ;
@@ -57,20 +62,20 @@ begin
 uos.uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch);
 end;
 
-function uos_GetInfoDeviceStr() : String ; cdecl;
+function uos_GetInfoDeviceStr() : PChar ; cdecl;
 begin
 result :=  uos.uos_GetInfoDeviceStr();
 end;
 
-procedure uos_CreatePlayer(PlayerIndex: cardinal) ; cdecl;
+procedure uos_CreatePlayer(PlayerIndex: LongInt) ; cdecl;
         //// PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, soundcard, ...)
         //// If PlayerIndex already exists, it will be overwriten...
 begin
 uos.uos_CreatePlayer(PlayerIndex);
 end;
 
-function uos_AddIntoDevOut(PlayerIndex: Cardinal; Device: integer; Latency: CDouble;
-            SampleRate: integer; Channels: integer; SampleFormat: shortint ; FramesCount: integer ): cardinal;  cdecl;
+function uos_AddIntoDevOut(PlayerIndex: LongInt; Device: LongInt; Latency: CDouble;
+            SampleRate: LongInt; Channels: LongInt; SampleFormat: shortint ; FramesCount: LongInt ): LongInt;  cdecl;
           ////// Add a Output into Device Output with default parameters
           //////////// PlayerIndex : Index of a existing Player
           //////////// Device ( -1 is default device )
@@ -84,19 +89,19 @@ begin
  result :=  uos.uos_AddIntoDevOut(PlayerIndex, Device, Latency, SampleRate, Channels, SampleFormat, FramesCount) ;
 end;
 
-function uos_AddIntoDevOutDef(PlayerIndex: Cardinal): cardinal; cdecl;
+function uos_AddIntoDevOutDef(PlayerIndex: LongInt): LongInt; cdecl;
           ////// Add a Output into Device Output with default parameters
           //////////// PlayerIndex : Index of a existing Player
 begin
  result :=  uos.uos_AddIntoDevOut(PlayerIndex);
 end;
 
-function uos_AddFromFile(PlayerIndex: Cardinal; Filename: string; OutputIndex: cardinal;
-              SampleFormat: shortint ; FramesCount: integer): cardinal;  cdecl;
+function uos_AddFromFile(PlayerIndex: LongInt; Filename: Pchar; OutputIndex: LongInt;
+              SampleFormat: shortint ; FramesCount: LongInt): LongInt;  cdecl;
             /////// Add a input from audio file with default parameters
             //////////// PlayerIndex : Index of a existing Player
             ////////// FileName : filename of audio file
-            ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other integer refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+            ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
             //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
             //////////// FramesCount : default : -1 (65536)
             //  result : Input Index in array
@@ -104,7 +109,7 @@ begin
  result :=  uos.uos_AddFromFile(PlayerIndex, Filename, OutputIndex, SampleFormat, FramesCount);
 end;
 
-function uos_AddFromFileDef(PlayerIndex: Cardinal; Filename: string): cardinal; cdecl;
+function uos_AddFromFileDef(PlayerIndex: LongInt; Filename: Pchar): LongInt; cdecl;
             /////// Add a input from audio file with default parameters
             //////////// PlayerIndex : Index of a existing Player
             ////////// FileName : filename of audio file
@@ -113,8 +118,8 @@ begin
  result :=  uos.uos_AddFromFile(PlayerIndex, Filename);
 end;
 
-function uos_AddIntoFile(PlayerIndex: Cardinal; Filename: string; SampleRate: integer;
-                 Channels: integer; SampleFormat: shortint ; FramesCount: integer): cardinal; cdecl;
+function uos_AddIntoFile(PlayerIndex: LongInt; Filename: Pchar; SampleRate: LongInt;
+                 Channels: LongInt; SampleFormat: shortint ; FramesCount: LongInt): LongInt; cdecl;
                /////// Add a Output into audio wav file with custom parameters
                //////////// PlayerIndex : Index of a existing Player
                ////////// FileName : filename of saved audio wav file
@@ -128,7 +133,7 @@ begin
  result :=  uos.uos_AddIntoFile(PlayerIndex, Filename, SampleRate, Channels, SampleFormat, FramesCount);
 end;
 
-function uos_AddIntoFileDef(PlayerIndex: Cardinal; Filename: String): cardinal; cdecl;
+function uos_AddIntoFileDef(PlayerIndex: LongInt; Filename: Pchar): LongInt; cdecl;
                /////// Add a Output into audio wav file with Default parameters
               //////////// PlayerIndex : Index of a existing Player
               ////////// FileName : filename of saved audio wav file
@@ -137,16 +142,16 @@ begin
  result :=  uos.uos_AddIntoFile(PlayerIndex, Filename) ;
 end;
 
-function uos_AddFromDevIn(PlayerIndex: Cardinal; Device: integer; Latency: CDouble;
-             SampleRate: integer; Channels: integer; OutputIndex: integer;
-             SampleFormat: shortint; FramesCount : integer): cardinal; cdecl;
+function uos_AddFromDevIn(PlayerIndex: LongInt; Device: LongInt; Latency: CDouble;
+             SampleRate: LongInt; Channels: LongInt; OutputIndex: LongInt;
+             SampleFormat: shortint; FramesCount : LongInt): LongInt; cdecl;
               ////// Add a Input from Device Input with custom parameters
               //////////// PlayerIndex : Index of a existing Player
                //////////// Device ( -1 is default Input device )
                //////////// Latency  ( -1 is latency suggested ) )
                //////////// SampleRate : delault : -1 (44100)
                //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-               //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other integer refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+               //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
                //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
                //////////// FramesCount : default : -1 (65536)
                //  result : Output Index in array
@@ -156,28 +161,28 @@ begin
                SampleFormat, FramesCount);
 end;
 
-function uos_InputGetSampleRate(PlayerIndex: Cardinal; InputIndex: cardinal): integer; cdecl;
+function uos_InputGetSampleRate(PlayerIndex: LongInt; InputIndex: LongInt): LongInt; cdecl;
                    ////////// InputIndex : InputIndex of existing input
                   ////// result : default sample rate
 begin
  result :=  uos.uos_InputGetSampleRate(PlayerIndex, InputIndex) ;
 end;
 
-function uos_InputGetChannels(PlayerIndex: Cardinal; InputIndex: cardinal): integer; cdecl;
+function uos_InputGetChannels(PlayerIndex: LongInt; InputIndex: LongInt): LongInt; cdecl;
                    ////////// InputIndex : InputIndex of existing input
                   ////// result : default channels
 begin
  result :=  uos.uos_InputGetChannels(PlayerIndex, InputIndex) ;
 end;
 
-function uos_AddFromDevInDef(PlayerIndex: Cardinal): cardinal ; cdecl;
+function uos_AddFromDevInDef(PlayerIndex: LongInt): LongInt ; cdecl;
               ////// Add a Input from Device Input with default parameters
               ///////// PlayerIndex : Index of a existing Player
  begin
   result :=  uos.uos_AddFromDevIn(PlayerIndex);
  end;
 
-procedure uos_AddDSPVolumeIn(PlayerIndex: Cardinal; InputIndex: Cardinal; VolLeft: double;
+procedure uos_AddDSPVolumeIn(PlayerIndex: LongInt; InputIndex: LongInt; VolLeft: double;
                 VolRight: double); cdecl;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
@@ -189,7 +194,7 @@ begin
 uos.uos_AddDSPVolumeIn(PlayerIndex, InputIndex, VolLeft, VolRight) ;
 end;
 
-procedure uos_AddDSPVolumeOut(PlayerIndex: Cardinal; OutputIndex: Cardinal; VolLeft: double;
+procedure uos_AddDSPVolumeOut(PlayerIndex: LongInt; OutputIndex: LongInt; VolLeft: double;
                  VolRight: double); cdecl;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
@@ -201,7 +206,7 @@ begin
 uos.uos_AddDSPVolumeOut(PlayerIndex, OutputIndex, VolLeft, VolRight) ;
 end;
 
-procedure uos_SetDSPVolumeIn(PlayerIndex: Cardinal; InputIndex: cardinal;
+procedure uos_SetDSPVolumeIn(PlayerIndex: LongInt; InputIndex: LongInt;
                  VolLeft: double; VolRight: double; Enable: boolean); cdecl;
                ////////// InputIndex : InputIndex of a existing Input
                //////////// PlayerIndex : Index of a existing Player
@@ -213,7 +218,7 @@ begin
 uos.uos_SetDSPVolumeIn(PlayerIndex, InputIndex, VolLeft, VolRight, Enable) ;
 end;
 
-procedure uos_SetDSPVolumeOut(PlayerIndex: Cardinal; OutputIndex: cardinal;
+procedure uos_SetDSPVolumeOut(PlayerIndex: LongInt; OutputIndex: LongInt;
                  VolLeft: double; VolRight: double; Enable: boolean); cdecl;
                ////////// OutputIndex : OutputIndex of a existing Output
                //////////// PlayerIndex : Index of a existing Player
@@ -226,7 +231,7 @@ uos.uos_SetDSPVolumeOut(PlayerIndex, OutputIndex, VolLeft, VolRight, Enable) ;
 end;
 
 {   TODO
-procedure uos_BeginProc(PlayerIndex: Cardinal; Proc: TProc); cdecl;
+procedure uos_BeginProc(PlayerIndex: LongInt; Proc: TProc); cdecl;
             ///// Assign the procedure of object to execute  at begining, before loop
             //////////// PlayerIndex : Index of a existing Player
             //////////// InIndex : Index of a existing Input
@@ -234,7 +239,7 @@ begin
  uos.uos_BeginProc(PlayerIndex, Proc);
 end;
 
-procedure uos_EndProc(PlayerIndex: Cardinal; Proc: TProc); cdecl;
+procedure uos_EndProc(PlayerIndex: LongInt; Proc: TProc); cdecl;
             ///// Assign the procedure of object to execute  at end, after loop
             //////////// PlayerIndex : Index of a existing Player
             //////////// InIndex : Index of a existing Input
@@ -242,7 +247,7 @@ begin
  uos.uos_EndProc(PlayerIndex, Proc);
 end;
 
-procedure uos_LoopProcIn(PlayerIndex: Cardinal; InIndex: Cardinal; Proc: TProc); cdecl;
+procedure uos_LoopProcIn(PlayerIndex: LongInt; InIndex: LongInt; Proc: TProc); cdecl;
             ///// Assign the procedure of object to execute inside the loop
             //////////// PlayerIndex : Index of a existing Player
             //////////// InIndex : Index of a existing Input
@@ -250,7 +255,7 @@ begin
  uos.uos_LoopProcIn(PlayerIndex, InIndex, Proc);
 end;
 
-procedure uos_LoopProcOut(PlayerIndex: Cardinal; OutIndex: Cardinal; Proc: TProc); cdecl;
+procedure uos_LoopProcOut(PlayerIndex: LongInt; OutIndex: LongInt; Proc: TProc); cdecl;
               ///// Assign the procedure of object to execute inside the loop
             //////////// PlayerIndex : Index of a existing Player
             //////////// OutIndex : Index of a existing Output
@@ -258,8 +263,8 @@ begin
  uos.uos_LoopProcOut(PlayerIndex, OutIndex, Proc);
 end;
 
-function uos_AddDSPin(PlayerIndex: Cardinal; InputIndex: cardinal; BeforeProc: TFunc;
-                    AfterProc: TFunc; LoopProc: TProc): integer ; cdecl;
+function uos_AddDSPin(PlayerIndex: LongInt; InputIndex: LongInt; BeforeProc: TFunc;
+                    AfterProc: TFunc; LoopProc: TProc): LongInt ; cdecl;
                   ///// add a DSP procedure for input
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// InputIndex : Input Index of a existing input
@@ -272,7 +277,7 @@ begin
 result := uos.uos_AddDSPin(PlayerIndex, InputIndex, BeforeProc, AfterProc, LoopProc);
 end;
 
-procedure uos_SetDSPin(PlayerIndex: Cardinal; InputIndex: cardinal; DSPinIndex: cardinal; Enable: boolean); cdecl;
+procedure uos_SetDSPin(PlayerIndex: LongInt; InputIndex: LongInt; DSPinIndex: LongInt; Enable: boolean); cdecl;
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// InputIndex : Input Index of a existing input
                   ////////// DSPIndexIn : DSP Index of a existing DSP In
@@ -282,8 +287,8 @@ begin
 uos.uos_SetDSPin(PlayerIndex, InputIndex, DSPinIndex, Enable);
 end;
 
-function uos_AddDSPout(PlayerIndex: Cardinal; OutputIndex: cardinal; BeforeProc: TFunc;
-                    AfterProc: TFunc; LoopProc: TProc): integer; cdecl;    //// usefull if multi output
+function uos_AddDSPout(PlayerIndex: LongInt; OutputIndex: LongInt; BeforeProc: TFunc;
+                    AfterProc: TFunc; LoopProc: TProc): LongInt; cdecl;    //// usefull if multi output
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// OutputIndex : OutputIndex of a existing Output
                   ////////// BeforeProc : procedure to do before the buffer is filled
@@ -295,7 +300,7 @@ begin
 result := uos.uos_AddDSPout(PlayerIndex, OutputIndex, BeforeProc, AfterProc, LoopProc);
 end;
 
-procedure uos_SetDSPout(PlayerIndex: Cardinal; OutputIndex: cardinal; DSPoutIndex: cardinal; Enable: boolean); cdecl;
+procedure uos_SetDSPout(PlayerIndex: LongInt; OutputIndex: LongInt; DSPoutIndex: LongInt; Enable: boolean); cdecl;
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// OutputIndex : OutputIndex of a existing Output
                   ////////// DSPoutIndex : DSPoutIndex of existing DSPout
@@ -306,9 +311,9 @@ uos.uos_SetDSPin(PlayerIndex, OutputIndex, DSPOutIndex, Enable);
 end;
 }
 
-function uos_AddFilterIn(PlayerIndex: Cardinal; InputIndex: cardinal; LowFrequency: integer;
-                    HighFrequency: integer; Gain: cfloat; TypeFilter: integer;
-                    AlsoBuf: boolean; LoopProc: TProc): cardinal;  cdecl;
+function uos_AddFilterIn(PlayerIndex: LongInt; InputIndex: LongInt; LowFrequency: LongInt;
+                    HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
+                    AlsoBuf: boolean; LoopProc: TProc): LongInt;  cdecl;
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// InputIndex : InputIndex of a existing Input
                   ////////// LowFrequency : Lowest frequency of filter
@@ -324,9 +329,9 @@ begin
 result := uos.uos_AddFilterIn(PlayerIndex, InputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, LoopProc);
 end;
 
-procedure uos_SetFilterIn(PlayerIndex: Cardinal; InputIndex: cardinal; FilterIndex: cardinal;
-                    LowFrequency: integer; HighFrequency: integer; Gain: cfloat;
-                    TypeFilter: integer; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);  cdecl;
+procedure uos_SetFilterIn(PlayerIndex: LongInt; InputIndex: LongInt; FilterIndex: LongInt;
+                    LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
+                    TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);  cdecl;
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// InputIndex : InputIndex of a existing Input
                   ////////// DSPInIndex : DSPInIndex of existing DSPIn
@@ -343,9 +348,9 @@ begin
 uos.uos_SetFilterIn(PlayerIndex, InputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable, LoopProc);
 end;
 
-function uos_AddFilterOut(PlayerIndex: Cardinal; OutputIndex: cardinal; LowFrequency: integer;
-                    HighFrequency: integer; Gain: cfloat; TypeFilter: integer;
-                    AlsoBuf: boolean; LoopProc: TProc): cardinal;  cdecl;
+function uos_AddFilterOut(PlayerIndex: LongInt; OutputIndex: LongInt; LowFrequency: LongInt;
+                    HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
+                    AlsoBuf: boolean; LoopProc: TProc): LongInt;  cdecl;
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// OutputIndex : OutputIndex of a existing Output
                   ////////// LowFrequency : Lowest frequency of filter
@@ -361,9 +366,9 @@ begin
 result := uos.uos_AddFilterOut(PlayerIndex, OutputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, LoopProc);
 end;
 
-procedure uos_SetFilterOut(PlayerIndex: Cardinal; OutputIndex: cardinal; FilterIndex: cardinal;
-                    LowFrequency: integer; HighFrequency: integer; Gain: cfloat;
-                    TypeFilter: integer; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);  cdecl;
+procedure uos_SetFilterOut(PlayerIndex: LongInt; OutputIndex: LongInt; FilterIndex: LongInt;
+                    LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
+                    TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);  cdecl;
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// OutputIndex : OutputIndex of a existing Output
                   ////////// FilterIndex : DSPOutIndex of existing DSPOut
@@ -380,8 +385,8 @@ begin
 uos.uos_SetFilterOut(PlayerIndex, OutputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable, LoopProc);
 end;
 
-function uos_AddPlugin(PlayerIndex: Cardinal; PlugName: string; SampleRate: integer;
-                       Channels: integer): cardinal;  cdecl;
+function uos_AddPlugin(PlayerIndex: LongInt; PlugName: Pchar; SampleRate: LongInt;
+                       Channels: LongInt): LongInt;  cdecl;
                      /////// Add a plugin , result is PluginIndex
                      //////////// PlayerIndex : Index of a existing Player
                      //////////// SampleRate : delault : -1 (44100)
@@ -391,7 +396,7 @@ begin
 result := uos.uos_AddPlugin(PlayerIndex, PlugName, SampleRate, Channels);
 end;
 
-procedure uos_SetPluginSoundTouch(PlayerIndex: Cardinal; PluginIndex: cardinal; Tempo: cfloat;
+procedure uos_SetPluginSoundTouch(PlayerIndex: LongInt; PluginIndex: LongInt; Tempo: cfloat;
                        Pitch: cfloat; Enable: boolean);  cdecl;
                      ////////// PluginIndex : PluginIndex Index of a existing Plugin.
                      //////////// PlayerIndex : Index of a existing Player
@@ -399,108 +404,108 @@ begin
 uos.uos_SetPluginSoundTouch(PlayerIndex, PluginIndex, Tempo, Pitch, Enable);
 end;
 
-function uos_GetStatus(PlayerIndex: Cardinal) : integer; cdecl;
+function uos_GetStatus(PlayerIndex: LongInt) : LongInt; cdecl;
              /////// Get the status of the player :-1 => error,  0 => has stopped, 1 => is running, 2 => is paused.
 begin
 uos.uos_GetStatus(PlayerIndex);
 end;
 
-procedure uos_Seek(PlayerIndex: Cardinal; InputIndex: cardinal; pos: {$if defined(cpu64)} cint64 {$else} longint {$endif}); cdecl;
+procedure uos_Seek(PlayerIndex: LongInt; InputIndex: LongInt; pos: {$if defined(cpu64)} cint64 {$else} longint {$endif}); cdecl;
                      //// change position in sample
 begin
 uos.uos_Seek(PlayerIndex, InputIndex, pos);
 end;
 
-procedure uos_SeekSeconds(PlayerIndex: Cardinal; InputIndex: cardinal; pos: cfloat); cdecl;
+procedure uos_SeekSeconds(PlayerIndex: LongInt; InputIndex: LongInt; pos: cfloat); cdecl;
                      //// change position in seconds
 begin
 uos.uos_SeekSeconds(PlayerIndex, InputIndex, pos);
 end;
 
-procedure uos_SeekTime(PlayerIndex: Cardinal; InputIndex: cardinal; pos: TTime); cdecl;
+procedure uos_SeekTime(PlayerIndex: LongInt; InputIndex: LongInt; pos: TTime); cdecl;
                      //// change position in time format
 begin
 uos.uos_SeekTime(PlayerIndex, InputIndex, pos);
 end;
 
-function uos_InputLength(PlayerIndex: Cardinal; InputIndex: cardinal): {$if defined(cpu64)} cint64 {$else} longint {$endif};  cdecl;
+function uos_InputLength(PlayerIndex: LongInt; InputIndex: LongInt): {$if defined(cpu64)} cint64 {$else} longint {$endif};  cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : Length of Input in samples
 begin
 result := uos.uos_InputLength(PlayerIndex, InputIndex);
 end;
 
-function uos_InputLengthSeconds(PlayerIndex: Cardinal; InputIndex: cardinal): cfloat;  cdecl;
+function uos_InputLengthSeconds(PlayerIndex: LongInt; InputIndex: LongInt): cfloat;  cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : Length of Input in seconds
 begin
 result := uos.uos_InputLengthSeconds(PlayerIndex, InputIndex);
 end;
 
-function uos_InputLengthTime(PlayerIndex: Cardinal; InputIndex: cardinal): TTime; cdecl;
+function uos_InputLengthTime(PlayerIndex: LongInt; InputIndex: LongInt): TTime; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : Length of Input in time format
 begin
 result := uos.uos_InputLengthTime(PlayerIndex, InputIndex);
 end;
 
-function uos_InputPosition(PlayerIndex: Cardinal; InputIndex: cardinal): longint; cdecl;
+function uos_InputPosition(PlayerIndex: LongInt; InputIndex: LongInt): longint; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ////// result : current postion in sample
 begin
 result := uos.uos_InputPosition(PlayerIndex, InputIndex);
 end;
 
-procedure uos_InputSetLevelEnable(PlayerIndex: Cardinal; InputIndex: cardinal ; enable : boolean);  cdecl;
+procedure uos_InputSetLevelEnable(PlayerIndex: LongInt; InputIndex: LongInt ; enable : boolean);  cdecl;
                      ///////// enable/disable level calculation (default is false/disable)
 begin
 uos.uos_InputSetLevelEnable(PlayerIndex, InputIndex, enable);
 end;
 
-function uos_InputGetLevelLeft(PlayerIndex: Cardinal; InputIndex: cardinal): double; cdecl;
+function uos_InputGetLevelLeft(PlayerIndex: LongInt; InputIndex: LongInt): double; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ////// result : left volume from 0 to 1
 begin
 result := uos.uos_InputGetLevelLeft(PlayerIndex, InputIndex);
 end;
 
-function uos_InputGetLevelRight(PlayerIndex: Cardinal; InputIndex: cardinal): double; cdecl;
+function uos_InputGetLevelRight(PlayerIndex: LongInt; InputIndex: LongInt): double; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ////// result : right volume from 0 to 1
 begin
 result := uos.uos_InputGetLevelRight(PlayerIndex, InputIndex);
 end;
 
-function uos_InputPositionSeconds(PlayerIndex: Cardinal; InputIndex: cardinal): cfloat; cdecl;
+function uos_InputPositionSeconds(PlayerIndex: LongInt; InputIndex: LongInt): cfloat; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : current postion of Input in seconds
 begin
 result := uos.uos_InputPositionSeconds(PlayerIndex, InputIndex);
 end;
 
-function uos_InputPositionTime(PlayerIndex: Cardinal; InputIndex: cardinal): TTime; cdecl;
+function uos_InputPositionTime(PlayerIndex: LongInt; InputIndex: LongInt): TTime; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : current postion of Input in time format
 begin
 result := uos.uos_InputPositionTime(PlayerIndex, InputIndex);
 end;
 
-procedure uos_Play(PlayerIndex: Cardinal); cdecl;         ///// Start playing
+procedure uos_Play(PlayerIndex: LongInt); cdecl;         ///// Start playing
 begin
 uos.uos_Play(PlayerIndex) ;
 end;
 
-procedure uos_RePlay(PlayerIndex: Cardinal); cdecl;                 ///// Resume playing after pause
+procedure uos_RePlay(PlayerIndex: LongInt); cdecl;                 ///// Resume playing after pause
 begin
 uos.uos_RePlay(PlayerIndex) ;
 end;
 
-procedure uos_Stop(PlayerIndex: Cardinal); cdecl;                   ///// Stop playing and free thread
+procedure uos_Stop(PlayerIndex: LongInt); cdecl;                   ///// Stop playing and free thread
 begin
 uos.uos_Stop(PlayerIndex) ;
 end;
 
-procedure uos_Pause(PlayerIndex: Cardinal); cdecl;                  ///// Pause playing
+procedure uos_Pause(PlayerIndex: LongInt); cdecl;                  ///// Pause playing
 begin
 uos.uos_Pause(PlayerIndex) ;
 end;
@@ -559,7 +564,8 @@ uos_InputGetChannels name 'uos_InputGetChannels',
 uos_Play name 'uos_Play',
 uos_RePlay name 'uos_RePlay',
 uos_Stop name 'uos_Stop',
-uos_Pause name 'uos_Pause';
+uos_Pause name 'uos_Pause',
+uos_GetVersion name 'uos_GetVersion';
 
 begin
 end.

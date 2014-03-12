@@ -553,8 +553,8 @@ var
   begin
 
    // Load the libraries
-    // function uos_LoadLibs(uoslibFilename: string; PortAudioFileName: string; SndFileFileName: string; Mpg123FileName: string; SoundTouchFileName: string) : integer;
-    if uos_LoadLibs(uoslibFilename, FilenameEdit1.FileName, FilenameEdit2.FileName, FilenameEdit3.FileName, '') then
+    // function uos_LoadLibs(uoslibFilename: Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
+    if uos_LoadLibs(Pchar(uoslibFilename), Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pchar(FilenameEdit3.FileName), nil) then
    begin
       hide;
       Height := 465;
@@ -643,7 +643,7 @@ var
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
 
-  uos_AddFromFile(PlayerIndex0, FilenameEdit4.filename, -1, 0, -1);
+  uos_AddFromFile(PlayerIndex0, Pchar(FilenameEdit4.filename), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
@@ -704,7 +704,7 @@ var
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
 
-  uos_AddFromFile(PlayerIndex1, FilenameEdit5.filename, -1, 0, -1);
+  uos_AddFromFile(PlayerIndex1, Pchar(FilenameEdit5.filename), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
@@ -765,7 +765,7 @@ var
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
 
-  uos_AddFromFile(PlayerIndex2, FilenameEdit6.filename, -1, 0, -1);
+  uos_AddFromFile(PlayerIndex2, Pchar(FilenameEdit6.filename), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
@@ -827,7 +827,7 @@ var
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
 
-  uos_AddFromFile(PlayerIndex3, FilenameEdit7.filename, -1, 0, -1);
+  uos_AddFromFile(PlayerIndex3, Pchar(FilenameEdit7.filename), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player

@@ -122,8 +122,8 @@ var
     str: string;
   begin
       // Load the libraries
-    // function uos_LoadLibs(uoslibfilename: string; PortAudioFileName: string; SndFileFileName: string; Mpg123FileName: string; SoundTouchFileName: string) : integer;
-    if uos_LoadLibs(uoslibfilename, FilenameEdit1.FileName, FilenameEdit2.FileName, FilenameEdit3.FileName, '') then
+    // function uos_LoadLibs(uoslibfilename: Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
+    if uos_LoadLibs(PChar(uoslibfilename), PChar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pchar(FilenameEdit3.FileName), nil) then
   begin
       hide;
       Height := 345;
@@ -181,7 +181,7 @@ var
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (= 65536)
 
-    In1Index := uos_AddFromFile(PlayerIndex1, FilenameEdit4.filename, -1, 0, -1);
+    In1Index := uos_AddFromFile(PlayerIndex1, PChar(FilenameEdit4.filename), -1, 0, -1);
       //// add input from audio file with custom parameters
       //////////// PlayerIndex : Index of a existing Player
       ////////// FileName : filename of audio file

@@ -53,11 +53,11 @@ var
 
  {$IFDEF linux}
     {$if defined(cpu64)}
-     PA_FileName := ordir + 'lib/Linux/64bit/libuos-64.so';
+     uoslib_FileName := ordir + 'lib/Linux/64bit/libuos-64.so';
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     {$else}
-    PA_FileName := ordir + 'lib/Linux/32bit/libuos-32.so';
+    uoslib_FileName := ordir + 'lib/Linux/32bit/libuos-32.so';
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
 {$endif}
@@ -76,7 +76,7 @@ var
 
     writeln('Here we go...');
     // Load the libraries
-    if uos_loadlibs(uoslib_FileName, PA_FileName, SF_FileName, '', '') then
+    if uos_loadlibs(PChar(uoslib_FileName), PChar(PA_FileName), PChar(SF_FileName), nil, nil) then
 
       writeln('Libraries are loaded...')
     else
@@ -86,15 +86,16 @@ var
     uos_CreatePlayer(PlayerIndex1);
     writeln('Player created...');
 
-    uos_AddFromFileDef(PlayerIndex1, sndfilename);
+    uos_AddFromFileDef(PlayerIndex1, PChar(sndfilename));
     writeln('uos_AddFromFileDef : ok');
 
     uos_AddIntoDevOutDef(PlayerIndex1);
     writeln('uos_AddIntoDevOutDef : ok');
     writeln('');
-    writeln('Yep,say it...');
+    writeln('Yep, say it...');
     writeln('');
     uos_Play(PlayerIndex1);
+
   end;
 
   procedure TuosConsole.doRun;

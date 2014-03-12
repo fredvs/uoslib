@@ -259,9 +259,9 @@ begin
   // function uos_LoadLib(PortAudioFileName: string; SndFileFileName: string; Mpg123FileName: string; SoundTouchFileName: string) : integer;
   // You may load one or more libraries . When you want... :
 
-if uos_LoadLibs(uoslibfilename, edit1.Text, edit2.Text, edit3.Text, edit5.Text) then
+if uos_LoadLibs(pchar(uoslibfilename), pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text), pchar(edit5.Text)) then
   begin
-    form1.hide;
+    hide;
     button1.Caption :=
       'uos, PortAudio, SndFile, Mpg123 and SoundTouch ibraries are loaded...';
     button1.Enabled := False;
@@ -269,9 +269,10 @@ if uos_LoadLibs(uoslibfilename, edit1.Text, edit2.Text, edit3.Text, edit5.Text) 
     edit2.ReadOnly := True;
     edit3.ReadOnly := True;
     edit5.ReadOnly := True;
-    form1.Height := 418;
-    form1.Position := poScreenCenter;
-    form1.Show;
+    Height := 418;
+    Position := poScreenCenter;
+    caption := 'Simple Player.    uos version ' + inttostr(uos_GetVersion());
+    Show;
   end;
 end;
 
@@ -327,7 +328,7 @@ begin
 
       // In1Index := uos_AddFromFile(PlayerIndex1, Edit4.Text);
     //// add input from audio file with default parameters
-    In1Index := uos_AddFromFile(PlayerIndex1, Edit4.Text, -1, samformat, -1);
+    In1Index := uos_AddFromFile(PlayerIndex1, Pchar(Edit4.Text), -1, samformat, -1);
     //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     //////////// PlayerIndex : Index of a existing Player

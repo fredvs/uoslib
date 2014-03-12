@@ -92,7 +92,7 @@ var
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
 
-  In1Index :=uos_AddFromFileDef(PlayerIndex1, filenameedit4.FileName); //// add input from audio file with default parameters
+  In1Index :=uos_AddFromFileDef(PlayerIndex1, Pchar(filenameedit4.FileName)); //// add input from audio file with default parameters
   // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   ////////// FileName : filename of audio file
@@ -139,8 +139,8 @@ var
   begin
 
     // Load the libraries
-    // function uos_LoadLib(uoslibfilename: string; PortAudioFileName: string; SndFileFileName: string; Mpg123FileName: string; SoundTouchFileName: string) : integer;
-    if uos_LoadLibs( uoslibfilename, FilenameEdit1.FileName,  FilenameEdit2.FileName, '', '') then
+    // function uos_LoadLib(uoslibfilename: Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
+    if uos_LoadLibs( Pchar(uoslibfilename), Pchar(FilenameEdit1.FileName),  Pchar(FilenameEdit2.FileName), nil, nil) then
   begin
       hide;
       Height := 305;
@@ -186,7 +186,7 @@ var
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
-    uos_AddIntoFileDef(PlayerIndex1, filenameEdit4.filename);
+    uos_AddIntoFileDef(PlayerIndex1, Pchar(filenameEdit4.filename));
     //// add Output into wav file (save record)  with default parameters
     // uos_AddIntoDevOut(0, 'test.wav', -1, -1, -1);   //// add a Output into wav file (save record) with custom parameters
     //////////// PlayerIndex : Index of a existing Player

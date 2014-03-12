@@ -154,8 +154,8 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="162"/>
-        <CursorPos X="1" Y="170"/>
+        <TopLine Value="288"/>
+        <CursorPos X="62" Y="293"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -459,7 +459,7 @@ install:
         <Loaded Value="True"/>
       </Unit37>
     </Units>
-    <JumpHistory Count="21" HistoryIndex="20">
+    <JumpHistory Count="23" HistoryIndex="22">
       <Position1>
         <Filename Value="main_fp.pas"/>
         <Caret Line="224" Column="35" TopLine="214"/>
@@ -544,6 +544,14 @@ install:
         <Filename Value="main_fp.pas"/>
         <Caret Line="80" Column="15" TopLine="71"/>
       </Position21>
+      <Position22>
+        <Filename Value="main_fp.pas"/>
+        <Caret Line="170" Column="1" TopLine="162"/>
+      </Position22>
+      <Position23>
+        <Filename Value="main_fp.pas"/>
+        <Caret Line="237" Column="50" TopLine="230"/>
+      </Position23>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

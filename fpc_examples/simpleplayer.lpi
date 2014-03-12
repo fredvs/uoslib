@@ -151,11 +151,10 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_sp"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="329"/>
-        <CursorPos X="1" Y="352"/>
+        <TopLine Value="272"/>
+        <CursorPos X="2" Y="275"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -515,10 +514,11 @@ install:
       <Unit45>
         <Filename Value="simpleplayer_fpGUI.pas"/>
         <UnitName Value="simpleplayer_fpGUI"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="285"/>
-        <CursorPos X="5" Y="291"/>
+        <TopLine Value="217"/>
+        <CursorPos X="19" Y="234"/>
         <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit45>
@@ -527,8 +527,8 @@ install:
         <UnitName Value="uoslib_h"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="128"/>
-        <CursorPos X="25" Y="140"/>
+        <TopLine Value="190"/>
+        <CursorPos X="60" Y="186"/>
         <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit46>
@@ -564,7 +564,7 @@ install:
         <UsageCount Value="10"/>
       </Unit50>
     </Units>
-    <JumpHistory Count="20" HistoryIndex="19">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="main_sp.pas"/>
         <Caret Line="382" Column="3" TopLine="373"/>
@@ -645,6 +645,38 @@ install:
         <Filename Value="uoslib_h.pas"/>
         <Caret Line="1" Column="1" TopLine="1"/>
       </Position20>
+      <Position21>
+        <Filename Value="uoslib_h.pas"/>
+        <Caret Line="140" Column="25" TopLine="128"/>
+      </Position21>
+      <Position22>
+        <Filename Value="uoslib_h.pas"/>
+        <Caret Line="368" Column="120" TopLine="361"/>
+      </Position22>
+      <Position23>
+        <Filename Value="main_sp.pas"/>
+        <Caret Line="352" Column="1" TopLine="338"/>
+      </Position23>
+      <Position24>
+        <Filename Value="main_sp.pas"/>
+        <Caret Line="263" Column="82" TopLine="255"/>
+      </Position24>
+      <Position25>
+        <Filename Value="main_sp.pas"/>
+        <Caret Line="4" Column="69" TopLine="1"/>
+      </Position25>
+      <Position26>
+        <Filename Value="main_sp.pas"/>
+        <Caret Line="211" Column="17" TopLine="198"/>
+      </Position26>
+      <Position27>
+        <Filename Value="main_sp.pas"/>
+        <Caret Line="204" Column="29" TopLine="187"/>
+      </Position27>
+      <Position28>
+        <Filename Value="main_sp.pas"/>
+        <Caret Line="205" Column="1" TopLine="198"/>
+      </Position28>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

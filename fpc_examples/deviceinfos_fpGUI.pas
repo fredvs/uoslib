@@ -54,9 +54,9 @@ var
 
 
   procedure TDevicesInfos.CheckInfos();
-    begin
-    memo1.Text :=  UOS_GetInfoDeviceStr();
-    end;
+  begin
+  memo1.Text := uos_GetInfoDeviceStr();
+  end;
 
   procedure TDevicesInfos.CloseClick(Sender: TObject);
   begin
@@ -67,8 +67,8 @@ var
   procedure TDevicesInfos.btnLoadClick(Sender: TObject);
    begin
       // Load the library
-  // function uos_LoadLib(uoslibFileName: string; PortAudioFileName: string; SndFileFileName: string; Mpg123FileName: string; SoundTouchFileName: string) : integer;
-   if uos_LoadLibs(uoslibFilename, FilenameEdit1.FileName, '', '', '') then
+  // function uos_LoadLib(uoslibFileName: Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
+   if uos_LoadLibs(Pchar(uoslibFilename), Pchar(FilenameEdit1.FileName), nil, nil, nil) then
       begin
       hide;
       Height := 385;

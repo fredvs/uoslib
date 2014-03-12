@@ -4,7 +4,7 @@ object Form1: TForm1
   Top = 58
   Width = 505
   BorderIcons = [biSystemMenu]
-  Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'
+  Caption = 'Simple Player'
   ClientHeight = 419
   ClientWidth = 505
   Color = clMoneyGreen
@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   Position = poDesktopCenter
-  LCLVersion = '1.3'
+  LCLVersion = '1.2.0.3'
   object Shape1: TShape
     Left = 8
     Height = 216

@@ -234,8 +234,8 @@ procedure TForm1.Button1Click(Sender: TObject);
 begin
 
   // Load the libraries
-  // function uos_LoadLib(uoslibfilename: string;PortAudioFileName: string; SndFileFileName: string; Mpg123FileName: string; SoundTouchFileName: string) : integer;
-  if uos_LoadLibs(uoslibfilename, edit1.Text, edit2.Text, edit3.Text, '') then
+  // function uos_LoadLib(uoslibfilename: Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
+  if uos_LoadLibs(Pchar(uoslibfilename), Pchar(edit1.Text), Pchar(edit2.Text), Pchar(edit3.Text), nil) then
   begin
     form1.hide;
     button1.Caption := 'uos, PortAudio, SndFile and Mpg123 libraries are loaded...';
@@ -290,7 +290,7 @@ begin
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (= 65536)
 
-  In1Index := uos_AddFromFile(PlayerIndex1, Edit4.Text, -1, 0, -1);
+  In1Index := uos_AddFromFile(PlayerIndex1, Pchar(Edit4.Text), -1, 0, -1);
   //// add input from audio file with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   ////////// FileName : filename of audio file
