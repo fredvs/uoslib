@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CONFIG>
-  <Compiler Value="/usr/lib/codetyphon/fpc/bin/x86_64-linux/fpc" Date="1389770687"/>
-  <Params Value=" -MObjFPC -Scghi -CX -Xs -XX -vewnhi -Fi/home/fred/uoslib/src/units -Fu/home/fred/uoslib/src/ -FU/home/fred/uoslib/src/units/ -olibuoslib.so uoslib.pas"/>
-</CONFIG>
