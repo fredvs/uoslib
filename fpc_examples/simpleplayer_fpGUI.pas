@@ -4,7 +4,7 @@ program simpleplayer_fpGUI;  /// library version
   {$DEFINE UseCThreads}
 
 uses
- //  cmem,    // uncoment it if uoslib was compiled with cmem
+  cmem,    // uncoment it if uoslib was compiled with cmem
    {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
@@ -80,8 +80,7 @@ type
       Shift: TShiftState; const pos: TPoint);
     procedure btnTrackOffClick(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; const pos: TPoint);
-    procedure ClosePlayer1;
-    procedure LoopProcPlayer1(Sender: TObject);
+     procedure LoopProcPlayer1(Sender: TObject);
     procedure ShowPosition;
     procedure ShowLevel;
     procedure VolumeChange(Sender: TObject; pos: integer);
@@ -95,7 +94,9 @@ type
   {@VFD_NEWFORM_IMPL}
 
 var
+  frm: TSimpleplayer;
   PlayerIndex1: cardinal;
+
   ordir, opath: string;
   Out1Index, In1Index, Plugin1Index: cardinal;
   uoslibFilename : string ;
@@ -219,7 +220,7 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject; var closeit :TCloseAction
     if uos_LoadLibs(pchar(uoslibfilename), pchar(FilenameEdit1.FileName), pchar(FilenameEdit2.FileName),
       pchar(FilenameEdit3.FileName), Pchar(FilenameEdit5.FileName)) then
     begin
-      hide;
+
       Height := 403;
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
@@ -237,8 +238,23 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject; var closeit :TCloseAction
     end;
   end;
 
-  procedure TSimpleplayer.ClosePlayer1;
+  procedure ClosePlayer1;
   begin
+    with frm do begin
+  timersynchro.Enabled:=false;
+  sleep(150);
+    trackbar1.Visible := False;
+    lposition.Visible := False;
+
+      btnStart.visible := False;
+    btnStop.visible := False;
+    btnPause.visible := False;
+    btnresume.visible := False;
+
+     radiobutton1.visible := False;
+    radiobutton2.visible := False;
+    radiobutton3.visible := False;
+
     radiobutton1.Enabled := True;
     radiobutton2.Enabled := True;
     radiobutton3.Enabled := True;
@@ -254,6 +270,21 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject; var closeit :TCloseAction
     btnresume.Enabled := False;
     trackbar1.Position := 0;
     lposition.Text := '00:00:00.000';
+
+       btnStart.visible := true;
+    btnStop.visible := true;
+    btnPause.visible := true;
+    btnresume.visible := true;
+
+     radiobutton1.visible := True;
+    radiobutton2.visible := True;
+    radiobutton3.visible := True;
+
+    trackbar1.Visible := true;
+    lposition.Visible := true;
+    frm.show;
+
+    end;
   end;
 
   procedure TSimpleplayer.btnStopClick(Sender: TObject);
@@ -356,6 +387,8 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject; var closeit :TCloseAction
     btnStop.Enabled := True;
     btnpause.Enabled := True;
     btnresume.Enabled := False;
+
+    uos_EndProc(PlayerIndex1,@ClosePlayer1);
 
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
     TimerSynchro.Enabled := true;
@@ -919,8 +952,7 @@ end;
   end;
 
   procedure MainProc;
-  var
-    frm: TSimpleplayer;
+
   begin
     fpgApplication.Initialize;
     frm := TSimpleplayer.Create(nil);

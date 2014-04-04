@@ -47,7 +47,7 @@ uses
   DynLibs, ctypes;
 
 type
-TProc = procedure of object ;
+TProc = procedure ;
 
 var
 
@@ -55,6 +55,14 @@ var
   uos_GetInfoDeviceStr: function() : PChar ; cdecl;
 
   uos_CreatePlayer: procedure(PlayerIndex: LongInt); cdecl;
+
+  uos_BeginProc: procedure(PlayerIndex: cint32; Proc: TProc); cdecl;
+
+  uos_EndProc: procedure(PlayerIndex: cint32; Proc: TProc); cdecl;
+
+  uos_LoopProcIn: procedure(PlayerIndex: cint32; InIndex: cint32; Proc: TProc); cdecl;
+
+  uos_LoopProcOut: procedure(PlayerIndex: cint32; OutIndex: cint32; Proc: TProc); cdecl;
 
   uos_AddIntoDevOut: function(PlayerIndex: LongInt; Device: LongInt;
   Latency: CDouble; SampleRate: LongInt; Channels: LongInt;
@@ -157,7 +165,7 @@ var
   uos_unloadlib: procedure(); cdecl;
   ////////////////////////
 
-  uos_GetVersion:  function(): LongInt ; cdecl;  /// uos version
+  uos_GetVersion:  function(): LongInt ; cdecl;    /// uos version
 
   LibHandle: TLibHandle = dynlibs.NilHandle; // this will hold our handle for the uoslib
   ReferenceCounter: LongInt = 0;  // Reference counter
@@ -341,9 +349,7 @@ begin
         Pointer(uos_GetVersion) :=
           GetProcAddress(LibHandle, 'uos_GetVersion');
 
-
-        { TODO ...
-        Pointer(uos_BeginProc) :=
+       Pointer(uos_BeginProc) :=
           GetProcAddress(LibHandle, 'uos_BeginProc');
 
         Pointer(uos_EndProc) :=
@@ -355,6 +361,7 @@ begin
         Pointer(uos_LoopProcOut) :=
           GetProcAddress(LibHandle, 'uos_LoopProcOut');
 
+         { TODO ...
         Pointer(uos_AddDSPIn) :=
           GetProcAddress(LibHandle, 'uos_AddDSPIn');
 

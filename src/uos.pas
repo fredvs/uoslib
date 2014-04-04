@@ -65,7 +65,7 @@ uses
   uos_LibSndFile, uos_Mpg123, uos_soundtouch;
 
 const
-  uos_version : LongInt = 130140316 ;
+  uos_version : LongInt = 130140325 ;
 
 type
   TDArFloat = array of cfloat;
@@ -214,7 +214,12 @@ type
 
 type
   TFunc = function(Data: Tuos_Data; FFT: Tuos_FFT): TDArFloat;
+    {$IF not DEFINED(Library)}   // ici
   TProc = procedure of object;
+   {$else}
+  TProc = procedure ;
+    {$endif}
+
   TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; NumProceed : LongInt;
     param1: float; param2: float; param3: float; param4: float;
     param5: float; param6: float): TDArFloat;
@@ -237,7 +242,7 @@ type
   public
     Data: Tuos_Data;
     DSP: array of Tuos_DSP;
-    LoopProc: procedure of object;    //// external procedure to execute in loop
+    LoopProc: TProc;    //// external procedure to execute in loop
     destructor Destroy; override;
   end;
 
@@ -246,7 +251,7 @@ type
   public
     Data: Tuos_Data;
     DSP: array of Tuos_DSP;
-    LoopProc: procedure of object;    //// external procedure to execute in loop
+    LoopProc: TProc;    //// external procedure to execute in loop
     destructor Destroy; override;
   end;
 
@@ -275,10 +280,10 @@ type
     isAssigned: boolean ;
     Status: LongInt;
     Index: LongInt;
-    BeginProc: procedure of object;
+    BeginProc: TProc;
     //// external procedure to execute at begin of thread
 
-    EndProc: procedure of object;
+    EndProc: TProc;
     //// procedure to execute at end of thread
 
     StreamIn: array of Tuos_InStream;
@@ -2274,7 +2279,7 @@ var
 
 begin
   curpos := 0;
-   {$IF not DEFINED(Library)}
+   {$IF not DEFINED(Library)}   /// ici
       if BeginProc <> nil then
     /////  Execute BeginProc procedure
        {$IF FPC_FULLVERSION>=20701}
@@ -2289,6 +2294,9 @@ begin
    end;
     {$endif}
     {$endif}
+      {$else}
+    if BeginProc <> nil then
+      BeginProc;
     {$endif}
 
   repeat
@@ -2391,7 +2399,7 @@ begin
                   StreamIn[x].DSP[x2].AftProc(StreamIn[x].Data,
                   StreamIn[x].DSP[x2].fftdata);
 
-              {$IF not DEFINED(Library)}
+              {$IF not  DEFINED(Library)}  // ici
               if (StreamIn[x].DSP[x2].LoopProc <> nil) then
             {$IF FPC_FULLVERSION>=20701}
           queue(StreamIn[x].DSP[x2].LoopProc);
@@ -2406,6 +2414,9 @@ begin
    end;
     {$endif}
     {$endif}
+     {$else}
+      if (StreamIn[x].DSP[x2].LoopProc <> nil) then
+        StreamIn[x].DSP[x2].LoopProc;
      {$endif}
        end;
       end;
@@ -2414,7 +2425,7 @@ begin
         ///// End DSPin AfterBuffProc
 
         ///////////// the synchro main loop procedure
-         {$IF not DEFINED(Library)}
+         {$IF not DEFINED(Library)}  // ici
          if StreamIn[x].LoopProc <> nil then
    {$IF FPC_FULLVERSION>=20701}
           queue(StreamIn[x].LoopProc);
@@ -2429,7 +2440,10 @@ begin
    end;
     {$endif}
     {$endif}
-    {$endif}
+    {$else}
+      if (StreamIn[x].LoopProc <> nil) then
+        StreamIn[x].LoopProc;
+     {$endif}
 
    ////////////////// Seeking if StreamIn is terminated
     if status > 0 then
@@ -2479,7 +2493,7 @@ begin
                   StreamOut[x].DSP[x3].AftProc(StreamOut[x].Data,
                   StreamOut[x].DSP[x3].fftdata);
 
-                {$IF not DEFINED(Library)}
+                {$IF not DEFINED(Library)}  // ici
         if (StreamOut[x].DSP[x3].LoopProc <> nil) then
             {$IF FPC_FULLVERSION>=20701}
          queue(StreamOut[x].DSP[x3].LoopProc);
@@ -2494,7 +2508,11 @@ begin
    end;
     {$endif}
     {$endif}
-    {$endif}
+    {$else}
+      if (StreamOut[x].DSP[x3].LoopProc <> nil) then
+        StreamOut[x].DSP[x3].LoopProc;
+     {$endif}
+
 
             end;    ///// end DSPOut AfterBuffProc
 
@@ -2680,14 +2698,18 @@ begin
        end;
     end;
 
-         {$IF not DEFINED(Library)}
+         {$IF not DEFINED(Library)} // ici
       if EndProc <> nil then
        {$IF FPC_FULLVERSION>=20701}
         queue(EndProc);
         {$else}
       synchronize(EndProc); /////  Execute EndProc procedure
             {$endif}
-            {$endif}
+     {$else}
+      if (EndProc <> nil) then
+        EndProc;
+     {$endif}
+
 
   isAssigned := false ;
     end;
@@ -2718,6 +2740,7 @@ begin
   inherited Create(CreateSuspended, StackSize);
   FreeOnTerminate := false;
   evPause := RTLEventCreate;
+  Priority := tpTimeCritical;
      {$IF FPC_FULLVERSION<20701}
      {$IF DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
      {$else}
@@ -2801,6 +2824,7 @@ begin
       uosLoadResult.MPinitError := 0;
       Result := 0;
     end
+
     else
     begin
       Result := -2;
@@ -2828,7 +2852,7 @@ end;
 function Tuos_Init.loadlib(): LongInt;
 begin
   Result := -1;
-   if PA_FileName <>  nil then
+   if (PA_FileName <>  nil) and (PA_FileName <>  '') then
   begin
     if not fileexists(PA_FileName) then
       uosLoadResult.PAloadERROR := 1
@@ -2847,7 +2871,7 @@ begin
   else
     uosLoadResult.PAloadERROR := -1;
 
-  if SF_FileName <> nil then
+  if (SF_FileName <> nil) and (SF_FileName <>  '') then
   begin
     if not fileexists(SF_FileName) then
     begin
@@ -2870,7 +2894,7 @@ begin
   else
     uosLoadResult.SFloadERROR := -1;
 
-  if trim(MP_FileName) <> '' then
+  if (MP_FileName <> nil) and (MP_FileName <>  '') then
   begin
     if not fileexists(MP_FileName) then
     begin
@@ -2895,7 +2919,7 @@ begin
   else
     uosLoadResult.MPloadERROR := -1;
 
-  if trim(Plug_ST_FileName) <> '' then
+  if (Plug_ST_FileName <> nil) and (Plug_ST_FileName <>  '')  then
   begin
     if not fileexists(Plug_ST_FileName) then
     begin
@@ -3067,4 +3091,4 @@ begin
   Plug_ST_FileName := nil; // Plugin SoundTouch
 end;
 
-end.
+end.

@@ -136,12 +136,12 @@ install:
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="33">
+    <Units Count="34">
       <Unit0>
         <Filename Value="multiplayer.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="multiplayer"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="3" Y="7"/>
@@ -158,8 +158,8 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="448"/>
-        <CursorPos X="50" Y="455"/>
+        <TopLine Value="285"/>
+        <CursorPos X="9" Y="149"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -417,6 +417,16 @@ install:
         <CursorPos X="43" Y="151"/>
         <UsageCount Value="10"/>
       </Unit32>
+      <Unit33>
+        <Filename Value="multiplayer_fpGUI.pas"/>
+        <UnitName Value="multiplayer_fpGUI"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="565"/>
+        <CursorPos X="68" Y="565"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit33>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

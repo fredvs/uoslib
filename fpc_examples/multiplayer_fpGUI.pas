@@ -3,7 +3,9 @@ program multiplayer_fpGUI;
 {$mode objfpc}{$H+}
   {$DEFINE UseCThreads}
 
-uses {$IFDEF UNIX} {$IFDEF UseCThreads}
+uses
+cmem,
+{$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
@@ -67,25 +69,25 @@ type
     procedure btnStopClick(Sender: TObject);
     procedure btnPauseClick(Sender: TObject);
     procedure btnResumeClick(Sender: TObject);
-    procedure ClosePlayer0;
+    //procedure ClosePlayer0;
 
     procedure btnStartClick2(Sender: TObject);
     procedure btnStopClick2(Sender: TObject);
     procedure btnPauseClick2(Sender: TObject);
     procedure btnResumeClick2(Sender: TObject);
-    procedure ClosePlayer1;
+    //procedure ClosePlayer1;
 
     procedure btnStartClick3(Sender: TObject);
     procedure btnStopClick3(Sender: TObject);
     procedure btnPauseClick3(Sender: TObject);
     procedure btnResumeClick3(Sender: TObject);
-    procedure ClosePlayer2;
+    //procedure ClosePlayer2;
 
     procedure btnStartClick4(Sender: TObject);
     procedure btnStopClick4(Sender: TObject);
     procedure btnPauseClick4(Sender: TObject);
     procedure btnResumeClick4(Sender: TObject);
-    procedure ClosePlayer3;
+    //procedure ClosePlayer3;
 
     procedure btnStartClickAll(Sender: TObject);
 
@@ -99,6 +101,7 @@ var
   PlayerIndex0, PlayerIndex1, PlayerIndex2, PlayerIndex3: Cardinal;
   ordir, opath: string;
    uoslibFilename : string ;
+   frm: TMultiplayer;
 
   procedure TMultiplayer.AfterCreate;
   begin
@@ -556,50 +559,92 @@ var
     // function uos_LoadLibs(uoslibFilename: Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
     if uos_LoadLibs(Pchar(uoslibFilename), Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pchar(FilenameEdit3.FileName), nil) then
    begin
-      hide;
+    //  hide;
       Height := 465;
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
       FilenameEdit1.ReadOnly := True;
       FilenameEdit2.ReadOnly := True;
       FilenameEdit3.ReadOnly := True;
-      UpdateWindowPosition;
       btnLoad.Text := 'uos, PortAudio, SndFile and Mpg123 libraries are loaded...';
       WindowPosition := wpScreenCenter;
+        UpdateWindowPosition;
       Show;
+
     end;
   end;
 
-  procedure TMultiplayer.ClosePlayer0;
+  procedure ClosePlayer0;
   begin
-    btnStart.Enabled := True;
-    btnStop.Enabled := False;
-    btnPause.Enabled := False;
-    btnresume.Enabled := False;
+    frm.btnStart.Visible:=false;
+    frm.btnStop.Visible:=false;
+    frm.btnPause.Visible:=false;
+    frm.btnresume.Visible:=false;
+
+   frm.btnStart.Enabled := True;
+    frm.btnStop.Enabled := False;
+    frm.btnPause.Enabled := False;
+   frm.btnresume.Enabled := False;
+
+    frm.btnStart.Visible:=True;
+    frm.btnStop.Visible:=True;
+    frm.btnPause.Visible:=True;
+    frm.btnresume.Visible:=True;
+
   end;
 
-  procedure TMultiplayer.ClosePlayer1;
+  procedure ClosePlayer1;
   begin
-    btnStart2.Enabled := True;
-    btnStop2.Enabled := False;
-    btnPause2.Enabled := False;
-    btnresume2.Enabled := False;
+    frm.btnStart2.Visible:=false;
+    frm.btnStop2.Visible:=false;
+    frm.btnPause2.Visible:=false;
+    frm.btnresume2.Visible:=false;
+
+    frm.btnStart2.Enabled := True;
+    frm.btnStop2.Enabled := False;
+    frm.btnPause2.Enabled := False;
+    frm.btnresume2.Enabled := False;
+
+    frm.btnStart2.Visible:=True;
+    frm.btnStop2.Visible:=True;
+    frm.btnPause2.Visible:=True;
+    frm.btnresume2.Visible:=True;
   end;
 
-  procedure TMultiplayer.ClosePlayer2;
+  procedure ClosePlayer2;
   begin
-    btnStart3.Enabled := True;
-    btnStop3.Enabled := False;
-    btnPause3.Enabled := False;
-    btnresume3.Enabled := False;
+    frm.btnStart3.Visible:=false;
+    frm.btnStop3.Visible:=false;
+    frm.btnPause3.Visible:=false;
+    frm.btnresume3.Visible:=false;
+
+    frm.btnStart3.Enabled := True;
+    frm.btnStop3.Enabled := False;
+    frm.btnPause3.Enabled := False;
+    frm.btnresume3.Enabled := False;
+
+    frm.btnStart3.Visible:=True;
+    frm.btnStop3.Visible:=True;
+    frm.btnPause3.Visible:=True;
+    frm.btnresume3.Visible:=True;
   end;
 
-  procedure TMultiplayer.ClosePlayer3;
+  procedure ClosePlayer3;
   begin
-    btnStart4.Enabled := True;
-    btnStop4.Enabled := False;
-    btnPause4.Enabled := False;
-    btnresume4.Enabled := False;
+    frm.btnStart4.Visible:=false;
+    frm.btnStop4.Visible:=false;
+    frm.btnPause4.Visible:=false;
+    frm.btnresume4.Visible:=false;
+
+    frm.btnStart4.Enabled := True;
+    frm.btnStop4.Enabled := False;
+    frm.btnPause4.Enabled := False;
+    frm.btnresume4.Enabled := False;
+
+    frm.btnStart4.Visible:=True;
+    frm.btnStop4.Visible:=True;
+    frm.btnPause4.Visible:=True;
+    frm.btnresume4.Visible:=True;
   end;
 
   procedure TMultiplayer.btnStopClick(Sender: TObject);
@@ -611,7 +656,7 @@ var
   procedure TMultiplayer.btnResumeClick(Sender: TObject);
   begin
     uos_Replay(PlayerIndex0);
-   // btnStart.Enabled := False;
+    btnStart.Enabled := False;
     btnStop.Enabled := True;
     btnPause.Enabled := True;
     btnresume.Enabled := False;
@@ -620,7 +665,7 @@ var
   procedure TMultiplayer.btnPauseClick(Sender: TObject);
   begin
     uos_Pause(PlayerIndex0);
-   // btnStart.Enabled := False;
+    btnStart.Enabled := False;
     btnStop.Enabled := True;
     btnPause.Enabled := False;
     btnresume.Enabled := True;
@@ -652,8 +697,9 @@ var
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
+   uos_EndProc(PlayerIndex0,@ClosePlayer0);
 
-  //  btnStart.Enabled := False;
+    btnStart.Enabled := False;
     btnStop.Enabled := True;
     btnpause.Enabled := True;
     btnresume.Enabled := False;
@@ -713,10 +759,12 @@ var
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
-   //  btnStart2.Enabled := False;
+    btnStart2.Enabled := False;
     btnStop2.Enabled := True;
     btnpause2.Enabled := True;
     btnresume2.Enabled := False;
+
+    uos_EndProc(PlayerIndex1,@ClosePlayer1);
 
     uos_Play(PlayerIndex1);
   ////// Ok let start it
@@ -732,7 +780,7 @@ var
   procedure TMultiplayer.btnResumeClick3(Sender: TObject);
   begin
     uos_RePlay(PlayerIndex2);
-    //btnStart3.Enabled := False;
+    btnStart3.Enabled := False;
     btnStop3.Enabled := True;
     btnPause3.Enabled := True;
     btnresume3.Enabled := False;
@@ -741,7 +789,7 @@ var
   procedure TMultiplayer.btnPauseClick3(Sender: TObject);
   begin
     uos_Pause(PlayerIndex2);
-    //btnStart3.Enabled := False;
+    btnStart3.Enabled := False;
     btnStop3.Enabled := True;
     btnPause3.Enabled := False;
     btnresume3.Enabled := True;
@@ -773,11 +821,12 @@ var
   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
+  uos_EndProc(PlayerIndex2,@ClosePlayer2);
 
      uos_Play(PlayerIndex2);
   ////// Ok let start it
 
- //   btnStart3.Enabled := False;
+    btnStart3.Enabled := False;
     btnStop3.Enabled := True;
     btnpause3.Enabled := True;
     btnresume3.Enabled := False;
@@ -794,7 +843,7 @@ var
   procedure TMultiplayer.btnResumeClick4(Sender: TObject);
   begin
      uos_RePlay(PlayerIndex3);
-   // btnStart4.Enabled := False;
+    btnStart4.Enabled := False;
     btnStop4.Enabled := True;
     btnPause4.Enabled := True;
     btnresume4.Enabled := False;
@@ -835,11 +884,12 @@ var
   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
+  uos_EndProc(PlayerIndex3,@ClosePlayer3);
 
      uos_Play(PlayerIndex3);
   ////// Ok let start it
 
- //   btnStart4.Enabled := False;
+    btnStart4.Enabled := False;
     btnStop4.Enabled := True;
     btnpause4.Enabled := True;
     btnresume4.Enabled := False;
@@ -875,8 +925,7 @@ var
   end;
 
   procedure MainProc;
-  var
-    frm: TMultiplayer;
+
   begin
     fpgApplication.Initialize;
     frm := TMultiplayer.Create(nil);

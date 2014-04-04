@@ -84,10 +84,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
 
-    procedure ClosePlayer0;
-    procedure ClosePlayer1;
-    procedure ClosePlayer2;
-    procedure ClosePlayer3;
 
   private
     { private declarations }
@@ -111,32 +107,32 @@ implementation
 
 { TForm1 }
 
-procedure TForm1.ClosePlayer0;
+procedure ClosePlayer0;
 begin
-  button16.Enabled := False;
-  button15.Enabled := False;
-  button3.Enabled := False;
+  form1.button16.Enabled := False;
+  form1.button15.Enabled := False;
+  form1.button3.Enabled := False;
 end;
 
-procedure TForm1.ClosePlayer1;
+procedure ClosePlayer1;
 begin
-  button17.Enabled := False;
-  button18.Enabled := False;
-  button6.Enabled := False;
+  form1.button17.Enabled := False;
+  form1.button18.Enabled := False;
+  form1.button6.Enabled := False;
 end;
 
-procedure TForm1.ClosePlayer2;
+procedure ClosePlayer2;
 begin
-  button19.Enabled := False;
-  button20.Enabled := False;
-  button9.Enabled := False;
+  form1.button19.Enabled := False;
+  form1.button20.Enabled := False;
+  form1.button9.Enabled := False;
 end;
 
-procedure TForm1.ClosePlayer3;
+procedure ClosePlayer3;
 begin
-  button21.Enabled := False;
-  button22.Enabled := False;
-  button12.Enabled := False;
+  form1.button21.Enabled := False;
+  form1.button22.Enabled := False;
+  form1.button12.Enabled := False;
 end;
 
 procedure TForm1.FormActivate(Sender: TObject);
@@ -282,6 +278,8 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
+ uos_EndProc(PlayerIndex3,@ClosePlayer3);
+
  uos_Play(PlayerIndex3);
   ////// Ok let start it
 
@@ -366,6 +364,8 @@ begin
    ////////// FileName : filename of audio file
   //  result : -1 nothing created, otherwise Input Index in array
 
+  uos_EndProc(PlayerIndex0,@ClosePlayer0);
+
    uos_Play(PlayerIndex0);
   ////// Ok let start it
 
@@ -414,6 +414,8 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
+  uos_EndProc(PlayerIndex1,@ClosePlayer1);
+
   uos_Play(PlayerIndex1);
   ////// Ok let start it
 
@@ -460,6 +462,8 @@ begin
   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
+
+  uos_EndProc(PlayerIndex2,@ClosePlayer2);
 
    uos_Play(PlayerIndex2);
   ////// Ok let start it
