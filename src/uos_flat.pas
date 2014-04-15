@@ -1,7 +1,5 @@
 unit uos_flat;
-
 {$DEFINE library}   // uncomment it for building uos library
-
    // This is the "Flat Layer" of uos => for universal procedures.
 
 {*******************************************************************************
@@ -41,10 +39,10 @@ interface
 
 uses
   
-  Classes, ctypes, SysUtils, uos;
+  Classes, ctypes, Math, SysUtils, uos;
 
   type
-   {$IF not DEFINED(Library)}  // ici
+   {$IF not DEFINED(Library)}
   TProc = procedure of object;
    {$else}
   TProc = procedure ;
@@ -159,6 +157,15 @@ procedure uos_EndProc(PlayerIndex: cint32; Proc: TProc);
             //////////// PlayerIndex : Index of a existing Player
             //////////// InIndex : Index of a existing Input
 
+procedure uos_LoopBeginProc(PlayerIndex: cint32; Proc: TProc);
+            ///// Assign the procedure of object to execute  at begin of loop
+            //////////// PlayerIndex : Index of a existing Player
+            //////////// InIndex : Index of a existing Input
+
+procedure uos_LoopEndProc(PlayerIndex: cint32; Proc: TProc);
+            ///// Assign the procedure of object to execute  at end of loop
+            //////////// PlayerIndex : Index of a existing Player
+            //////////// InIndex : Index of a existing Input
 
 procedure uos_LoopProcIn(PlayerIndex: cint32; InIndex: cint32; Proc: TProc);
             ///// Assign the procedure of object to execute inside the loop
@@ -345,8 +352,31 @@ function uos_InputPosition(PlayerIndex: cint32; InputIndex: cint32): cint32;
                      ////////// InputIndex : InputIndex of existing input
                      ////// result : current postion in sample
 
-procedure uos_InputSetLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ; enable : boolean);
-                   ///////// enable/disable level(volume) calculation (default is false/disable)
+procedure uos_InputSetFrameCount(PlayerIndex: cint32; InputIndex: cint32 ; framecount : cint32);
+           ///////// set number of frames to be done. (usefull for recording and level precision)
+
+procedure uos_InputSetLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);
+                 ///////// set level calculation (default is 0)
+                  ////////// InputIndex : InputIndex of existing input
+                          // 0 => no calcul
+                          // 1 => calcul before all DSP procedures.
+                          // 2 => calcul after all DSP procedures.
+                          // 3 => calcul before and after all DSP procedures.
+
+procedure uos_InputSetPositionEnable(PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);
+                 ///////// set position calculation (default is 0)
+                  ////////// InputIndex : InputIndex of existing input
+                          // 0 => no calcul
+                          // 1 => calcul position.
+
+procedure uos_InputSetArrayLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ; levelcalc : cint32);
+                  ///////// set add level calculation in level-array (default is 0)
+                         // 0 => no calcul
+                         // 1 => calcul before all DSP procedures.
+                         // 2 => calcul after all DSP procedures.
+
+function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: LongInt) : TDArFloat;
+
 
 function uos_InputGetLevelLeft(PlayerIndex: cint32; InputIndex: cint32): double;
                      ////////// InputIndex : InputIndex of existing input
@@ -812,13 +842,51 @@ begin
  result := uosPlayers[PlayerIndex].InputPosition(InputIndex) ;
 end;
 
-procedure uos_InputSetLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ; enable : boolean);
-                   ///////// enable/disable level calculation (default is false/disable)
+procedure uos_InputSetFrameCount(PlayerIndex: cint32; InputIndex: cint32 ; framecount : cint32);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
- uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.levelEnable:= enable;
+  uosPlayers[PlayerIndex].InputSetFrameCount(InputIndex, framecount) ;
 end;
+
+procedure uos_InputSetLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);
+                   ///////// set level calculation (default is 0)
+                          // 0 => no calcul
+                          // 1 => calcul before all DSP procedures.
+                          // 2 => calcul after all DSP procedures.
+                          // 3 => calcul before and after all DSP procedures.
+
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+  uosPlayers[PlayerIndex].InputSetLevelEnable(InputIndex, enable) ;
+end;
+
+procedure uos_InputSetPositionEnable(PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);
+                   ///////// set position calculation (default is 0)
+                          // 0 => no calcul
+                          // 1 => calcul position.
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+  uosPlayers[PlayerIndex].InputSetPositionEnable(InputIndex, enable) ;
+end;
+
+procedure uos_InputSetArrayLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ; levelcalc : cint32);
+                  ///////// set add level calculation in level-array (default is 0)
+                         // 0 => no calcul
+                         // 1 => calcul before all DSP procedures.
+                         // 2 => calcul after all DSP procedures.
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+  uosPlayers[PlayerIndex].InputSetArrayLevelEnable(InputIndex, levelcalc) ;
+end;
+
+function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: LongInt) : TDArFloat;
+begin
+   result :=  uosLevelArray[PlayerIndex][InputIndex] ;
+ end;
 
 function uos_InputGetLevelLeft(PlayerIndex: cint32; InputIndex: cint32): double;
                      ////////// InputIndex : InputIndex of existing input
@@ -926,6 +994,21 @@ begin
  uosPlayers[PlayerIndex].EndProc := Proc;
 end;
 
+procedure uos_LoopBeginProc(PlayerIndex: cint32; Proc: TProc );
+                 ///// Assign the procedure of object to execute at begin, before loop
+                 //////////// PlayerIndex : Index of a existing Player
+begin
+  uosPlayers[PlayerIndex].LoopBeginProc := Proc;
+end;
+
+procedure uos_LoopEndProc(PlayerIndex: cint32; Proc: TProc );
+                 ///// Assign the procedure of object to execute at end, after loop
+                //////////// PlayerIndex : Index of a existing Player
+                   //////////// InIndex : Index of a existing Input
+begin
+ uosPlayers[PlayerIndex].LoopEndProc := Proc;
+end;
+
 
 procedure uos_LoopProcIn(PlayerIndex: cint32; InIndex: cint32; Proc: TProc );
                       ///// Assign the procedure of object to execute inside the loop
@@ -1022,6 +1105,7 @@ if PlayerIndex + 1 > length(uosPlayers) then
 begin
  setlength(uosPlayers,PlayerIndex + 1) ;
  setlength(uosPlayersStat,PlayerIndex + 1) ;
+ setlength(uosLevelArray,PlayerIndex + 1) ;
 end;
 
  {$IF ( FPC_FULLVERSION>=20701)or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}

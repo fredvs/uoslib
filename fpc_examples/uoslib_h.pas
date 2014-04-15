@@ -51,336 +51,356 @@ TProc = procedure ;
 
 var
 
- // function uos_GetInfoDeviceStr(infos:PChar) : Longint ;    cdecl;
-  uos_GetInfoDeviceStr: function() : PChar ; cdecl;
+ // function uos_getinfodevicestr(infos:pchar) : longint ;    cdecl;
+  uos_getinfodevicestr: function() : pchar ; cdecl;
 
-  uos_CreatePlayer: procedure(PlayerIndex: LongInt); cdecl;
+  uos_createplayer: procedure(playerindex: longint); cdecl;
 
-  uos_BeginProc: procedure(PlayerIndex: cint32; Proc: TProc); cdecl;
+  uos_beginproc: procedure(playerindex: cint32; proc: tproc); cdecl;
 
-  uos_EndProc: procedure(PlayerIndex: cint32; Proc: TProc); cdecl;
+  uos_endproc: procedure(playerindex: cint32; proc: tproc); cdecl;
 
-  uos_LoopProcIn: procedure(PlayerIndex: cint32; InIndex: cint32; Proc: TProc); cdecl;
+  uos_loopprocin: procedure(playerindex: cint32; inindex: cint32; proc: tproc); cdecl;
 
-  uos_LoopProcOut: procedure(PlayerIndex: cint32; OutIndex: cint32; Proc: TProc); cdecl;
+  uos_loopprocout: procedure(playerindex: cint32; outindex: cint32; proc: tproc); cdecl;
 
-  uos_AddIntoDevOut: function(PlayerIndex: LongInt; Device: LongInt;
-  Latency: CDouble; SampleRate: LongInt; Channels: LongInt;
-  SampleFormat: shortint; FramesCount: LongInt): LongInt; cdecl;
+  uos_loopbeginproc: procedure(playerindex: cint32; outindex: cint32; proc: tproc); cdecl;
 
-  uos_AddIntoDevOutDef: function(PlayerIndex: LongInt): LongInt; cdecl;
+  uos_loopendproc: procedure(playerindex: cint32; outindex: cint32; proc: tproc); cdecl;
 
-  uos_AddFromFile: function(PlayerIndex: LongInt; Filename: Pchar;
-  OutputIndex: LongInt; SampleFormat: shortint; FramesCount: LongInt): LongInt; cdecl;
+  uos_addintodevout: function(playerindex: longint; device: longint;
+  latency: cdouble; samplerate: longint; channels: longint;
+  sampleformat: shortint; framescount: longint): longint; cdecl;
 
-  uos_AddFromFileDef: function(PlayerIndex: LongInt; Filename: Pchar): LongInt; cdecl;
+  uos_addintodevoutdef: function(playerindex: longint): longint; cdecl;
 
-  uos_AddIntoFile: function(PlayerIndex: LongInt; Filename: Pchar; SampleRate: LongInt;
-        Channels: LongInt; SampleFormat: shortint ; FramesCount: LongInt): LongInt; cdecl;
+  uos_addfromfile: function(playerindex: longint; filename: pchar;
+  outputindex: longint; sampleformat: shortint; framescount: longint): longint; cdecl;
 
-  uos_AddIntoFileDef: function(PlayerIndex: LongInt; Filename: PChar): LongInt; cdecl;
+  uos_addfromfiledef: function(playerindex: longint; filename: pchar): longint; cdecl;
 
-  uos_AddFromDevIn: function(PlayerIndex: LongInt; Device: LongInt; Latency: CDouble;
-             SampleRate: LongInt; Channels: LongInt; OutputIndex: LongInt;
-             SampleFormat: shortint; FramesCount : LongInt): LongInt; cdecl;
+  uos_addintofile: function(playerindex: longint; filename: pchar; samplerate: longint;
+        channels: longint; sampleformat: shortint ; framescount: longint): longint; cdecl;
 
-  uos_AddFromDevInDef: function(PlayerIndex: LongInt): LongInt; cdecl;
+  uos_addintofiledef: function(playerindex: longint; filename: pchar): longint; cdecl;
 
-  uos_AddDSPVolumeIn: procedure(PlayerIndex: LongInt; InputIndex: LongInt; VolLeft: double;
-                VolRight: double); cdecl;
+  uos_addfromdevin: function(playerindex: longint; device: longint; latency: cdouble;
+             samplerate: longint; channels: longint; outputindex: longint;
+             sampleformat: shortint; framescount : longint): longint; cdecl;
 
-  uos_AddDSPVolumeOut: procedure(PlayerIndex: LongInt; OutputIndex: LongInt; VolLeft: double;
-                 VolRight: double); cdecl;
+  uos_addfromdevindef: function(playerindex: longint): longint; cdecl;
 
-  uos_SetDSPVolumeIn: procedure(PlayerIndex: LongInt; InputIndex: LongInt;
-                 VolLeft: double; VolRight: double; Enable: boolean); cdecl;
+  uos_adddspvolumein: procedure(playerindex: longint; inputindex: longint; volleft: double;
+                volright: double); cdecl;
 
-  uos_SetDSPVolumeOut: procedure(PlayerIndex: LongInt; OutputIndex: LongInt;
-                 VolLeft: double; VolRight: double; Enable: boolean); cdecl;
+  uos_adddspvolumeout: procedure(playerindex: longint; outputindex: longint; volleft: double;
+                 volright: double); cdecl;
 
-  uos_AddFilterIn: function(PlayerIndex: LongInt; InputIndex: LongInt; LowFrequency: LongInt;
-                    HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
-                    AlsoBuf: boolean; LoopProc: TProc): LongInt; cdecl;
+  uos_setdspvolumein: procedure(playerindex: longint; inputindex: longint;
+                 volleft: double; volright: double; enable: boolean); cdecl;
 
-  uos_SetFilterIn: procedure(PlayerIndex: LongInt; InputIndex: LongInt; FilterIndex: LongInt;
-                    LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
-                    TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc); cdecl;
+  uos_setdspvolumeout: procedure(playerindex: longint; outputindex: longint;
+                 volleft: double; volright: double; enable: boolean); cdecl;
 
-  uos_AddFilterOut: function(PlayerIndex: LongInt; OutputIndex: LongInt; LowFrequency: LongInt;
-                    HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
-                    AlsoBuf: boolean; LoopProc: TProc): LongInt; cdecl;
+  uos_addfilterin: function(playerindex: longint; inputindex: longint; lowfrequency: longint;
+                    highfrequency: longint; gain: cfloat; typefilter: longint;
+                    alsobuf: boolean; loopproc: tproc): longint; cdecl;
 
-  uos_SetFilterOut: procedure(PlayerIndex: LongInt; OutputIndex: LongInt; FilterIndex: LongInt;
-                    LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
-                    TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc); cdecl;
+  uos_setfilterin: procedure(playerindex: longint; inputindex: longint; filterindex: longint;
+                    lowfrequency: longint; highfrequency: longint; gain: cfloat;
+                    typefilter: longint; alsobuf: boolean; enable: boolean; loopproc: tproc); cdecl;
 
-  uos_AddPlugin: function(PlayerIndex: LongInt; PlugName: PChar; SampleRate: LongInt;
-                       Channels: LongInt): LongInt; cdecl;
+  uos_addfilterout: function(playerindex: longint; outputindex: longint; lowfrequency: longint;
+                    highfrequency: longint; gain: cfloat; typefilter: longint;
+                    alsobuf: boolean; loopproc: tproc): longint; cdecl;
 
-  uos_SetPluginSoundTouch: procedure(PlayerIndex: LongInt; PluginIndex: LongInt; Tempo: cfloat;
-                       Pitch: cfloat; Enable: boolean); cdecl;
+  uos_setfilterout: procedure(playerindex: longint; outputindex: longint; filterindex: longint;
+                    lowfrequency: longint; highfrequency: longint; gain: cfloat;
+                    typefilter: longint; alsobuf: boolean; enable: boolean; loopproc: tproc); cdecl;
 
-  uos_GetStatus: function(PlayerIndex: LongInt) : LongInt; cdecl;
+  uos_addplugin: function(playerindex: longint; plugname: pchar; samplerate: longint;
+                       channels: longint): longint; cdecl;
 
-  uos_Seek: procedure(PlayerIndex: LongInt; InputIndex: LongInt; pos: {$if defined(cpu64)} cint64 {$else} cint32 {$endif}); cdecl;
+  uos_setpluginsoundtouch: procedure(playerindex: longint; pluginindex: longint; tempo: cfloat;
+                       pitch: cfloat; enable: boolean); cdecl;
 
-  uos_SeekSeconds: procedure(PlayerIndex: LongInt; InputIndex: LongInt; pos: cfloat); cdecl;
+  uos_getstatus: function(playerindex: longint) : longint; cdecl;
 
-  uos_SeekTime: procedure(PlayerIndex: LongInt; InputIndex: LongInt; pos: TTime); cdecl;
+  uos_seek: procedure(playerindex: longint; inputindex: longint; pos: {$if defined(cpu64)} cint64 {$else} cint32 {$endif}); cdecl;
 
-  uos_InputLength: function(PlayerIndex: LongInt; InputIndex: LongInt): longint; cdecl;
+  uos_seekseconds: procedure(playerindex: longint; inputindex: longint; pos: cfloat); cdecl;
 
-  uos_InputLengthSeconds: function(PlayerIndex: LongInt; InputIndex: LongInt): cfloat; cdecl;
+  uos_seektime: procedure(playerindex: longint; inputindex: longint; pos: ttime); cdecl;
 
-  uos_InputLengthTime: function(PlayerIndex: LongInt; InputIndex: LongInt): TTime; cdecl;
+  uos_inputlength: function(playerindex: longint; inputindex: longint): longint; cdecl;
 
-  uos_InputPosition: function(PlayerIndex: LongInt; InputIndex: LongInt): longint; cdecl;
+  uos_inputlengthseconds: function(playerindex: longint; inputindex: longint): cfloat; cdecl;
 
-  uos_InputPositionSeconds: function(PlayerIndex: LongInt; InputIndex: LongInt): cfloat; cdecl;
+  uos_inputlengthtime: function(playerindex: longint; inputindex: longint): ttime; cdecl;
 
-  uos_InputPositionTime: function(PlayerIndex: LongInt; InputIndex: LongInt): TTime; cdecl;
+  uos_inputposition: function(playerindex: longint; inputindex: longint): longint; cdecl;
 
-  uos_InputSetLevelEnable: procedure(PlayerIndex: LongInt; InputIndex: LongInt; Enable: boolean); cdecl;
+  uos_inputpositionseconds: function(playerindex: longint; inputindex: longint): cfloat; cdecl;
 
-  uos_InputGetLevelLeft: function(PlayerIndex: LongInt; InputIndex: LongInt): double; cdecl;
+  uos_inputpositiontime: function(playerindex: longint; inputindex: longint): ttime; cdecl;
 
-  uos_InputGetLevelRight: function(PlayerIndex: LongInt; InputIndex: LongInt): double; cdecl;
+  uos_inputsetlevelenable: procedure(playerindex: longint; inputindex: longint; enable: boolean); cdecl;
 
-  uos_InputGetSampleRate: function(PlayerIndex: LongInt; InputIndex: LongInt): LongInt; cdecl;
- 
-  uos_InputGetChannels: function(PlayerIndex: LongInt; InputIndex: LongInt): LongInt; cdecl;
+  uos_inputsetpositionenable: procedure(playerindex: longint; inputindex: longint; enable: boolean); cdecl;
 
-  uos_Play: procedure(PlayerIndex: LongInt); cdecl;
+  uos_inputsetarraylevelenable: procedure(playerindex: longint; inputindex: longint; levelcalc : cint32); cdecl;
 
-  uos_RePlay: procedure(PlayerIndex: LongInt); cdecl;
+  // todo => function uos_inputgetarraylevel(playerindex: cint32; inputindex: longint) : tdarfloat;
 
-  uos_Stop: procedure(PlayerIndex: LongInt); cdecl;
 
-  uos_Pause: procedure(PlayerIndex:  LongInt); cdecl;
+  uos_inputgetlevelleft: function(playerindex: longint; inputindex: longint): double; cdecl;
 
-  uos_unloadlibCust: procedure(PortAudio : boolean; SndFile: boolean; Mpg123: boolean; SoundTouch: boolean); cdecl;
+  uos_inputgetlevelright: function(playerindex: longint; inputindex: longint): double; cdecl;
 
-  ///// This functions should not be used, use uos_loadlibs and uos_unloadlibs instead...
-  uos_loadlib: function(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar): LongInt; cdecl;
+  uos_inputgetsamplerate: function(playerindex: longint; inputindex: longint): longint; cdecl;
+
+  uos_inputgetchannels: function(playerindex: longint; inputindex: longint): longint; cdecl;
+
+  uos_play: procedure(playerindex: longint); cdecl;
+
+  uos_replay: procedure(playerindex: longint); cdecl;
+
+  uos_stop: procedure(playerindex: longint); cdecl;
+
+  uos_pause: procedure(playerindex:  longint); cdecl;
+
+  uos_unloadlibcust: procedure(portaudio : boolean; sndfile: boolean; mpg123: boolean; soundtouch: boolean); cdecl;
+
+  ///// this functions should not be used, use uos_loadlibs and uos_unloadlibs instead...
+  uos_loadlib: function(portaudiofilename, sndfilefilename, mpg123filename, soundtouchfilename: pchar): longint; cdecl;
   uos_unloadlib: procedure(); cdecl;
   ////////////////////////
 
-  uos_GetVersion:  function(): LongInt ; cdecl;    /// uos version
+  uos_getversion:  function(): longint ; cdecl;    /// uos version
 
-  LibHandle: TLibHandle = dynlibs.NilHandle; // this will hold our handle for the uoslib
-  ReferenceCounter: LongInt = 0;  // Reference counter
+  libhandle: tlibhandle = dynlibs.nilhandle; // this will hold our handle for the uoslib
+  referencecounter: longint = 0;  // reference counter
 
 
-function uos_IsLoaded: boolean; inline;
-function uos_loadlibs(const uoslibfilename, PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar): boolean;
-// load the all the libraries (If filename = '' => do not load that library)
+function uos_isloaded: boolean; inline;
+function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename, soundtouchfilename: pchar): boolean;
+// load the all the libraries (if filename = '' => do not load that library)
 
 procedure uos_unloadlibs();
 // unload and frees the lib from memory : do not forget to call it before close application.
 
-{ TODO ...
-  uos_BeginProc: procedure(PlayerIndex: LongInt; Proc: TProc); cdecl;
+{ todo ...
+  uos_beginproc: procedure(playerindex: longint; proc: tproc); cdecl;
 
-  uos_EndProc: procedure(PlayerIndex: LongInt; Proc: TProc); cdecl;
+  uos_endproc: procedure(playerindex: longint; proc: tproc); cdecl;
 
-  uos_LoopProcIn: procedure(PlayerIndex: LongInt; InIndex: LongInt; Proc: TProc);  cdecl;
+  uos_loopprocin: procedure(playerindex: longint; inindex: longint; proc: tproc);  cdecl;
 
-  uos_LoopProcOut: procedure(PlayerIndex: LongInt; OutIndex: LongInt; Proc: TProc); cdecl;
+  uos_loopprocout: procedure(playerindex: longint; outindex: longint; proc: tproc); cdecl;
 
-  uos_AddDSPin: function(PlayerIndex: LongInt; InputIndex: LongInt; BeforeProc: TFunc;
-                  AfterProc: TFunc; LoopProc: TProc): LongInt; cdecl;
+  uos_adddspin: function(playerindex: longint; inputindex: longint; beforeproc: tfunc;
+                  afterproc: tfunc; loopproc: tproc): longint; cdecl;
 
-  uos_SetDSPin: procedure(PlayerIndex: LongInt; InputIndex: LongInt; DSPinIndex: LongInt; Enable: boolean); cdecl;
+  uos_setdspin: procedure(playerindex: longint; inputindex: longint; dspinindex: longint; enable: boolean); cdecl;
 
-  uos_AddDSPout: function(PlayerIndex: LongInt; OutputIndex: LongInt; BeforeProc: TFunc;
-                   AfterProc: TFunc; LoopProc: TProc): LongInt; cdecl;
+  uos_adddspout: function(playerindex: longint; outputindex: longint; beforeproc: tfunc;
+                   afterproc: tfunc; loopproc: tproc): longint; cdecl;
 
-  uos_SetDSPout: procedure(PlayerIndex: LongInt; OutputIndex: LongInt; DSPoutIndex: LongInt; Enable: boolean); cdecl;
+  uos_setdspout: procedure(playerindex: longint; outputindex: longint; dspoutindex: longint; enable: boolean); cdecl;
 }
 
 implementation
 
-function uos_IsLoaded: boolean;
+function uos_isloaded: boolean;
 begin
-  Result := (LibHandle <> dynlibs.NilHandle);
+  result := (libhandle <> dynlibs.nilhandle);
 end;
 
-function uos_loadlibs(const uoslibfilename, PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar): boolean;
+function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename, soundtouchfilename: pchar): boolean;
 begin
-  Result := False;
-  if LibHandle <> 0 then
+  result := false;
+  if libhandle <> 0 then
   begin
-    Inc(ReferenceCounter);
-    Result := True;
+    inc(referencecounter);
+    result := true;
   end
   else
   begin
-    if Length(uoslibfilename) = 0 then exit;
-    LibHandle := DynLibs.LoadLibrary(uoslibfilename); // obtain the handle we want
-    if LibHandle <> DynLibs.NilHandle then
+    if length(uoslibfilename) = 0 then exit;
+    libhandle := dynlibs.loadlibrary(uoslibfilename); // obtain the handle we want
+    if libhandle <> dynlibs.nilhandle then
     begin
       try
-        Pointer(uos_loadlib) :=
-          GetProcAddress(LibHandle, 'uos_loadlib');
+        pointer(uos_loadlib) :=
+          getprocaddress(libhandle, 'uos_loadlib');
 
-        Pointer(uos_unloadlib) :=
-          GetProcAddress(LibHandle, 'uos_unloadlib');
+        pointer(uos_unloadlib) :=
+          getprocaddress(libhandle, 'uos_unloadlib');
 
-        Pointer(uos_unloadlibCust) :=
-          GetProcAddress(LibHandle, 'uos_unloadlibCust');
+        pointer(uos_unloadlibcust) :=
+          getprocaddress(libhandle, 'uos_unloadlibcust');
 
-        Pointer(uos_GetInfoDeviceStr) :=
-          GetProcAddress(LibHandle, 'uos_GetInfoDeviceStr');
+        pointer(uos_getinfodevicestr) :=
+          getprocaddress(libhandle, 'uos_getinfodevicestr');
 
-        Pointer(uos_CreatePlayer) :=
-          GetProcAddress(LibHandle, 'uos_CreatePlayer');
+        pointer(uos_createplayer) :=
+          getprocaddress(libhandle, 'uos_createplayer');
 
-        Pointer(uos_AddIntoDevOut) :=
-          GetProcAddress(LibHandle, 'uos_AddIntoDevOut');
+        pointer(uos_addintodevout) :=
+          getprocaddress(libhandle, 'uos_addintodevout');
 
-        Pointer(uos_AddIntoDevOutDef) :=
-          GetProcAddress(LibHandle, 'uos_AddIntoDevOutDef');
+        pointer(uos_addintodevoutdef) :=
+          getprocaddress(libhandle, 'uos_addintodevoutdef');
 
-        Pointer(uos_AddFromFileDef) :=
-          GetProcAddress(LibHandle, 'uos_AddFromFileDef');
+        pointer(uos_addfromfiledef) :=
+          getprocaddress(libhandle, 'uos_addfromfiledef');
 
-        Pointer(uos_AddFromFile) :=
-          GetProcAddress(LibHandle, 'uos_AddFromFile');
+        pointer(uos_addfromfile) :=
+          getprocaddress(libhandle, 'uos_addfromfile');
 
-        Pointer(uos_AddIntoFile) :=
-          GetProcAddress(LibHandle, 'uos_AddIntoFile');
+        pointer(uos_addintofile) :=
+          getprocaddress(libhandle, 'uos_addintofile');
 
-        Pointer(uos_AddIntoFileDef) :=
-          GetProcAddress(LibHandle, 'uos_AddIntoFileDef');
+        pointer(uos_addintofiledef) :=
+          getprocaddress(libhandle, 'uos_addintofiledef');
 
-        Pointer(uos_AddFromDevIn) :=
-          GetProcAddress(LibHandle, 'uos_AddFromDevIn');
+        pointer(uos_addfromdevin) :=
+          getprocaddress(libhandle, 'uos_addfromdevin');
 
-        Pointer(uos_AddFromDevInDef) :=
-         GetProcAddress(LibHandle, 'uos_AddFromDevInDef');
+        pointer(uos_addfromdevindef) :=
+         getprocaddress(libhandle, 'uos_addfromdevindef');
 
-          Pointer(uos_AddDSPVolumeIn) :=
-       GetProcAddress(LibHandle, 'uos_AddDSPVolumeIn');
+          pointer(uos_adddspvolumein) :=
+       getprocaddress(libhandle, 'uos_adddspvolumein');
 
-         Pointer(uos_SetDSPVolumeIn) :=
-          GetProcAddress(LibHandle, 'uos_SetDSPVolumeIn');
+         pointer(uos_setdspvolumein) :=
+          getprocaddress(libhandle, 'uos_setdspvolumein');
 
-          Pointer(uos_AddDSPVolumeOut) :=
-          GetProcAddress(LibHandle, 'uos_AddDSPVolumeOut');
+          pointer(uos_adddspvolumeout) :=
+          getprocaddress(libhandle, 'uos_adddspvolumeout');
 
-         Pointer(uos_SetDSPVolumeOut) :=
-          GetProcAddress(LibHandle, 'uos_SetDSPVolumeOut');
+         pointer(uos_setdspvolumeout) :=
+          getprocaddress(libhandle, 'uos_setdspvolumeout');
 
-        Pointer(uos_AddFilterIn) :=
-          GetProcAddress(LibHandle, 'uos_AddFilterIn');
+        pointer(uos_addfilterin) :=
+          getprocaddress(libhandle, 'uos_addfilterin');
 
-        Pointer(uos_AddFilterOut) :=
-          GetProcAddress(LibHandle, 'uos_AddFilterOut');
+        pointer(uos_addfilterout) :=
+          getprocaddress(libhandle, 'uos_addfilterout');
 
-        Pointer(uos_SetFilterIn) :=
-          GetProcAddress(LibHandle, 'uos_SetFilterIn');
+        pointer(uos_setfilterin) :=
+          getprocaddress(libhandle, 'uos_setfilterin');
 
-        Pointer(uos_SetFilterOut) :=
-          GetProcAddress(LibHandle, 'uos_SetFilterOut');
+        pointer(uos_setfilterout) :=
+          getprocaddress(libhandle, 'uos_setfilterout');
 
-        Pointer(uos_AddPlugin) :=
-          GetProcAddress(LibHandle, 'uos_AddPlugin');
+        pointer(uos_addplugin) :=
+          getprocaddress(libhandle, 'uos_addplugin');
 
-        Pointer(uos_SetPluginSoundTouch) :=
-          GetProcAddress(LibHandle, 'uos_SetPluginSoundTouch');
+        pointer(uos_setpluginsoundtouch) :=
+          getprocaddress(libhandle, 'uos_setpluginsoundtouch');
 
-        Pointer(uos_GetStatus) :=
-          GetProcAddress(LibHandle, 'uos_GetStatus');
+        pointer(uos_getstatus) :=
+          getprocaddress(libhandle, 'uos_getstatus');
 
-         Pointer(uos_Seek) :=
-          GetProcAddress(LibHandle, 'uos_Seek');
+         pointer(uos_seek) :=
+          getprocaddress(libhandle, 'uos_seek');
 
-        Pointer(uos_SeekSeconds) :=
-          GetProcAddress(LibHandle, 'uos_SeekSeconds');
+        pointer(uos_seekseconds) :=
+          getprocaddress(libhandle, 'uos_seekseconds');
 
-        Pointer(uos_SeekTime) :=
-          GetProcAddress(LibHandle, 'uos_SeekTime');
+        pointer(uos_seektime) :=
+          getprocaddress(libhandle, 'uos_seektime');
 
-        Pointer(uos_InputLength) :=
-          GetProcAddress(LibHandle, 'uos_InputLength');
+        pointer(uos_inputlength) :=
+          getprocaddress(libhandle, 'uos_inputlength');
 
-        Pointer(uos_InputLengthSeconds) :=
-          GetProcAddress(LibHandle, 'uos_InputLengthSeconds');
+        pointer(uos_inputlengthseconds) :=
+          getprocaddress(libhandle, 'uos_inputlengthseconds');
 
-        Pointer(uos_InputLengthTime) :=
-          GetProcAddress(LibHandle, 'uos_InputLengthTime');
+        pointer(uos_inputlengthtime) :=
+          getprocaddress(libhandle, 'uos_inputlengthtime');
 
-        Pointer(uos_InputPosition) :=
-          GetProcAddress(LibHandle, 'uos_InputPosition');
+        pointer(uos_inputposition) :=
+          getprocaddress(libhandle, 'uos_inputposition');
 
-        Pointer(uos_InputSetLevelEnable) :=
-          GetProcAddress(LibHandle, 'uos_InputSetLevelEnable');
+        pointer(uos_inputsetlevelenable) :=
+          getprocaddress(libhandle, 'uos_inputsetlevelenable');
 
-        Pointer(uos_InputGetLevelLeft) :=
-          GetProcAddress(LibHandle, 'uos_InputGetLevelLeft');
+         pointer(uos_inputsetpositionenable) :=
+          getprocaddress(libhandle, 'uos_inputsetpositionenable');
 
-        Pointer(uos_InputGetLevelRight) :=
-          GetProcAddress(LibHandle, 'uos_InputGetLevelRight');
+        pointer(uos_inputgetlevelleft) :=
+          getprocaddress(libhandle, 'uos_inputgetlevelleft');
 
-        Pointer(uos_InputPositionSeconds) :=
-          GetProcAddress(LibHandle, 'uos_InputPositionSeconds');
+        pointer(uos_inputgetlevelright) :=
+          getprocaddress(libhandle, 'uos_inputgetlevelright');
 
-        Pointer(uos_InputPositionTime) :=
-          GetProcAddress(LibHandle, 'uos_InputPositionTime');
+        pointer(uos_inputpositionseconds) :=
+          getprocaddress(libhandle, 'uos_inputpositionseconds');
 
-        Pointer(uos_InputGetSampleRate) :=
-          GetProcAddress(LibHandle, 'uos_InputGetSampleRate');
+        pointer(uos_inputpositiontime) :=
+          getprocaddress(libhandle, 'uos_inputpositiontime');
 
-       Pointer(uos_InputGetChannels) :=
-          GetProcAddress(LibHandle, 'uos_InputGetChannels');
+        pointer(uos_inputgetsamplerate) :=
+          getprocaddress(libhandle, 'uos_inputgetsamplerate');
 
-       Pointer(uos_Play) :=
-          GetProcAddress(LibHandle, 'uos_Play');
+       pointer(uos_inputgetchannels) :=
+          getprocaddress(libhandle, 'uos_inputgetchannels');
 
-        Pointer(uos_RePlay) :=
-          GetProcAddress(LibHandle, 'uos_RePlay');
+       pointer(uos_play) :=
+          getprocaddress(libhandle, 'uos_play');
 
-        Pointer(uos_Stop) :=
-          GetProcAddress(LibHandle, 'uos_Stop');
+        pointer(uos_replay) :=
+          getprocaddress(libhandle, 'uos_replay');
 
-        Pointer(uos_Pause) :=
-          GetProcAddress(LibHandle, 'uos_Pause');
+        pointer(uos_stop) :=
+          getprocaddress(libhandle, 'uos_stop');
 
-        Pointer(uos_GetVersion) :=
-          GetProcAddress(LibHandle, 'uos_GetVersion');
+        pointer(uos_pause) :=
+          getprocaddress(libhandle, 'uos_pause');
 
-       Pointer(uos_BeginProc) :=
-          GetProcAddress(LibHandle, 'uos_BeginProc');
+        pointer(uos_getversion) :=
+          getprocaddress(libhandle, 'uos_getversion');
 
-        Pointer(uos_EndProc) :=
-          GetProcAddress(LibHandle, 'uos_EndProc');
+       pointer(uos_beginproc) :=
+          getprocaddress(libhandle, 'uos_beginproc');
 
-        Pointer(uos_LoopProcIn) :=
-          GetProcAddress(LibHandle, 'uos_LoopProcIn');
+        pointer(uos_endproc) :=
+          getprocaddress(libhandle, 'uos_endproc');
 
-        Pointer(uos_LoopProcOut) :=
-          GetProcAddress(LibHandle, 'uos_LoopProcOut');
+        pointer(uos_loopprocin) :=
+          getprocaddress(libhandle, 'uos_loopprocin');
 
-         { TODO ...
-        Pointer(uos_AddDSPIn) :=
-          GetProcAddress(LibHandle, 'uos_AddDSPIn');
+        pointer(uos_loopprocout) :=
+          getprocaddress(libhandle, 'uos_loopprocout');
 
-        Pointer(uos_AddDSPOut) :=
-          GetProcAddress(LibHandle, 'uos_AddDSPOut');
+          pointer(uos_loopbeginproc) :=
+          getprocaddress(libhandle, 'uos_loopbeginproc');
 
-        Pointer(uos_SetDSPin) :=
-          GetProcAddress(LibHandle, 'uos_SetDSPin');
+        pointer(uos_loopendproc) :=
+          getprocaddress(libhandle, 'uos_loopendproc');
 
-        Pointer(uos_SetDSPOut) :=
-          GetProcAddress(LibHandle, 'uos_SetDSPOut');
+         { todo ...
+        pointer(uos_adddspin) :=
+          getprocaddress(libhandle, 'uos_adddspin');
+
+        pointer(uos_adddspout) :=
+          getprocaddress(libhandle, 'uos_adddspout');
+
+        pointer(uos_setdspin) :=
+          getprocaddress(libhandle, 'uos_setdspin');
+
+        pointer(uos_setdspout) :=
+          getprocaddress(libhandle, 'uos_setdspout');
        }
 
-        ReferenceCounter := 1;
+        referencecounter := 1;
 
         ///// load the audio libraries
-        uos_loadlib(pchar(PortAudioFileName), pchar(SndFileFileName), pchar(Mpg123FileName), pchar(SoundTouchFileName));
+        uos_loadlib(pchar(portaudiofilename), pchar(sndfilefilename), pchar(mpg123filename), pchar(soundtouchfilename));
 
-        Result := uos_IsLoaded;
+        result := uos_isloaded;
       except
         uos_unloadlibs();
       end;
