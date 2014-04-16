@@ -30,7 +30,7 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <Units Count="10">
+    <Units Count="11">
       <Unit0>
         <Filename Value="uoslib.pas"/>
         <IsPartOfProject Value="True"/>
@@ -46,7 +46,7 @@
       <Unit1>
         <Filename Value="uos.pas"/>
         <UnitName Value="uos"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="69" Y="167"/>
@@ -70,7 +70,7 @@
       </Unit3>
       <Unit4>
         <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/classes/classesh.inc"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1538"/>
         <CursorPos X="19" Y="1547"/>
@@ -94,7 +94,7 @@
       <Unit7>
         <Filename Value="uoslib_h.pas"/>
         <UnitName Value="uoslib_h"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="50" Y="407"/>
@@ -104,7 +104,7 @@
       <Unit8>
         <Filename Value="uos_flat.pas"/>
         <UnitName Value="uos_flat"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="360"/>
         <CursorPos X="58" Y="368"/>
@@ -114,13 +114,27 @@
       <Unit9>
         <Filename Value="../../fpGUIlib/src/fpgui.pas"/>
         <UnitName Value="fpgui"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="602"/>
         <CursorPos X="27" Y="623"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="../../uos/examples/main_sp_nf.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="main_sp_nf"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="98" Y="329"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit10>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>

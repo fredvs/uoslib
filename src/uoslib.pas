@@ -1,6 +1,6 @@
 library uoslib ;
 
-{$DEFINE Java}     //// uncomment if you want a Java-compatible library
+{.$DEFINE Java}     //// uncomment if you want a Java-compatible library
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -47,7 +47,24 @@ uses
 type
 TProc = procedure ;
 
+ {$IF DEFINED(Java)}
+var
+theclass : JClass;
+ {$endif}
+
  /////////// General public procedure/function
+ 
+{$IF DEFINED(Java)}
+procedure uos_initclass(PEnv: PJNIEnv; Obj: JObject; MClass : JString) ; cdecl;
+var
+MainClass : Pchar ;
+begin
+ MainClass :=  (PEnv^^).GetStringUTFChars(PEnv, MClass, nil);
+ theclass := (PEnv^^).FindClass(PEnv,MainClass) ;
+ (PEnv^^).ReleaseStringUTFChars(PEnv, MClass, nil);
+end;
+
+{$endif} 
 
 function uos_GetVersion({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject {$endif}) : cint32 ; cdecl;
 begin
@@ -628,6 +645,7 @@ end;
 exports
 {$IF DEFINED(Java)}
 uos_loadlib name 'Java_uos_loadlib',
+uos_initclass name 'Java_uos_initclass',
 uos_unloadlib name 'Java_uos_unloadlib',
 uos_unloadlibcust name 'Java_uos_unloadlibcust',
 uos_getinfodevicestr name 'Java_uos_getinfodevicestr',

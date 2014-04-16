@@ -144,9 +144,9 @@ var
 
   uos_inputpositiontime: function(playerindex: longint; inputindex: longint): ttime; cdecl;
 
-  uos_inputsetlevelenable: procedure(playerindex: longint; inputindex: longint; enable: boolean); cdecl;
+  uos_inputsetlevelenable: procedure(playerindex: longint; inputindex: longint; enable: cint32); cdecl;
 
-  uos_inputsetpositionenable: procedure(playerindex: longint; inputindex: longint; enable: boolean); cdecl;
+  uos_inputsetpositionenable: procedure(playerindex: longint; inputindex: longint; enable: cint32); cdecl;
 
   uos_inputsetarraylevelenable: procedure(playerindex: longint; inputindex: longint; levelcalc : cint32); cdecl;
 

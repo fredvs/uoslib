@@ -205,7 +205,7 @@ object Form1: TForm1
     Left = 30
     Height = 14
     Top = 358
-    Width = 24
+    Width = 28
     Alignment = taCenter
     Caption = 'Vol L'
     Font.Height = -11
@@ -287,7 +287,7 @@ object Form1: TForm1
     Left = 86
     Height = 14
     Top = 358
-    Width = 25
+    Width = 30
     Alignment = taCenter
     Caption = 'Vol R'
     Font.Height = -11
@@ -310,14 +310,14 @@ object Form1: TForm1
     ChildSizing.ShrinkVertical = crsScaleChilds
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 68
+    ClientHeight = 69
     ClientWidth = 116
     Color = clSilver
     ParentColor = False
     TabOrder = 13
     object RadioButton1: TRadioButton
       Left = 6
-      Height = 18
+      Height = 19
       Top = 6
       Width = 104
       Caption = 'Float 32 bit'
@@ -328,7 +328,7 @@ object Form1: TForm1
     object RadioButton2: TRadioButton
       Left = 6
       Height = 19
-      Top = 24
+      Top = 25
       Width = 104
       Caption = 'Int 32 bit'
       TabOrder = 1
@@ -336,7 +336,7 @@ object Form1: TForm1
     object RadioButton3: TRadioButton
       Left = 6
       Height = 19
-      Top = 43
+      Top = 44
       Width = 104
       Caption = 'Int 16 bit'
       TabOrder = 2
@@ -346,7 +346,7 @@ object Form1: TForm1
     Left = 314
     Height = 15
     Top = 262
-    Width = 63
+    Width = 84
     Caption = '00:00:00.000'
     ParentColor = False
   end
@@ -354,7 +354,7 @@ object Form1: TForm1
     Left = 214
     Height = 15
     Top = 262
-    Width = 63
+    Width = 84
     Caption = '00:00:00.000'
     ParentColor = False
   end
@@ -362,7 +362,7 @@ object Form1: TForm1
     Left = 302
     Height = 15
     Top = 262
-    Width = 5
+    Width = 4
     Caption = '/'
     ParentColor = False
   end
@@ -404,9 +404,9 @@ object Form1: TForm1
   end
   object CheckBox2: TCheckBox
     Left = 274
-    Height = 19
+    Height = 24
     Top = 278
-    Width = 163
+    Width = 186
     Caption = 'Enable SoundTouch Plugin'
     OnChange = ChangePlugSet
     TabOrder = 15
@@ -424,7 +424,7 @@ object Form1: TForm1
     Left = 280
     Height = 15
     Top = 314
-    Width = 59
+    Width = 67
     Caption = 'Tempo: 1.0'
     ParentColor = False
   end
@@ -432,7 +432,7 @@ object Form1: TForm1
     Left = 396
     Height = 15
     Top = 314
-    Width = 44
+    Width = 55
     Caption = 'Rate: 1.0'
     ParentColor = False
   end

@@ -55,7 +55,7 @@ var
 
   procedure TDevicesInfos.CheckInfos();
   begin
-  memo1.Text := uos_GetInfoDeviceStr();
+  memo1.Text := uos_getinfodevicestr();
   end;
 
   procedure TDevicesInfos.CloseClick(Sender: TObject);
@@ -68,7 +68,7 @@ var
    begin
       // Load the library
   // function uos_LoadLib(uoslibFileName: Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
-   if uos_LoadLibs(Pchar(uoslibFilename), Pchar(FilenameEdit1.FileName), nil, nil, nil) then
+   if uos_loadlibs(Pchar(uoslibFilename), Pchar(FilenameEdit1.FileName), nil, nil, nil) then
       begin
       hide;
       Height := 385;
@@ -77,7 +77,7 @@ var
       FilenameEdit1.ReadOnly := True;
       UpdateWindowPosition;
       btnLoad.Text := 'PortAudio library is loaded...';
-      CheckInfos();
+      checkinfos();
       WindowPosition := wpScreenCenter;
       Show;
     end;
@@ -178,10 +178,10 @@ var
     Height := 157;
              {$IFDEF Windows}
      {$if defined(cpu64)}
-      uoslibfilename  := ordir + 'lib\Windows\64bit\Libuos-64.dll';
+      uoslibfilename  := ordir + 'uoslib.dll';
     FilenameEdit1.FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
 {$else}
-   uoslibfilename  := ordir + 'lib\Windows\32bit\Libuos-32.dll';
+   uoslibfilename  := ordir + 'uoslib.dll';
     FilenameEdit1.FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
    {$endif}
 
@@ -196,10 +196,10 @@ var
 
    {$IFDEF linux}
     {$if defined(cpu64)}
-      uoslibfilename  := ordir + 'lib/Linux/64bit/libuos-64.so';
+     uoslibfilename  := ordir + 'libuoslib.so';
     FilenameEdit1.FileName := ordir + '/lib/Linux/64bit/LibPortaudio-64.so';
 {$else}
-     uoslibfilename  := ordir + 'lib/Linux/32bit/libuos-32.so';
+     uoslibfilename  := ordir + 'libuoslib.so';
     FilenameEdit1.FileName := ordir + '/lib/Linux/32bit/LibPortaudio-32.so';
 {$endif}
 

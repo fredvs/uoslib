@@ -40,7 +40,7 @@
       <Unit0>
         <Filename Value="simpleplayer_fpGUI.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="simpleplayer_fpGUI"/>
+        <UnitName Value="simpleplayer_fpgui"/>
       </Unit0>
     </Units>
   </ProjectOptions>
