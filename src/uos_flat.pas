@@ -364,7 +364,7 @@ procedure uos_InputSetLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ; enab
                           // 3 => calcul before and after all DSP procedures.
 
 procedure uos_InputSetPositionEnable(PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);
-                 ///////// set position calculation (default is 0)
+                 ///////// set position calculation (default is 1)
                   ////////// InputIndex : InputIndex of existing input
                           // 0 => no calcul
                           // 1 => calcul position.
@@ -1107,6 +1107,7 @@ begin
  setlength(uosPlayersStat,PlayerIndex + 1) ;
  setlength(uosLevelArray,PlayerIndex + 1) ;
 end;
+       if uosPlayers[PlayerIndex] <> nil then uosPlayers[PlayerIndex].Terminate;
 
  {$IF ( FPC_FULLVERSION>=20701)or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
      uosPlayers[PlayerIndex] := Tuos_Player.Create(true);
@@ -1125,4 +1126,4 @@ end;
 end;
 
 
-end.
+end.

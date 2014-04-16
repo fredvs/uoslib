@@ -1,6 +1,6 @@
 unit uos;
 {$DEFINE library}   // uncomment it for building uos library
-{$DEFINE ConsoleApp} // if FPC version < 2.7.1 uncomment it for console application
+{.$DEFINE ConsoleApp} // if FPC version < 2.7.1 uncomment it for console application
 
 {*******************************************************************************
 *                  United Openlibraries of Sound ( uos )                       *
@@ -65,7 +65,7 @@ uses
   uos_LibSndFile, uos_Mpg123, uos_soundtouch;
 
 const
-  uos_version : LongInt = 130140410 ;
+  uos_version : LongInt = 130140416 ;
 
 type
   TDArFloat = array of cfloat;
@@ -2612,12 +2612,12 @@ begin
 
    end;
 
-  end;   //////////////// end for low(StreamIn[x] to high(StreamIn[x]
+  end;   //////////////// end for low(StreamIn[x]) to high(StreamIn[x])
 
    ////////////////// Seeking if StreamIn is terminated
    status := 0 ;
     for x := 0 to high(StreamIn) do
-    if (StreamIn[x].Data.Status) <> cint(0) then status := (StreamIn[x].Data.Status);
+    if (StreamIn[x].Data.Status) <> 0 then status := StreamIn[x].Data.Status ;
 
     RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
     RTLeventSetEvent(evPause);
@@ -2991,13 +2991,11 @@ end;
 
 procedure Tuos_Init.unloadlib;
 begin
-
   Sf_Unload();
   Mp_Unload();
   Pa_Unload();
   ST_Unload();
- Set8087CW(old8087cw);
-
+  Set8087CW(old8087cw);
 end;
 
 function Tuos_Init.InitLib(): LongInt;
@@ -3160,7 +3158,7 @@ begin
 end;
 
 procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch: boolean);
-                    ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
+                    ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
  uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, SoundTouch) ;
 end;
@@ -3276,4 +3274,4 @@ begin
   Plug_ST_FileName := nil; // Plugin SoundTouch
 end;
 
-end.
+end.
