@@ -123,12 +123,12 @@ begin
   uos_logo();
             {$IFDEF Windows}
      {$if defined(cpu64)}
-      uoslibfilename  := ordir + 'lib\Windows\64bit\Libuos-64.dll';
+      uoslibfilename  := ordir + 'libuos.dll';
   Edit1.Text := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
   Edit2.Text := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
   Edit3.Text := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
    {$else}
-    uoslibfilename  := ordir + 'lib\Windows\32bit\Libuos-32.dll';
+    uoslibfilename  := ordir + 'libuos.dll';
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
@@ -148,18 +148,18 @@ begin
 
    {$IFDEF linux}
     {$if defined(cpu64)}
-  uoslibfilename  := ordir + 'lib/Linux/64bit/libuos-64.so';
+  uoslibfilename  := ordir + 'libuoslib.so';
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   {$else}
 
-   uoslibfilename  := ordir + 'lib/Linux/32bit/libuos-32.so';
+   uoslibfilename  := ordir + 'libuoslib.so';
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
   {$endif}
-  Edit4.Text := ordir + 'sound/test.mp3';
+  Edit4.Text := ordir + 'sound/test.ogg';
             {$ENDIF}
 
   opendialog1.Initialdir := application.Location + 'sound';
@@ -247,7 +247,7 @@ begin
     form1.Position := poScreenCenter;
     form1.Show;
   end
-  else MessageDlg( 'A library do not load...', mtWarning, [mbYes], 0);
+  else MessageDlg( 'A library does not load...', mtWarning, [mbYes], 0);
 
 end;
 
@@ -369,6 +369,9 @@ begin
     EqGain := TrackBar3.Position div 100;
   uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex3, -1, -1, EqGain, -1, True,
     checkbox1.Checked, nil);
+
+  /////// procedure to execute when stream is terminated
+  uos_EndProc(PlayerIndex1, @ClosePlayer1);
 
   uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
 

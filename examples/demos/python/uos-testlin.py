@@ -10,7 +10,7 @@ dll.uos_loadlib(di + '/lib/Linux/64bit/LibPortaudio-64.so', di + '/lib/Linux/64b
 print 'ok load all other libraries'
 dll.uos_createplayer(0)
 print 'ok CreatePlayer'
-dll.uos_addfromfiledef(0, di + '/sound/test.flac')
+dll.uos_addfromfiledef(0, di + '/sound/test.ogg')
 print 'ok AddFromFile'
 dll.uos_addintodevoutdef(0)
 print 'ok AddIntoDevOut'

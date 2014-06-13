@@ -141,6 +141,7 @@ var
 
   procedure TFilterplayer.ClosePlayer1;
   begin
+    fpgapplication.ProcessMessages;
     radiobutton1.Enabled := True;
     radiobutton2.Enabled := True;
     radiobutton3.Enabled := True;
@@ -149,6 +150,7 @@ var
     btnStop.Enabled := False;
     btnPause.Enabled := False;
     btnresume.Enabled := False;
+     fpgapplication.ProcessMessages;
    end;
 
   procedure TFilterplayer.btnStopClick(Sender: TObject);
@@ -228,16 +230,17 @@ var
   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
   ////////// Enable :  Filter enabled
 
+  /////// procedure to execute when stream is terminated
+  // uos_EndProc(PlayerIndex1, @ClosePlayer1);
 
-  uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
-
- // btnStart.Enabled := False;
-    btnPause.Enabled := True;
+   btnPause.Enabled := True;
     btnResume.Enabled := False;
     btnStop.Enabled := True;
     TrackBar1proc;
     TrackBar2proc;
     TrackBar3proc;
+    uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
+
 
   end;
 
@@ -715,12 +718,12 @@ var
     Height := 157;
                   {$IFDEF Windows}
      {$if defined(cpu64)}
-      uoslibfilename  := ordir + 'lib\Windows\64bit\Libuos-64.dll';
+      uoslibfilename  := ordir + 'libuos.dll';
     FilenameEdit1.FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     FilenameEdit2.FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
    {$else}
-      uoslibfilename  := ordir + 'lib\Windows\32bit\Libuos-32.dll';
+      uoslibfilename  := ordir + 'libuos.dll';
     FilenameEdit1.FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     FilenameEdit2.FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
@@ -740,17 +743,17 @@ var
 
    {$IFDEF linux}
     {$if defined(cpu64)}
-     uoslibfilename  := ordir + 'lib/Linux/64bit/libuos-64.so';
+     uoslibfilename  := ordir + 'libuoslib.so';
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
    {$else}
-     uoslibfilename  := ordir + 'lib/Linux/32bit/libuos-32.so';
+     uoslibfilename  := ordir + 'libuoslib.so';
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
    {$endif}
-    FilenameEdit4.FileName := ordir + 'sound/test.mp3';
+    FilenameEdit4.FileName := ordir + 'sound/test.ogg';
             {$ENDIF}
     FilenameEdit4.Initialdir := ordir + 'sound';
     FilenameEdit1.Initialdir := ordir + 'lib';

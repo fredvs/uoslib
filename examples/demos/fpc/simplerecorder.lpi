@@ -154,8 +154,8 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="245"/>
-        <CursorPos X="65" Y="252"/>
+        <TopLine Value="211"/>
+        <CursorPos X="40" Y="225"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>

@@ -86,8 +86,8 @@ procedure uos_logo();
 var
   form1: tform1;
   bufferbmp: tbitmap;
-  playerindex1: cardinal;
-  out1index, in1index, dsp1index, plugin1index: cardinal;
+  playerindex1: integer;
+  out1index, in1index, dsp1index, plugin1index: integer;
   uoslibfilename : string ;
 
 implementation
@@ -157,13 +157,13 @@ begin
              {$ifdef windows}
      {$if defined(cpu64)}
   uoslibfilename  := ordir + 'uoslib.dll';
-  edit1.text := ordir + 'lib\windows\64bit\libportaudio-64.dll';
+  edit1.text := ordir + 'lib\windows\64bit\LibPortaudio-64.dll';
   edit2.text := ordir + 'lib\windows\64bit\libsndfile-64.dll';
   edit3.text := ordir + 'lib\windows\64bit\libmpg123-64.dll';
   edit5.text := ordir + 'lib\windows\64bit\libsoundtouch-64.dll';
 {$else}
    uoslibfilename  := ordir + 'uoslib.dll';
-  edit1.text := ordir + 'lib\windows\32bit\libportaudio-32.dll';
+  edit1.text := ordir + 'lib\windows\32bit\LibPortaudio-32.dll';
   edit2.text := ordir + 'lib\windows\32bit\libsndfile-32.dll';
   edit3.text := ordir + 'lib\windows\32bit\libmpg123-32.dll';
   edit5.text := ordir + 'lib\windows\32bit\libsoundtouch-32.dll';
@@ -185,16 +185,16 @@ begin
    {$ifdef linux}
     {$if defined(cpu64)}
     uoslibfilename  := ordir + 'libuoslib.so';
-  edit1.text := ordir + 'lib/linux/64bit/libportaudio-64.so';
-  edit2.text := ordir + 'lib/linux/64bit/libsndfile-64.so';
-  edit3.text := ordir + 'lib/linux/64bit/libmpg123-64.so';
-  edit5.text := ordir + 'lib/linux/64bit/libsoundtouch-64.so';
+     Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
+     Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
+     Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+ Edit5.Text := ordir + 'lib/Linux/64bit/libSoundTouch-64.so';
 {$else}
   uoslibfilename  := ordir + 'libuoslib.so';
-  edit1.text := ordir + 'lib/linux/32bit/libportaudio-32.so';
-  edit2.text := ordir + 'lib/linux/32bit/libsndfile-32.so';
-  edit3.text := ordir + 'lib/linux/32bit/libmpg123-32.so';
-  edit5.text := ordir + 'lib/linux/32bit/libsoundtouch-32.so';
+  edit1.text := ordir + 'lib/linux/32bit/LibPortaudio-32.so';
+  edit2.text := ordir + 'lib/linux/32bit/LibSndFile-32.so';
+  edit3.text := ordir + 'lib/linux/32bit/LibMpg123-32.so';
+  edit5.text := ordir + 'lib/linux/32bit/LibSoundTouch-32.so';
 {$endif}
   edit4.text := ordir + 'sound/test.mp3';
             {$endif}
@@ -220,15 +220,14 @@ end;
 procedure tform1.timer1timer(sender: tobject);
 begin
   timer1.enabled:=false;
-   if uos_getstatus(playerindex1) = 1 then
+
+   uos_checksynchro() ;
+
+ if uos_getstatus(playerindex1) = 1 then
    begin
-  loopprocplayer1;
-  timer1.enabled:=true;
-    end
-   else if uos_getstatus(playerindex1) = 0 then
-   begin
-     closeplayer1 ;
-   end;
+ loopprocplayer1;
+ timer1.enabled:=true;
+   end else  application.ProcessMessages;
 end;
 
 procedure tform1.trackbar1change(sender: tobject);
@@ -258,7 +257,6 @@ begin
   // load the libraries
   // function uos_loadlib(portaudiofilename: string; sndfilefilename: string; mpg123filename: string; soundtouchfilename: string) : integer;
   // you may load one or more libraries . when you want... :
-
 if uos_loadlibs(pchar(uoslibfilename), pchar(edit1.text), pchar(edit2.text), pchar(edit3.text), pchar(edit5.text)) then
   begin
     hide;
@@ -273,7 +271,7 @@ if uos_loadlibs(pchar(uoslibfilename), pchar(edit1.text), pchar(edit2.text), pch
     position := poscreencenter;
     caption := 'simple player.    uos version ' + inttostr(uos_getversion());
     show;
-  end;
+  end else MessageDlg('A Library does not load...', mtWarning, [mbYes], 0);
 end;
 
 procedure tform1.button5click(sender: tobject);
@@ -321,15 +319,13 @@ begin
 
     radiogroup1.enabled := false;
 
-    uos_createplayer(playerindex1);
-    //// create the player.
+    uos_createplayer(PlayerIndex1);
+       //// create the player.
     //// playerindex : from 0 to what your computer can do !
     //// if playerindex exists already, it will be overwriten...
 
-      // in1index := uos_addfromfile(playerindex1, edit4.text);
-    //// add input from audio file with default parameters
-    in1index := uos_addfromfile(playerindex1, pchar(edit4.text), -1, samformat, -1);
-    //// add input from audio file with custom parameters
+   in1index := uos_addfromfile(playerindex1, pchar(edit4.text), -1, samformat, -1);
+        //// add input from audio file with custom parameters
     ////////// filename : filename of audio file
     //////////// playerindex : index of a existing player
     ////////// outputindex : outputindex of existing output // -1 : all output, -2: no output, other integer : existing output)
@@ -337,11 +333,8 @@ begin
     //////////// framescount : default : -1 (65536)
     //  result : -1 nothing created, otherwise input index in array
 
-
-    // out1index := uos_addintodevout(playerindex1) ;
-    //// add a output into device with default parameters
-    out1index := uos_addintodevout(playerindex1, -1, -1,  uos_inputgetsamplerate(playerindex1,in1index) , -1, samformat, -1);
-    //// add a output into device with custom parameters
+   Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, samformat, -1);
+       //// add a output into device with custom parameters
     //////////// playerindex : index of a existing player
     //////////// device ( -1 is default output device )
     //////////// latency  ( -1 is latency suggested ) )
@@ -351,19 +344,19 @@ begin
     //////////// framescount : default : -1 (65536)
     //  result : -1 nothing created, otherwise output index in array
 
-      uos_inputsetlevelenable(playerindex1, in1index, 2) ;
+     uos_inputsetlevelenable(PlayerIndex1, in1index, 2) ;
     ///// set calculation of level/volume to true (usefull for showvolume procedure)
 
-       uos_inputsetpositionenable(playerindex1, in1index, 1) ;
+       uos_inputsetpositionenable(PlayerIndex1, in1index, 1) ;
 
-    uos_adddspvolumein(playerindex1, in1index, 1, 1);
+          uos_adddspvolumein(PlayerIndex1, in1index, 1, 1);
     ///// dsp volume changer
     ////////// playerindex1 : index of a existing player
     ////////// in1index : inputindex of a existing input
     ////////// volleft : left volume  ( from 0 to 1 => gain > 1 )
     ////////// volright : right volume
 
-    uos_setdspvolumein(playerindex1, in1index, trackbar1.position / 100,
+       uos_setdspvolumein(playerindex1, in1index, trackbar1.position / 100,
       trackbar3.position / 100, true); /// set volume
     ////////// playerindex1 : index of a existing player
     ////////// in1index : inputindex of a existing input
@@ -373,6 +366,7 @@ begin
 
     plugin1index := uos_addplugin(playerindex1, 'soundtouch', -1, -1);
     ///// add soundtouch plugin with default samplerate(44100) / channels(2 = stereo)
+
 
     changeplugset(self); //// change plugin settings
 
@@ -393,13 +387,16 @@ begin
     button6.enabled := true;
     button5.enabled := true;
 
-    application.processmessages;
+    /////// procedure to execute when stream is terminated
+    uos_EndProc(PlayerIndex1, @ClosePlayer1);
+
+     application.processmessages;
 
     uos_play(playerindex1);  /////// everything is ready, here we are, lets play it...
     timer1.enabled:=true;
   end
   else
-    messagedlg(edit4.text + ' do not exist...', mtwarning, [mbyes], 0);
+    messagedlg(edit4.text + ' does not exist...', mtwarning, [mbyes], 0);
 
 end;
 

@@ -91,11 +91,11 @@ begin
   uos_logo();
       {$IFDEF Windows}
      {$if defined(cpu64)}
-      uoslibfilename  := application.Location + 'lib\Windows\64bit\Libuos-64.dll';
+      uoslibfilename  := application.Location + 'libuos.dll';
   edit1.Text := application.Location + 'lib\Windows\64bit\LibPortaudio-64.dll';
   edit2.Text := application.Location + 'lib\Windows\64bit\LibSndFile-64.dll';
 {$else}
-    uoslibfilename  := application.Location + 'lib\Windows\32bit\Libuos-32.dll';
+    uoslibfilename  := application.Location + 'libuos.dll';
   edit1.Text := application.Location + 'lib\Windows\32bit\LibPortaudio-32.dll';
   edit2.Text := application.Location + 'lib\Windows\32bit\LibSndFile-32.dll';
    {$endif}
@@ -113,11 +113,11 @@ begin
 
    {$IFDEF linux}
     {$if defined(cpu64)}
-     uoslibfilename  := application.Location + 'lib/Linux/64bit/libuos-64.so';
+     uoslibfilename  := application.Location + 'libuoslib.so';
   edit1.Text := application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
   edit2.Text := application.Location + 'lib/Linux/64bit/LibSndFile-64.so';
 {$else}
-    uoslibfilename  := application.Location + 'lib/Linux/32bit/libuos-32.so';
+    uoslibfilename  := application.Location + 'libuoslib.so';
   edit1.Text := application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
   edit2.Text := application.Location + 'lib/Linux/32bit/LibSndFile-64.so';
 {$endif}
@@ -146,7 +146,7 @@ begin
     form1.Height := 318;
     form1.Position := poScreenCenter;
     form1.Show;
-  end else  MessageDlg( 'A library do not load...', mtWarning, [mbYes], 0);
+  end else  MessageDlg( 'A library does not load...', mtWarning, [mbYes], 0);
 
 end;
 

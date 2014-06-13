@@ -1,5 +1,7 @@
 unit uos_flat;
-{$DEFINE library}   // uncomment it for building uos library
+{$DEFINE library}   // uncomment it for building uos library (native and java)
+{.$DEFINE java}   // uncomment it for building uos java library
+
    // This is the "Flat Layer" of uos => for universal procedures.
 
 {*******************************************************************************
@@ -39,14 +41,22 @@ interface
 
 uses
   
-  Classes, ctypes, Math, SysUtils, uos;
+  Classes,
+
+   {$IF DEFINED(Java)}
+   uos_jni,
+   {$endif}
+
+  ctypes, SysUtils, uos;
 
   type
-   {$IF not DEFINED(Library)}
-  TProc = procedure of object;
-   {$else}
-  TProc = procedure ;
+
+   {$if DEFINED(java)}
+  TProc = JMethodID ;
+    {$else}
+ TProc = procedure of object;
     {$endif}
+
   type
   TDArFloat = array of cfloat;
   type
@@ -64,7 +74,7 @@ uses
 
 procedure uos_GetInfoDevice();
 
-function uos_GetInfoDeviceStr() : Pchar ;
+function uos_GetInfoDeviceStr() : Pansichar ;
 
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar) : LongInt;
         ////// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
@@ -1068,8 +1078,7 @@ uosLoadResult:= uos.uosLoadResult;
 end;
 
 procedure uos_GetInfoDevice();
-var
-x : integer = 0;
+
 begin
 uos.uos_GetInfoDevice();
 setlength(uosDeviceInfos,length(uos.uosDeviceInfos));
@@ -1126,4 +1135,4 @@ end;
 end;
 
 
-end.
+end.

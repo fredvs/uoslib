@@ -4,7 +4,7 @@ program simpleplayer;
  {$define usecthreads}
 
 uses
-  //  cmem,    // uncoment it if uoslib was compiled with cmem
+ // cmem,    // uncoment it if uoslib was compiled with cmem
   {$ifdef unix} {$ifdef usecthreads}
   cthreads,
   cwstring, {$endif} {$endif}
@@ -15,7 +15,7 @@ uses
 {$r *.res}
 
 begin
-  application.title := 'simpleplayer';
+  Application.Title:='SimplePlayer';
   application.initialize;
   application.createform(tform1, form1);
   application.run;

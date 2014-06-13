@@ -154,8 +154,8 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="288"/>
-        <CursorPos X="62" Y="293"/>
+        <TopLine Value="364"/>
+        <CursorPos X="44" Y="370"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -444,8 +444,8 @@ install:
         <Filename Value="main_sp.pas"/>
         <UnitName Value="main_sp"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="375"/>
-        <CursorPos X="9" Y="375"/>
+        <TopLine Value="389"/>
+        <CursorPos X="5" Y="390"/>
         <UsageCount Value="11"/>
       </Unit36>
       <Unit37>

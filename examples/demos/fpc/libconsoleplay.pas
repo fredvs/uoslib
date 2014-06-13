@@ -40,11 +40,11 @@ var
 
           {$IFDEF Windows}
      {$if defined(cpu64)}
-    uoslib_FileName := ordir + 'lib\Windows\64bit\libuos-64.dll';
+    uoslib_FileName := ordir + 'libuos.dll';
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     SF_FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
 {$else}
-   uoslib_FileName := ordir + 'lib\Windows\32bit\libuos-32.dll';
+   uoslib_FileName := ordir + 'libuos.dll';
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     SF_FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
    {$endif}
@@ -53,11 +53,11 @@ var
 
  {$IFDEF linux}
     {$if defined(cpu64)}
-     uoslib_FileName := ordir + 'lib/Linux/64bit/libuos-64.so';
+     uoslib_FileName := ordir + 'libuoslib.so';
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     {$else}
-    uoslib_FileName := ordir + 'lib/Linux/32bit/libuos-32.so';
+    uoslib_FileName := ordir + 'libuoslib.so';
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
 {$endif}

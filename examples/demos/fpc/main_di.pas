@@ -59,10 +59,10 @@ begin
   uos_logo();
       {$IFDEF Windows}
      {$if defined(cpu64)}
-      uoslibfilename  := application.Location + 'lib\Windows\64bit\Libuos-64.dll';
+      uoslibfilename  := application.Location + 'libuos.dll';
   edit1.Text := application.Location + 'lib\Windows\64bit\LibPortaudio-64.dll';
 {$else}
-    uoslibfilename  := application.Location + 'lib\Windows\32bit\Libuos-32.dll';
+    uoslibfilename  := application.Location + 'libuos.dll';
   edit1.Text := application.Location + 'lib\Windows\32bit\LibPortaudio-32.dll';
    {$endif}
  {$ENDIF}
@@ -76,10 +76,10 @@ begin
 
    {$IFDEF linux}
     {$if defined(cpu64)}
-     uoslibfilename  := application.Location + 'lib/Linux/64bit/libuos-64.so';
+     uoslibfilename  := application.Location + 'libuoslib.so';
   edit1.Text := application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
 {$else}
-   uoslibfilename  := application.Location + 'lib/Linux/32bit/libuos-32.so';
+ uoslibfilename  := application.Location + 'libuoslib.so';
   edit1.Text := application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
 {$endif}
 

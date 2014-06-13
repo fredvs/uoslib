@@ -247,7 +247,7 @@ object Form1: TForm1
     Left = 24
     Height = 24
     Top = 252
-    Width = 126
+    Width = 129
     Caption = 'Enable Equalizer'
     Checked = True
     OnChange = CheckBox1Change
@@ -405,7 +405,7 @@ object Form1: TForm1
     Left = 388
     Height = 14
     Top = 152
-    Width = 87
+    Width = 86
     Alignment = taCenter
     Caption = 'High Frequency'
     Font.Height = -11
@@ -425,7 +425,7 @@ object Form1: TForm1
     Left = 388
     Height = 14
     Top = 198
-    Width = 84
+    Width = 83
     Alignment = taCenter
     Caption = 'Low Frequency'
     Font.Height = -11
@@ -437,7 +437,7 @@ object Form1: TForm1
     Left = 374
     Height = 24
     Top = 246
-    Width = 100
+    Width = 103
     Caption = 'Enable Filter'
     OnChange = RadioButton1Change
     TabOrder = 17

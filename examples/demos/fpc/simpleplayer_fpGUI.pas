@@ -4,7 +4,7 @@ program simpleplayer_fpgui;  /// library version
   {$define usecthreads}
 
 uses
-  cmem,    // uncoment it if uoslib was compiled with cmem
+ // cmem,    // uncoment it if uoslib was compiled with cmem
    {$ifdef unix} {$ifdef usecthreads}
   cthreads,
   cwstring, {$endif} {$endif}
@@ -83,6 +83,7 @@ type
      procedure loopprocplayer1(sender: tobject);
     procedure showposition;
     procedure showlevel;
+    procedure closeplayer1;
     procedure volumechange(sender: tobject; pos: integer);
     procedure changeplugset(sender: tobject);
     procedure trackchangeplugset(sender: tobject; pos: integer);
@@ -238,7 +239,7 @@ procedure tsimpleplayer.btncloseclick(sender: tobject; var closeit :tcloseaction
     end;
   end;
 
-  procedure closeplayer1;
+  procedure tsimpleplayer.closeplayer1;
   begin
     with frm do begin
   timersynchro.enabled:=false;
@@ -420,16 +421,15 @@ procedure tsimpleplayer.btncloseclick(sender: tobject; var closeit :tcloseaction
 procedure tsimpleplayer.loopprocplayer1(sender: tobject);
 begin
   timersynchro.enabled:=false;
+
+  uos_checksynchro() ;
+
   if uos_getstatus(playerindex1) = 1 then
-  begin
- showposition;
- showlevel ;
+   begin
+     showposition;
+     showlevel;
  timersynchro.enabled:=true;
-   end
-  else if uos_getstatus(playerindex1) = 0 then
-  begin
-    closeplayer1 ;
-  end;
+   end else  fpgapplication.ProcessMessages;
 end;
 
   procedure tsimpleplayer.aftercreate;
@@ -881,16 +881,16 @@ end;
              {$ifdef windows}
      {$if defined(cpu64)}
        uoslibfilename  := ordir + 'uoslib.dll';
-    filenameedit1.filename := ordir + 'lib\windows\64bit\libportaudio-64.dll';
-    filenameedit2.filename := ordir + 'lib\windows\64bit\libsndfile-64.dll';
-    filenameedit3.filename := ordir + 'lib\windows\64bit\libmpg123-64.dll';
-    filenameedit5.filename := ordir + 'lib\windows\64bit\libsoundtouch-64.dll';
+    filenameedit1.filename := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
+    filenameedit2.filename := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
+    filenameedit3.filename := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
+    filenameedit5.filename := ordir + 'lib\Windows\64bit\libSoundTouch-64.dll';
 {$else}
         uoslibfilename  := ordir + 'uoslib.dll';
-    filenameedit1.filename := ordir + 'lib\windows\32bit\libportaudio-32.dll';
-    filenameedit2.filename := ordir + 'lib\windows\32bit\libsndfile-32.dll';
-    filenameedit3.filename := ordir + 'lib\windows\32bit\libmpg123-32.dll';
-    filenameedit5.filename := ordir + 'lib\windows\32bit\libsoundtouch-32.dll';
+    filenameedit1.filename := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
+    filenameedit2.filename := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
+    filenameedit3.filename := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
+    filenameedit5.filename := ordir + 'lib\Windows\32bit\libSoundTouch-32.dll';
    {$endif}
     filenameedit4.filename := ordir + 'sound\test.mp3';
  {$endif}
@@ -899,26 +899,27 @@ end;
     opath := ordir;
     opath := copy(opath, 1, pos('/uos', opath) - 1);
     uoslibfilename  := opath + '/lib/mac/32bit/libuos-32.dylib';
-    filenameedit1.filename := opath + '/lib/mac/32bit/libportaudio-32.dylib';
-    filenameedit2.filename := opath + '/lib/mac/32bit/libsndfile-32.dylib';
-    filenameedit3.filename := opath + '/lib/mac/32bit/libmpg123-32.dylib';
-    filenameedit5.filename := opath + '/lib/mac/32bit/libsoundtouch-32.dylib';
+    filenameedit1.filename := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
+    filenameedit2.filename := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
+    filenameedit3.filename := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
+    filenameedit5.filename := opath + '/lib/Mac/32bit/libSoundTouch-32.dylib';
     filenameedit4.filename := opath + 'sound/test.mp3';
             {$endif}
 
    {$ifdef linux}
     {$if defined(cpu64)}
     uoslibfilename  := ordir + 'libuoslib.so';
-    filenameedit1.filename := ordir + 'lib/linux/64bit/libportaudio-64.so';
-    filenameedit2.filename := ordir + 'lib/linux/64bit/libsndfile-64.so';
-    filenameedit3.filename := ordir + 'lib/linux/64bit/libmpg123-64.so';
-    filenameedit5.filename := ordir + 'lib/linux/64bit/libsoundtouch-64.so';
+    filenameedit1.filename := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
+    filenameedit2.filename := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
+    filenameedit3.filename := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+    filenameedit5.filename := ordir + 'lib/Linux/64bit/libSoundTouch-64.so';
+
 {$else}
     uoslibfilename  := ordir + 'libuoslib.so';
-    filenameedit1.filename := ordir + 'lib/linux/32bit/libportaudio-32.so';
-    filenameedit2.filename := ordir + 'lib/linux/32bit/libsndfile-32.so';
-    filenameedit3.filename := ordir + 'lib/linux/32bit/libmpg123-32.so';
-    filenameedit5.filename := ordir + 'lib/linux/32bit/libsoundtouch-32.so';
+    filenameedit1.filename := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
+    filenameedit2.filename := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
+    filenameedit3.filename := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+    filenameedit5.filename := ordir + 'lib/Linux/32bit/libSoundTouch-32.so';
 {$endif}
     filenameedit4.filename := ordir + 'sound/test.mp3';
             {$endif}

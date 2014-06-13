@@ -142,16 +142,17 @@ var
   opath: string;
             {$ENDIF}
 begin
-  uos_logo();
+
   ordir := application.Location;
+   uos_logo();
                   {$IFDEF Windows}
      {$if defined(cpu64)}
-    uoslibfilename  := ordir + 'lib\Windows\64bit\Libuos-64.dll';
+    uoslibfilename  := ordir + 'Libuos.dll';
   Edit1.Text := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
   Edit2.Text := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
   Edit3.Text := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
    {$else}
-     uoslibfilename  := ordir + 'lib\Windows\32bit\Libuos-32.dll';
+     uoslibfilename  := ordir + 'Libuos.dll';
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
@@ -169,12 +170,12 @@ begin
 
    {$IFDEF linux}
     {$if defined(cpu64)}
-  uoslibfilename  := ordir + 'lib/Linux/64bit/libuos-64.so';
+  uoslibfilename  := ordir + 'libuoslib.so';
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   {$else}
-     uoslibfilename  := ordir + 'lib/Linux/32bit/libuos-32.so';
+     uoslibfilename  := ordir + 'libuoslib.so';
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
@@ -218,7 +219,7 @@ begin
     form1.Height := 478;
     form1.Position := poScreenCenter;
     form1.Show;
-  end else MessageDlg('A Library do not load...', mtWarning, [mbYes], 0);
+  end else MessageDlg('A Library does not load...', mtWarning, [mbYes], 0);
 
 end;
 
@@ -258,8 +259,7 @@ begin
   uos_CreatePlayer(PlayerIndex3);
 
   uos_AddIntoDevOut(PlayerIndex3, -1, -1, -1, -1, 0, -1);
-  //// add a Output with custom parameters
-  //// add a Output into device with custom parameters
+    //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
   //////////// Latency  ( -1 is latency suggested ) )

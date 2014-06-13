@@ -4,7 +4,7 @@ program multiplayer_fpGUI;
   {$DEFINE UseCThreads}
 
 uses
-cmem,
+//cmem,
 {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
@@ -69,25 +69,25 @@ type
     procedure btnStopClick(Sender: TObject);
     procedure btnPauseClick(Sender: TObject);
     procedure btnResumeClick(Sender: TObject);
-    //procedure ClosePlayer0;
+    procedure ClosePlayer0;
 
     procedure btnStartClick2(Sender: TObject);
     procedure btnStopClick2(Sender: TObject);
     procedure btnPauseClick2(Sender: TObject);
     procedure btnResumeClick2(Sender: TObject);
-    //procedure ClosePlayer1;
+    procedure ClosePlayer1;
 
     procedure btnStartClick3(Sender: TObject);
     procedure btnStopClick3(Sender: TObject);
     procedure btnPauseClick3(Sender: TObject);
     procedure btnResumeClick3(Sender: TObject);
-    //procedure ClosePlayer2;
+    procedure ClosePlayer2;
 
     procedure btnStartClick4(Sender: TObject);
     procedure btnStopClick4(Sender: TObject);
     procedure btnPauseClick4(Sender: TObject);
     procedure btnResumeClick4(Sender: TObject);
-    //procedure ClosePlayer3;
+    procedure ClosePlayer3;
 
     procedure btnStartClickAll(Sender: TObject);
 
@@ -495,12 +495,12 @@ var
     Height := 157;
              {$IFDEF Windows}
      {$if defined(cpu64)}
-     uoslibfilename  := ordir + 'lib\Windows\64bit\Libuos-64.dll';
+     uoslibfilename  := ordir + 'libuos.dll';
     FilenameEdit1.FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     FilenameEdit2.FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
    {$else}
-    uoslibfilename  := ordir + 'lib\Windows\32bit\Libuos-32.dll';
+    uoslibfilename  := ordir + 'libuos.dll';
     FilenameEdit1.FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     FilenameEdit2.FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
@@ -518,12 +518,12 @@ var
 
    {$IFDEF linux}
     {$if defined(cpu64)}
-      uoslibfilename  := ordir + 'lib/Linux/64bit/libuos-64.so';
+      uoslibfilename  := ordir + 'libuoslib.so';
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
    {$else}
-     uoslibfilename  := ordir + 'lib/Linux/32bit/libuos-32.so';
+     uoslibfilename  := ordir + 'libuoslib.so';
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
@@ -574,7 +574,7 @@ var
     end;
   end;
 
-  procedure ClosePlayer0;
+  procedure TMultiplayer.ClosePlayer0;
   begin
     frm.btnStart.Visible:=false;
     frm.btnStop.Visible:=false;
@@ -593,7 +593,7 @@ var
 
   end;
 
-  procedure ClosePlayer1;
+  procedure TMultiplayer.ClosePlayer1;
   begin
     frm.btnStart2.Visible:=false;
     frm.btnStop2.Visible:=false;
@@ -611,7 +611,7 @@ var
     frm.btnresume2.Visible:=True;
   end;
 
-  procedure ClosePlayer2;
+  procedure TMultiplayer.ClosePlayer2;
   begin
     frm.btnStart3.Visible:=false;
     frm.btnStop3.Visible:=false;
@@ -629,7 +629,7 @@ var
     frm.btnresume3.Visible:=True;
   end;
 
-  procedure ClosePlayer3;
+  procedure TMultiplayer.ClosePlayer3;
   begin
     frm.btnStart4.Visible:=false;
     frm.btnStop4.Visible:=false;

@@ -141,7 +141,7 @@ install:
         <Filename Value="multiplayer.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="multiplayer"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="3" Y="7"/>
@@ -155,11 +155,10 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_mp"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="285"/>
-        <CursorPos X="9" Y="149"/>
+        <TopLine Value="334"/>
+        <CursorPos X="1" Y="361"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -380,10 +379,13 @@ install:
       <Unit28>
         <Filename Value="main_sp.pas"/>
         <UnitName Value="main_sp"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="380"/>
-        <CursorPos X="27" Y="395"/>
+        <TopLine Value="319"/>
+        <CursorPos X="57" Y="332"/>
         <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit28>
       <Unit29>
         <Filename Value="../lazarus32/packager/registration/fcllaz.pas"/>
@@ -420,7 +422,7 @@ install:
       <Unit33>
         <Filename Value="multiplayer_fpGUI.pas"/>
         <UnitName Value="multiplayer_fpGUI"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="565"/>
         <CursorPos X="68" Y="565"/>

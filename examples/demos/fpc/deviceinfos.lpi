@@ -154,8 +154,8 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="80"/>
-        <CursorPos X="1" Y="97"/>
+        <TopLine Value="60"/>
+        <CursorPos X="51" Y="90"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -499,12 +499,10 @@ install:
       <Unit43>
         <Filename Value="../src/uos.pas"/>
         <UnitName Value="uos"/>
-        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="3928"/>
         <CursorPos X="51" Y="3937"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit43>
       <Unit44>
         <Filename Value="uoslib_h.pas"/>
@@ -512,12 +510,12 @@ install:
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="46"/>
-        <CursorPos X="3" Y="54"/>
+        <CursorPos X="30" Y="55"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit44>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="main_di.pas"/>
         <Caret Line="130" Column="44" TopLine="120"/>
@@ -630,10 +628,6 @@ install:
         <Filename Value="main_di.pas"/>
         <Caret Line="101" Column="1" TopLine="95"/>
       </Position28>
-      <Position29>
-        <Filename Value="../src/uos.pas"/>
-        <Caret Line="3765" Column="39" TopLine="3762"/>
-      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

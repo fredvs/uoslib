@@ -47,12 +47,10 @@ uses
   DynLibs, ctypes;
 
 type
-TProc = procedure ;
+TProc = procedure of object ;
 
 var
-
- // function uos_getinfodevicestr(infos:pchar) : longint ;    cdecl;
-  uos_getinfodevicestr: function() : pchar ; cdecl;
+  uos_getinfodevicestr: function() : pansichar ; cdecl;
 
   uos_createplayer: procedure(playerindex: longint); cdecl;
 
@@ -144,14 +142,13 @@ var
 
   uos_inputpositiontime: function(playerindex: longint; inputindex: longint): ttime; cdecl;
 
-  uos_inputsetlevelenable: procedure(playerindex: longint; inputindex: longint; enable: cint32); cdecl;
+  uos_inputsetlevelenable: procedure(playerindex: longint; inputindex: longint; enable: longint); cdecl;
 
-  uos_inputsetpositionenable: procedure(playerindex: longint; inputindex: longint; enable: cint32); cdecl;
+  uos_inputsetpositionenable: procedure(playerindex: longint; inputindex: longint; enable: longint); cdecl;
 
-  uos_inputsetarraylevelenable: procedure(playerindex: longint; inputindex: longint; levelcalc : cint32); cdecl;
+  uos_inputsetarraylevelenable: procedure(playerindex: longint; inputindex: longint; levelcalc : longint); cdecl;
 
   // todo => function uos_inputgetarraylevel(playerindex: cint32; inputindex: longint) : tdarfloat;
-
 
   uos_inputgetlevelleft: function(playerindex: longint; inputindex: longint): double; cdecl;
 
@@ -169,6 +166,8 @@ var
 
   uos_pause: procedure(playerindex:  longint); cdecl;
 
+  uos_checksynchro: procedure(); cdecl;
+
   uos_unloadlibcust: procedure(portaudio : boolean; sndfile: boolean; mpg123: boolean; soundtouch: boolean); cdecl;
 
   ///// this functions should not be used, use uos_loadlibs and uos_unloadlibs instead...
@@ -180,7 +179,6 @@ var
 
   libhandle: tlibhandle = dynlibs.nilhandle; // this will hold our handle for the uoslib
   referencecounter: longint = 0;  // reference counter
-
 
 function uos_isloaded: boolean; inline;
 function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename, soundtouchfilename: pchar): boolean;
@@ -231,6 +229,9 @@ begin
     if libhandle <> dynlibs.nilhandle then
     begin
       try
+        pointer(uos_checksynchro) :=
+          getprocaddress(libhandle, 'uos_checksynchro');
+
         pointer(uos_loadlib) :=
           getprocaddress(libhandle, 'uos_loadlib');
 
