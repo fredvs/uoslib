@@ -1,5 +1,6 @@
 unit uos;
-{$DEFINE library}   // uncomment it for building uos library (native and java)
+
+{.$DEFINE library}   // uncomment it for building uos library (native and java)
 {.$DEFINE java}   // uncomment it for building uos java library
 {.$DEFINE ConsoleApp} // if FPC version < 2.7.1 uncomment it for console application
 
@@ -231,6 +232,7 @@ type
    {$if DEFINED(java)}
   TProc = JMethodID ;
     {$else}
+
   TProc = procedure of object;
     {$endif}
 
@@ -669,7 +671,11 @@ var
   uosDefaultDeviceIn: LongInt;
   uosDefaultDeviceOut: LongInt;
   uosInit: Tuos_Init;
-  old8087cw: word;
+
+    {$IF DEFINED(windows)}
+   old8087cw: word;
+    {$endif}
+
    {$IF DEFINED(Java)}
   theclass : JClass;
     {$endif}
@@ -888,6 +894,7 @@ end;
 
 procedure Tuos_Player.Seek(InputIndex:LongInt; pos: Tsf_count_t);
 //// change position in samples
+
 begin
    if (isAssigned = True) then StreamIn[InputIndex].Data.Poseek := pos;
 end;
@@ -1245,6 +1252,7 @@ begin
           StreamIn[InputIndex].DSP[FilterIndex].fftdata.C *
           StreamIn[InputIndex].DSP[FilterIndex].fftdata.C);
         StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[1] :=
+
           -2 * StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0];
         StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[2] :=
           StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0];
@@ -2654,8 +2662,6 @@ begin
     {$endif}
       end;
 
-
-
     //// Getting the level after DSP procedure
   if  (StreamIn[x].Data.status > 0) and((StreamIn[x].Data.levelEnable = 2) or (StreamIn[x].Data.levelEnable = 3)) then StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
 
@@ -3086,7 +3092,10 @@ begin
   Mp_Unload();
   Pa_Unload();
   ST_Unload();
+    {$IF DEFINED(windows)}
   Set8087CW(old8087cw);
+    {$endif}
+
 end;
 
 function Tuos_Init.InitLib(): LongInt;
@@ -3115,7 +3124,8 @@ begin
       DefDevOutInfo := Pa_GetDeviceInfo(DefDevOut);
       DefDevOutAPIInfo := Pa_GetHostApiInfo(DefDevOutInfo^.hostApi);
       DefDevIn := Pa_GetDefaultInputDevice();
-      DefDevInInfo := Pa_GetDeviceInfo(DefDevIn);
+      if DefDevInInfo <> nil then
+    DefDevInAPIInfo := Pa_GetHostApiInfo(DefDevInInfo^.hostApi);
       DefDevInAPIInfo := Pa_GetHostApiInfo(DefDevInInfo^.hostApi);
     end;
   end;
@@ -3225,8 +3235,12 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTo
   begin
    result := -1 ;
    if not assigned(uosInit) then begin
-   old8087cw := Get8087CW;
+
+  {$IF DEFINED(windows)}
+  old8087cw := Get8087CW;
    Set8087CW($133f);
+    {$endif}
+
    uosInit := TUOS_Init.Create;   //// Create Iibraries Loader-Init
    end;
    uosInit.PA_FileName := PortAudioFileName;
@@ -3325,6 +3339,7 @@ begin
  if uosDeviceInfos[x].DefaultDevOut then bool2 := 'Yes' else bool2 := 'No';
 
  devtmp := devtmp +
+
  'DeviceNum: ' + inttostr(uosDeviceInfos[x].DeviceNum) + ' ǀ' +
  ' Name: ' + uosDeviceInfos[x].DeviceName +  ' ǀ' +
  ' Type: ' + uosDeviceInfos[x].DeviceType + ' ǀ' +
@@ -3405,4 +3420,4 @@ begin
 
 end;
 
-end.
+end.
