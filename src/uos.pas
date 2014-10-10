@@ -1,6 +1,6 @@
 unit uos;
 
-{.$DEFINE library}   // uncomment it for building uos library (native and java)
+{$DEFINE library}   // uncomment it for building uos library (native and java)
 {.$DEFINE java}   // uncomment it for building uos java library
 {.$DEFINE ConsoleApp} // if FPC version < 2.7.1 uncomment it for console application
 
@@ -73,7 +73,7 @@ uses
   uos_LibSndFile, uos_Mpg123, uos_soundtouch;
 
 const
-  uos_version : LongInt = 130140616 ;
+  uos_version : LongInt = 130141010 ;
 
 type
   TDArFloat = array of cfloat;
@@ -3126,8 +3126,7 @@ begin
       DefDevIn := Pa_GetDefaultInputDevice();
       if DefDevInInfo <> nil then
     DefDevInAPIInfo := Pa_GetHostApiInfo(DefDevInInfo^.hostApi);
-      DefDevInAPIInfo := Pa_GetHostApiInfo(DefDevInInfo^.hostApi);
-    end;
+        end;
   end;
   if (Result = -1) and (uosLoadResult.SFloadERROR = 0) then
     Result := 0;
@@ -3420,4 +3419,4 @@ begin
 
 end;
 
-end.
+end.

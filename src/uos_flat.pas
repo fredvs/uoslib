@@ -1,6 +1,7 @@
 unit uos_flat;
 {$DEFINE library}   // uncomment it for building uos library (native and java)
 {.$DEFINE java}   // uncomment it for building uos java library
+{.$DEFINE ConsoleApp} // if FPC version < 2.7.1 uncomment it for console application
 
    // This is the "Flat Layer" of uos => for universal procedures.
 
@@ -41,13 +42,16 @@ interface
 
 uses
   
-  Classes,
-
-   {$IF DEFINED(Java)}
+    {$IF DEFINED(Java)}
    uos_jni,
    {$endif}
 
-  ctypes, SysUtils, uos;
+        {$IF (FPC_FULLVERSION >= 20701) or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Windows) or DEFINED(Library)}
+     {$else}
+     fpg_base,
+      {$ENDIF}
+
+ Classes, ctypes, SysUtils, uos;
 
   type
 
@@ -69,6 +73,11 @@ uses
      Tsf_count_t    = cint;
   {$endif}
 
+    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Windows) or DEFINED(Library)}
+         {$else}
+          const
+         MSG_CUSTOM1 = FPGM_USER + 1;
+      {$ENDIF}
 
 //////////// General public procedure/function (accessible for library uos too)
 

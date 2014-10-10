@@ -11,7 +11,6 @@
       <Title Value="uos"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
-      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -35,57 +34,46 @@
         <Filename Value="uoslib.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uoslib"/>
-        <EditorIndex Value="0"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="8" Y="44"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="3" Y="3"/>
         <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="uos.pas"/>
         <UnitName Value="uos"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="8"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="218"/>
-        <CursorPos X="6" Y="231"/>
+        <TopLine Value="2397"/>
+        <CursorPos X="3" Y="2413"/>
         <UsageCount Value="28"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="uos_soundtouch.pas"/>
-        <UnitName Value="uos_soundtouch"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="154"/>
         <CursorPos X="54" Y="174"/>
         <UsageCount Value="10"/>
       </Unit2>
       <Unit3>
         <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/inc/objpash.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="27"/>
         <CursorPos X="23" Y="51"/>
         <UsageCount Value="10"/>
       </Unit3>
       <Unit4>
         <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/classes/classesh.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="1592"/>
         <CursorPos X="26" Y="1598"/>
         <UsageCount Value="14"/>
       </Unit4>
       <Unit5>
         <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/sysutils/sysutilh.inc"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="300"/>
         <CursorPos X="23" Y="312"/>
         <UsageCount Value="11"/>
       </Unit5>
       <Unit6>
         <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/sysutils/systhrdh.inc"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
         <CursorPos X="54" Y="10"/>
         <UsageCount Value="10"/>
       </Unit6>
@@ -93,7 +81,6 @@
         <Filename Value="uoslib_h.pas"/>
         <UnitName Value="uoslib_h"/>
         <EditorIndex Value="4"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="399"/>
         <CursorPos X="9" Y="232"/>
         <UsageCount Value="27"/>
@@ -103,9 +90,7 @@
         <Filename Value="uos_flat.pas"/>
         <UnitName Value="uos_flat"/>
         <EditorIndex Value="3"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="32"/>
-        <CursorPos X="4" Y="53"/>
+        <CursorPos X="2" Y="2"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit8>
@@ -113,7 +98,6 @@
         <Filename Value="../../fpGUIlib/src/fpgui.pas"/>
         <UnitName Value="fpgui"/>
         <EditorIndex Value="5"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="173"/>
         <CursorPos X="29" Y="177"/>
         <UsageCount Value="24"/>
@@ -124,9 +108,6 @@
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="main_sp_nf"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
         <CursorPos X="98" Y="329"/>
         <UsageCount Value="11"/>
       </Unit10>
@@ -134,7 +115,6 @@
         <Filename Value="uos_jni.pas"/>
         <UnitName Value="uos_jni"/>
         <EditorIndex Value="1"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="552"/>
         <CursorPos X="54" Y="558"/>
         <UsageCount Value="23"/>
@@ -144,7 +124,6 @@
         <Filename Value="../../fpGUIlib/src/fpglib_class.pas"/>
         <UnitName Value="fpglib_class"/>
         <EditorIndex Value="6"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="77"/>
         <CursorPos X="46" Y="95"/>
         <UsageCount Value="22"/>
@@ -154,7 +133,6 @@
         <Filename Value="../../fpGUIlib/src/jni.pas"/>
         <UnitName Value="jni"/>
         <EditorIndex Value="7"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="260"/>
         <CursorPos X="31" Y="285"/>
         <UsageCount Value="18"/>
@@ -164,7 +142,6 @@
         <Filename Value="../../fpGUIlib/src/sakfpg.pas"/>
         <UnitName Value="sakfpg"/>
         <EditorIndex Value="9"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="297"/>
         <CursorPos X="122" Y="130"/>
         <UsageCount Value="18"/>
@@ -174,7 +151,6 @@
         <Filename Value="uos_mpg123.pas"/>
         <UnitName Value="uos_mpg123"/>
         <EditorIndex Value="2"/>
-        <WindowIndex Value="0"/>
         <TopLine Value="815"/>
         <CursorPos X="10" Y="818"/>
         <UsageCount Value="10"/>
@@ -183,124 +159,123 @@
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="uoslib.pas"/>
-        <Caret Line="66" Column="11" TopLine="59"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="330" Column="30" TopLine="323"/>
       </Position1>
       <Position2>
         <Filename Value="uos.pas"/>
-        <Caret Line="3359" Column="1" TopLine="3338"/>
+        <Caret Line="2738" Column="4" TopLine="2725"/>
       </Position2>
       <Position3>
         <Filename Value="uos.pas"/>
-        <Caret Line="3360" Column="7" TopLine="3351"/>
+        <Caret Line="2618" Column="35" TopLine="2605"/>
       </Position3>
       <Position4>
-        <Filename Value="uos.pas"/>
-        <Caret Line="748" Column="102" TopLine="739"/>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="48" TopLine="43"/>
       </Position4>
       <Position5>
-        <Filename Value="uos.pas"/>
-        <Caret Line="328" Column="26" TopLine="323"/>
-      </Position5>
-      <Position6>
-        <Filename Value="uos.pas"/>
-        <Caret Line="330" Column="30" TopLine="323"/>
-      </Position6>
-      <Position7>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2738" Column="4" TopLine="2725"/>
-      </Position7>
-      <Position8>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2618" Column="35" TopLine="2605"/>
-      </Position8>
-      <Position9>
-        <Filename Value="uoslib.pas"/>
-        <Caret Line="48" Column="1" TopLine="43"/>
-      </Position9>
-      <Position10>
         <Filename Value="uos_flat.pas"/>
         <Caret Line="50" Column="10" TopLine="42"/>
-      </Position10>
-      <Position11>
+      </Position5>
+      <Position6>
         <Filename Value="uoslib.pas"/>
         <Caret Line="790" Column="55" TopLine="783"/>
-      </Position11>
-      <Position12>
+      </Position6>
+      <Position7>
         <Filename Value="uos_jni.pas"/>
         <Caret Line="285" Column="7" TopLine="279"/>
-      </Position12>
-      <Position13>
+      </Position7>
+      <Position8>
         <Filename Value="uos_jni.pas"/>
         <Caret Line="537" Column="32" TopLine="529"/>
-      </Position13>
-      <Position14>
+      </Position8>
+      <Position9>
         <Filename Value="uos_jni.pas"/>
         <Caret Line="543" Column="35" TopLine="536"/>
-      </Position14>
-      <Position15>
+      </Position9>
+      <Position10>
         <Filename Value="uos_mpg123.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
-      </Position15>
-      <Position16>
+      </Position10>
+      <Position11>
         <Filename Value="uos.pas"/>
         <Caret Line="36" Column="65" TopLine="24"/>
-      </Position16>
-      <Position17>
+      </Position11>
+      <Position12>
         <Filename Value="uos.pas"/>
         <Caret Line="836" Column="3" TopLine="829"/>
-      </Position17>
-      <Position18>
+      </Position12>
+      <Position13>
         <Filename Value="uos.pas"/>
         <Caret Line="526" Column="63" TopLine="521"/>
-      </Position18>
-      <Position19>
+      </Position13>
+      <Position14>
         <Filename Value="uos.pas"/>
         <Caret Line="555" Column="63" TopLine="549"/>
-      </Position19>
-      <Position20>
+      </Position14>
+      <Position15>
         <Filename Value="uos.pas"/>
         <Caret Line="1444" Column="62" TopLine="1437"/>
-      </Position20>
-      <Position21>
+      </Position15>
+      <Position16>
         <Filename Value="uos_flat.pas"/>
-        <Caret Line="1082" Column="1" TopLine="1076"/>
-      </Position21>
-      <Position22>
+        <Caret Line="1082" TopLine="1076"/>
+      </Position16>
+      <Position17>
         <Filename Value="uos_flat.pas"/>
         <Caret Line="509" Column="87" TopLine="493"/>
-      </Position22>
-      <Position23>
+      </Position17>
+      <Position18>
         <Filename Value="uos_flat.pas"/>
-        <Caret Line="3" Column="3" TopLine="1"/>
-      </Position23>
-      <Position24>
+        <Caret Line="3" Column="3"/>
+      </Position18>
+      <Position19>
         <Filename Value="uoslib.pas"/>
         <Caret Line="859" Column="57" TopLine="842"/>
+      </Position19>
+      <Position20>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="55" Column="17" TopLine="48"/>
+      </Position20>
+      <Position21>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="46" Column="17" TopLine="35"/>
+      </Position21>
+      <Position22>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="54" Column="17" TopLine="47"/>
+      </Position22>
+      <Position23>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="42" Column="7" TopLine="32"/>
+      </Position23>
+      <Position24>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="3" Column="2"/>
       </Position24>
       <Position25>
         <Filename Value="uoslib.pas"/>
-        <Caret Line="55" Column="17" TopLine="48"/>
+        <Caret Line="3" Column="3"/>
       </Position25>
       <Position26>
-        <Filename Value="uoslib.pas"/>
-        <Caret Line="46" Column="17" TopLine="35"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="53" Column="4" TopLine="32"/>
       </Position26>
       <Position27>
-        <Filename Value="uoslib.pas"/>
-        <Caret Line="54" Column="17" TopLine="47"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="231" Column="6" TopLine="218"/>
       </Position27>
       <Position28>
-        <Filename Value="uoslib.pas"/>
-        <Caret Line="42" Column="7" TopLine="32"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="63" Column="3" TopLine="51"/>
       </Position28>
       <Position29>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="3" Column="2" TopLine="1"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3" Column="2"/>
       </Position29>
       <Position30>
         <Filename Value="uoslib.pas"/>
-        <Caret Line="3" Column="3" TopLine="1"/>
+        <Caret Line="3" Column="2"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -335,10 +310,9 @@
     </Linking>
     <Other>
       <WriteFPCLogo Value="False"/>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
-      <CompilerPath Value="$(CompPath)"/>
+      <ConfigFile>
+        <CustomConfigFile Value="True"/>
+      </ConfigFile>
     </Other>
   </CompilerOptions>
   <Debugging>
@@ -354,5 +328,4 @@
       </Item3>
     </Exceptions>
   </Debugging>
-  <EditorMacros Count="0"/>
 </CONFIG>
