@@ -75,7 +75,12 @@ var
   uos_addfromfile: function(playerindex: longint; filename: pchar;
   outputindex: longint; sampleformat: shortint; framescount: longint): longint; cdecl;
 
-  uos_addfromfiledef: function(playerindex: longint; filename: pchar): longint; cdecl;
+   {$IFDEF UNIX}
+  uos_addfromurl: function(playerindex: longint; URL: PChar; OutputIndex: LongInt;
+   SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
+    {$endif}
+
+    uos_addfromfiledef: function(playerindex: longint; filename: pchar): longint; cdecl;
 
   uos_addintofile: function(playerindex: longint; filename: pchar; samplerate: longint;
         channels: longint; sampleformat: shortint ; framescount: longint): longint; cdecl;
@@ -255,6 +260,11 @@ begin
 
         pointer(uos_addfromfiledef) :=
           getprocaddress(libhandle, 'uos_addfromfiledef');
+
+        {$IFDEF UNIX}
+          pointer(uos_addfromurl) :=
+          getprocaddress(libhandle, 'uos_addfromurl');
+         {$endif}
 
         pointer(uos_addfromfile) :=
           getprocaddress(libhandle, 'uos_addfromfile');

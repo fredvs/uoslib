@@ -184,6 +184,28 @@ begin
 end;
 {$endif}
 
+{$IFDEF UNIX}
+{$IF DEFINED(Java)}
+function uos_AddFromURL(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
+       SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
+    /////// Add a Input from Audio URL
+      ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
+      ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
+      ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
+      //////////// FramesCount : default : -1 (65536)
+      ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
+begin
+result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL, OutputIndex, SampleFormat, FramesCount );
+end;
+{$else}
+function uos_AddFromURL( PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
+       SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
+ begin
+ result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL, OutputIndex, SampleFormat, FramesCount );
+ end;
+{$ENDIF}
+{$ENDIF}
+
 {$IF DEFINED(Java)}
 function uos_AddIntoFile(PEnv: PJNIEnv; Obj: JObject ; PlayerIndex: cint32; Filename: JString; SampleRate: cint32;
                  Channels: cint32; SampleFormat: shortint ; FramesCount: cint32): cint32; cdecl;
@@ -803,6 +825,9 @@ uos_getinfodevicestr name 'Java_uos_getinfodevicestr',
 uos_createplayer name 'Java_uos_createplayer',
 uos_addintodevout name 'Java_uos_addintodevout',
 uos_addintodevoutdef name 'Java_uos_addintodevoutdef',
+{$IF DEFINED(unix)}
+uos_addfromurl name 'Java_uos_uos_addfromurl',
+{$endif}
 uos_addfromfile name 'Java_uos_addfromfile',
 uos_addfromfiledef name 'Java_uos_addfromfiledef',
 uos_addintofile name 'Java_uos_addintofile',
@@ -867,6 +892,9 @@ uos_addfromfile name 'uos_addfromfile',
 uos_addfromfiledef name 'uos_addfromfiledef',
 uos_addintofile name 'uos_addintofile',
 uos_addintofiledef name 'uos_addintofiledef',
+{$IF DEFINED(unix)}
+uos_addfromurl name 'uos_addfromurl',
+{$endif}
 uos_addfromdevin name 'uos_addfromdevin',
 uos_addfromdevindef name 'uos_addfromdevindef',
 uos_beginproc name 'uos_beginproc',

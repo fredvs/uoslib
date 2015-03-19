@@ -99,14 +99,14 @@ procedure uos_CreatePlayer(PlayerIndex: LongInt);
 {$else}
 procedure uos_CreatePlayer(PlayerIndex: LongInt; AParent: TObject);
 {$endif}
+
+function uos_AddIntoDevOut(PlayerIndex: LongInt): LongInt;
         //// PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, soundcard, ...)
         //// If PlayerIndex already exists, it will be overwriten...
 
-
+         ////// Add a Output into Device Output with custom parameters
 function uos_AddIntoDevOut(PlayerIndex: LongInt; Device: LongInt; Latency: CDouble;
             SampleRate: LongInt; Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
-          ////// Add a Output into Device Output with custom parameters
-function uos_AddIntoDevOut(PlayerIndex: LongInt): LongInt;
           ////// Add a Output into Device Output with default parameters
           //////////// PlayerIndex : Index of a existing Player
           //////////// Device ( -1 is default device )
@@ -118,11 +118,11 @@ function uos_AddIntoDevOut(PlayerIndex: LongInt): LongInt;
           //  result : Output Index in array  , -1 = error
           /// example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1,-1,0);
 
+function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar): LongInt;
+            /////// Add a input from audio file with default parameters
+
 function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar; OutputIndex: LongInt;
               SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
-            /////// Add a input from audio file with custom parameters
-
-function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar): LongInt;
             /////// Add a input from audio file with default parameters
             //////////// PlayerIndex : Index of a existing Player
             ////////// FileName : filename of audio file
@@ -131,6 +131,20 @@ function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar): LongInt;
             //////////// FramesCount : default : -1 (65536)
             //  result : Input Index in array  -1 = error
             //////////// example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);
+
+            {$IFDEF UNIX}
+function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar): LongInt;
+          /////// Add a Input from Audio URL with default parameters
+
+function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
+                       SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
+             /////// Add a Input from Audio URL with custom parameters
+              ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
+              ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
+              ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
+              //////////// FramesCount : default : -1 (1024)
+              ////////// example : InputIndex := uos_AddFromURL(0,'http://someserver/somesound.mp3',-1,-1,-1);
+             {$ENDIF}
 
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
                  Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
@@ -764,6 +778,32 @@ begin
   Result := uosPlayers[PlayerIndex].AddFromFile(Filename, -1, -1, -1);
 end;
 
+{$IFDEF UNIX}
+function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
+               SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
+            /////// Add a Input from Audio URL
+              ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
+              ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
+              ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
+              //////////// FramesCount : default : -1 (65536)
+              ////////// example : InputIndex := AddFromFile('http://someserver/somesound.mp3',-1,-1,-1);
+begin
+   result := -1 ;
+    if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+       if  uosPlayersStat[PlayerIndex] = 1 then
+    Result := uosPlayers[PlayerIndex].AddFromURL(URL, OutputIndex, SampleFormat, FramesCount);
+end;
+
+function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar): LongInt;
+begin
+  result := -1 ;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+  Result := uosPlayers[PlayerIndex].AddFromURL(URL, -1, -1, -1);
+end;
+
+{$ENDIF}
+
 function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: cint32;
                        Channels: cint32): cint32;
                      /////// Add a plugin , result is PluginIndex
@@ -1144,4 +1184,4 @@ end;
 end;
 
 
-end.
+end.

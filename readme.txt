@@ -8,6 +8,8 @@ With uos you can:
 
 . Listen to mp3, ogg, wav, flac,... audio files.
 
+. Do internet audio streaming (unix only).
+
 . With 16, 32 or float 32 bit resolution.
 
 . Record all types of input into file.
