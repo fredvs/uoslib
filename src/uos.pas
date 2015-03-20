@@ -11,13 +11,13 @@ unit uos;
 *          United procedures to access Open Sound (IN/OUT) libraries           *
 *                                                                              *
 *              With Big contributions of (in alphabetic order)                 *
-*   Andrew, BigChimp, Blaazen, Sandro Cumerlato, Dibo, KpjComp, Leledumbo.     *
+*       Andrew, BigChimp, Blaazen, Sandro, Dibo, KpjComp, Leledumbo.           *
 *                                                                              *
 *                 Fred van Stappen /  fiens@hotmail.com                        *
 *                                                                              *
 *                                                                              *
 ********************************************************************************
-*  1 th changes: 2012-07-20   (first shot)                                    *
+*  1 th changes: 2012-07-20   (first shot)                                     *
 *  2 th changes: 2012-07-31   (mono thread, only one stream)                   *
 *  3 th changes: 2012-11-13  (mono thread, multi streams)                      *
 *  4 th changes: 2012-11-14  (multi threads, multi streams)                    *
@@ -171,7 +171,7 @@ type
   Tuos_Data = record  /////////////// common data
     Enabled: boolean;
     TypePut: LongInt;
-    ////// -1 : nothing,  //// for Input : 0:from audio file, 1:from input device, 2:from other stream
+    ////// -1 : nothing,  //// for Input : 0:from audio file, 1:from input device, 2:from internet audio stream
     //// for Output : 0:into wav file, 1:into output device, 2:to other stream
     Seekable: boolean;
     Status: LongInt;
@@ -227,6 +227,8 @@ type
     PAParam: PaStreamParameters;
     FileBuffer: Tuos_FileBuffer;
   end;
+
+
 
 type
   Tuos_FFT = class(TObject)
@@ -1924,6 +1926,7 @@ begin
 end;
 
 function Tuos_Player.AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;
+
   VolRight: double): LongInt;  ///// DSP Volume changer
   ////////// OutputIndex : OutputIndex of a existing Output
   ////////// VolLeft : Left volume ( 1 = max)
@@ -2280,7 +2283,7 @@ begin
            StreamIn[x].Data.SampleFormat := 2
          else
            StreamIn[x].Data.SampleFormat := SampleFormat;
-         {
+
          mpg123_format_none(StreamIn[x].Data.HandleSt);
          case StreamIn[x].Data.SampleFormat of
            0: mpg123_format(StreamIn[x].Data.HandleSt, DefRate, Stereo,
@@ -2290,7 +2293,7 @@ begin
            2: mpg123_format(StreamIn[x].Data.HandleSt, DefRate, Stereo,
                MPG123_ENC_SIGNED_16);
          end;
-         }
+
            Err := mpg123_open_fd(StreamIn[x].Data.HandleSt,StreamIn[x].Data.httpget.InHandle);
              //  writeln('ok mpg123_open_fd');
        end
@@ -2301,11 +2304,6 @@ begin
          // writeln('ok mpg123_open_fd all ok');
        if Err = 0 then
 
-       //  Err := mpg123_getformat(StreamIn[x].Data.HandleSt,
-       //    StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
-       //    StreamIn[x].Data.encoding);
-       //       writeln('ok mpg123_getformat');
-
           StreamIn[x].Data.filename := URL ;
 
           StreamIn[x].Data.Channels := 2;
@@ -2314,25 +2312,6 @@ begin
          StreamIn[x].Data.Wantframes := FramesCount ;
 
          SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
-
-         {
-         mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
-         mpg123_id3(StreamIn[x].Data.HandleSt, @mpid3v1, nil);
-
-          // writeln('ok mpg123_info');
-         ////////////// to do : add id2v2
-         StreamIn[x].Data.title := trim(mpid3v1.title);
-         StreamIn[x].Data.artist := mpid3v1.artist;
-         StreamIn[x].Data.album := mpid3v1.album;
-         StreamIn[x].Data.date := mpid3v1.year;
-         StreamIn[x].Data.comment := mpid3v1.comment;
-         StreamIn[x].Data.tag := mpid3v1.tag;
-         StreamIn[x].Data.genre := mpid3v1.genre;
-         StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
-         StreamIn[x].Data.hdformat := MPinfo.layer;
-         StreamIn[x].Data.frames := MPinfo.framesize;
-         StreamIn[x].Data.lengthst := mpg123_length(StreamIn[x].Data.HandleSt);
-         }
 
          StreamIn[x].Data.LibOpen := 1;
           // writeln('ok all');
@@ -2356,9 +2335,19 @@ begin
        StreamIn[x].Data.Position := 0;
        StreamIn[x].Data.OutFrames := 0;
        StreamIn[x].Data.Poseek := -1;
-       StreamIn[x].Data.TypePut := 0;
+       StreamIn[x].Data.TypePut := 2;
        StreamIn[x].Data.seekable := false;
        StreamIn[x].LoopProc := nil;
+
+       StreamIn[x].Data.httpget.WantedURL(url);
+
+   // {
+          Err := mpg123_getformat(StreamIn[x].Data.HandleSt,
+        StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
+        StreamIn[x].Data.encoding);
+           writeln('ok mpg123_getformat');
+   //  }
+
 
        if SampleFormat = -1 then
          StreamIn[x].Data.SampleFormat := 2
@@ -2370,7 +2359,27 @@ begin
            else
              StreamIn[x].Data.ratio := 2 * streamIn[x].Data.Channels;
 
-      StreamIn[x].Data.httpget.WantedURL(url);
+   //     {
+         mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
+         mpg123_id3(StreamIn[x].Data.HandleSt, @mpid3v1, nil);
+
+           writeln('ok mpg123_info');
+         ////////////// to do : add id2v2
+         StreamIn[x].Data.title := trim(mpid3v1.title);
+         StreamIn[x].Data.artist := mpid3v1.artist;
+         StreamIn[x].Data.album := mpid3v1.album;
+         StreamIn[x].Data.date := mpid3v1.year;
+         StreamIn[x].Data.comment := mpid3v1.comment;
+         StreamIn[x].Data.tag := mpid3v1.tag;
+         StreamIn[x].Data.genre := mpid3v1.genre;
+         StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
+         StreamIn[x].Data.hdformat := MPinfo.layer;
+         StreamIn[x].Data.frames := MPinfo.framesize;
+   //    }
+
+          if StreamIn[x].Data.SampleFormat = 0 then
+            mpg123_param(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Channels,
+              MPG123_FORCE_FLOAT, 0);
          end;
        end;
     {$ENDIF}
@@ -2696,7 +2705,6 @@ begin
                   StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
                 StreamIn[x].Data.outframes :=
                   StreamIn[x].Data.outframes div StreamIn[x].Data.Channels;
-                //    writeln('mpg123_read');
               end;
             end;
 
@@ -2712,6 +2720,15 @@ begin
               StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
             //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  /// if you want clean buffer
           end;
+
+          2:  /////// for Input from Internet audio stream.
+          begin
+          mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
+          StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
+          StreamIn[x].Data.outframes :=
+            StreamIn[x].Data.outframes div StreamIn[x].Data.Channels;
+                //    writeln('mpg123_read');
+         end;
         end;
 
         //// check if internet stream is stopped.
@@ -2862,7 +2879,7 @@ begin
 
       if ((StreamOut[x].Data.TypePut = 1) and (StreamOut[x].Data.HandleSt <> nil) and
         (StreamOut[x].Data.Enabled = True)) or
-        ((StreamOut[x].Data.TypePut = 0) and (StreamOut[x].Data.Enabled = True))
+        ( (StreamOut[x].Data.TypePut = 0)  and (StreamOut[x].Data.Enabled = True))
       then
       begin
         for x2 := 0 to high(StreamOut[x].Data.Buffer) do
@@ -3106,6 +3123,16 @@ begin
               begin
                 mpg123_close(StreamIn[x].Data.HandleSt);
                 mpg123_delete(StreamIn[x].Data.HandleSt);
+              end;
+               2:
+              begin
+                mpg123_close(StreamIn[x].Data.HandleSt);
+                mpg123_delete(StreamIn[x].Data.HandleSt);
+                {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
+               StreamIn[x].Data.httpget.Terminate;
+               StreamIn[x].Data.httpget.Free;
+               {$ENDIF}
+
               end;
             end;
           1:
