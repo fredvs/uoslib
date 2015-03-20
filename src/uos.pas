@@ -2375,6 +2375,7 @@ begin
          StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
          StreamIn[x].Data.hdformat := MPinfo.layer;
          StreamIn[x].Data.frames := MPinfo.framesize;
+         StreamIn[x].Data.lengthst := mpg123_length(StreamIn[x].Data.HandleSt);
    //    }
 
           if StreamIn[x].Data.SampleFormat = 0 then
@@ -2659,7 +2660,7 @@ begin
       begin
 
         if (StreamIn[x].Data.Poseek > -1) and (StreamIn[x].Data.Seekable = True) then
-        begin                    ////// is there a seek waiting ?
+         begin                    ////// is there a seek waiting ?
           case StreamIn[x].Data.LibOpen of
             0: sf_seek(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Poseek, SEEK_SET);
             1: mpg123_seek(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Poseek, SEEK_SET);
@@ -2668,8 +2669,7 @@ begin
           StreamIn[x].Data.Poseek := -1;
         end;
 
-          if (StreamIn[x].Data.positionEnable = 1) and
-         (StreamIn[x].Data.Seekable = True) then
+           if (StreamIn[x].Data.positionEnable = 1) then
           StreamIn[x].Data.position := curpos;
 
         //////// DSPin BeforeBuffProc
