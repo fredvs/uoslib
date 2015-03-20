@@ -110,6 +110,7 @@ end;
 constructor TThreadHttpGetter.Create();
 begin
   inherited Create(True);
+   FIsRunning:=False;
    AssignPipe(InHandle, FOutHandle);
 end;
 

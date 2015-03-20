@@ -184,7 +184,7 @@ begin
 end;
 {$endif}
 
-{$IFDEF UNIX}
+{$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
 {$IF DEFINED(Java)}
 function uos_AddFromURL(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
        SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
@@ -825,7 +825,7 @@ uos_getinfodevicestr name 'Java_uos_getinfodevicestr',
 uos_createplayer name 'Java_uos_createplayer',
 uos_addintodevout name 'Java_uos_addintodevout',
 uos_addintodevoutdef name 'Java_uos_addintodevoutdef',
-{$IF DEFINED(unix)}
+{$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
 uos_addfromurl name 'Java_uos_uos_addfromurl',
 {$endif}
 uos_addfromfile name 'Java_uos_addfromfile',
@@ -892,7 +892,7 @@ uos_addfromfile name 'uos_addfromfile',
 uos_addfromfiledef name 'uos_addfromfiledef',
 uos_addintofile name 'uos_addintofile',
 uos_addintofiledef name 'uos_addintofiledef',
-{$IF DEFINED(unix)}
+{$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
 uos_addfromurl name 'uos_addfromurl',
 {$endif}
 uos_addfromdevin name 'uos_addfromdevin',

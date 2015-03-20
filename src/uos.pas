@@ -11,7 +11,7 @@ unit uos;
 *          United procedures to access Open Sound (IN/OUT) libraries           *
 *                                                                              *
 *              With Big contributions of (in alphabetic order)                 *
-*      BigChimp, Blaazen, Sandro Cumerlato, Dibo, KpjComp, Leledumbo.          *
+*   Andrew, BigChimp, Blaazen, Sandro Cumerlato, Dibo, KpjComp, Leledumbo.     *
 *                                                                              *
 *                 Fred van Stappen /  fiens@hotmail.com                        *
 *                                                                              *
@@ -71,7 +71,7 @@ uses
    uos_jni,
    {$endif}
 
-   {$IFDEF UNIX}
+   {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
      uos_httpgetthread,
    {$ENDIF}
 
@@ -198,8 +198,9 @@ type
     Channels: LongInt;
 
     //////// for web streaming
-
+    {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
     httpget: TThreadHttpGetter;  // threaded http getter
+    {$ENDIF}
 
     /////////// audio file data
     HandleSt: pointer;
@@ -232,7 +233,6 @@ type
   public
     TypeFilter: LongInt;
     LowFrequency, HighFrequency: LongInt;
-
     AlsoBuf: boolean;
     a3, a32: array[0..2] of cfloat;
     b2, x0, x1, y0, y1, b22, x02, x12, y02, y12: array[0..1] of cfloat;
@@ -374,7 +374,7 @@ type
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (= 65536)
     //  result :  Output Index in array    -1 = error
-    /// example : OutputIndex1 := AddOutput(-1,-1,-1,-1,0);
+    /// example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0);
 
     function AddIntoFile(Filename: PChar; SampleRate: LongInt;
       Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
@@ -411,15 +411,15 @@ type
     //  result :   Input Index in array    -1 = error
     //////////// example : InputIndex1 := AddFromFile(edit5.Text,-1,0,-1);
 
-    {$IFDEF UNIX}
+    {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
        function AddFromURL(URL: PChar; OutputIndex: LongInt;
    SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
   /////// Add a Input from Audio URL
-  ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
+  ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
-  ////////// example : InputIndex := AddFromFile('http://someserver/somesound.mp3',-1,-1,-1);
+  ////////// example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1);
      {$ENDIF}
 
     function AddPlugin(PlugName: Pchar; SampleRate: LongInt;
@@ -988,8 +988,7 @@ end;
 end;
 
 
-
-  procedure Tuos_Player.InputSetArrayLevelEnable(InputIndex: LongInt ; levelcalc : longint);
+procedure Tuos_Player.InputSetArrayLevelEnable(InputIndex: LongInt ; levelcalc : longint);
                   ///////// set add level calculation in level-array (default is 0)
                          // 0 => no calcul
                          // 1 => calcul before all DSP procedures.
@@ -1007,7 +1006,6 @@ if index + 1 > length(uosLevelArray) then
 
 end;
 end;
-
 
 procedure Tuos_Player.InputSetLevelEnable(InputIndex: LongInt ; levelcalc : longint);
                    ///////// set level calculation (default is 0)
@@ -1611,6 +1609,7 @@ var
   minf, maxf: array[0..1] of cfloat;    //////// if input is Float32 format
 begin
 
+
   case Data.SampleFormat of
     2:
     begin
@@ -2020,7 +2019,6 @@ begin
 
 end;
 
-
 function Tuos_Player.AddFromDevIn(Device: LongInt; Latency: CDouble;
   SampleRate: LongInt; Channels: LongInt; OutputIndex: LongInt;
   SampleFormat: LongInt; FramesCount : LongInt): LongInt;
@@ -2235,7 +2233,7 @@ begin
     Result := x;
 end;
 
-{$IFDEF UNIX}
+{$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
  function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
    SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
 /////// Add a Input from Audio URL

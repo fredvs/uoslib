@@ -12,7 +12,7 @@ unit uos_flat;
 *          United procedures to access Open Sound (IN/OUT) libraries           *
 *                                                                              *
 *              With Big contributions of (in alphabetic order)                 *
-*      BigChimp, Blaazen, Sandro Cumerlato, Dibo, KpjComp, Leledumbo.          *
+*   Andrew, BigChimp, Blaazen, Sandro Cumerlato, Dibo, KpjComp, Leledumbo.     *
 *                                                                              *
 *                 Fred van Stappen /  fiens@hotmail.com                        *
 *                                                                              *
@@ -132,18 +132,18 @@ function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar; OutputIndex: Lon
             //  result : Input Index in array  -1 = error
             //////////// example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);
 
-            {$IFDEF UNIX}
+             {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
 function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar): LongInt;
           /////// Add a Input from Audio URL with default parameters
 
 function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
                        SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
              /////// Add a Input from Audio URL with custom parameters
-              ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
+              ////////// URL : URL of audio file 
               ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
               //////////// FramesCount : default : -1 (1024)
-              ////////// example : InputIndex := uos_AddFromURL(0,'http://someserver/somesound.mp3',-1,-1,-1);
+              ////////// example : InputIndex := AddFromURL(0,'http://someserver/somesound.mp3',-1,-1,-1);
              {$ENDIF}
 
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
@@ -157,6 +157,7 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint3
                //////////// FramesCount : default : -1 (= 65536)
                //  result :Output Index in array  -1 = error
                //////////// example : OutputIndex1 := uos_AddIntoFile(0,edit5.Text,-1,-1, 0, -1);
+
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar): cint32;
                /////// Add a Output into audio wav file with Default parameters
               //////////// PlayerIndex : Index of a existing Player
@@ -176,6 +177,7 @@ function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
                //////////// FramesCount : default : -1 (65536)
                //  result :  Output Index in array
                /// example : OutputIndex1 := uos_AddFromDevIn(-1,-1,-1,-1,-1,-1);
+
 function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
               ////// Add a Input from Device Input with custom parameters
               ///////// PlayerIndex : Index of a existing Player
@@ -778,7 +780,7 @@ begin
   Result := uosPlayers[PlayerIndex].AddFromFile(Filename, -1, -1, -1);
 end;
 
-{$IFDEF UNIX}
+{$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
 function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
                SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
             /////// Add a Input from Audio URL

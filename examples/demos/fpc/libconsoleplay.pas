@@ -66,8 +66,9 @@ var
 
             {$IFDEF Darwin}
     ordir := copy(ordir, 1, Pos('/uos', ordir) - 1);
+     uoslib_FileName := ordir + 'libuoslib.so';
     PA_FileName := ordir + 'lib/Mac/32bit/libuos-32.dylib';
-    PA_FileName := ordir + '/lib/Mac/32bit/LibSndFile-32.dylib';
+    PA_FileName := ordir + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     SF_FileName := ordir + '/lib/Mac/32bit/LibSndFile-32.dylib';
     sndfilename := ordir + '/sound/test.flac';
              {$ENDIF}

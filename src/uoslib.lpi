@@ -11,7 +11,6 @@
       <Title Value="uos"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
-      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -34,10 +33,8 @@
       <Unit0>
         <Filename Value="uoslib.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="uoslib"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="1"/>
         <CursorPos X="56" Y="198"/>
         <UsageCount Value="60"/>
         <Loaded Value="True"/>
@@ -48,8 +45,8 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="1"/>
-        <CursorPos X="2" Y="3"/>
+        <TopLine Value="179"/>
+        <CursorPos X="5" Y="206"/>
         <UsageCount Value="28"/>
         <Loaded Value="True"/>
       </Unit1>
@@ -88,7 +85,7 @@
         <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
         <TopLine Value="53"/>
-        <CursorPos X="2" Y="79"/>
+        <CursorPos X="53" Y="72"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit7>
@@ -97,14 +94,12 @@
         <UnitName Value="uos_flat"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="1"/>
         <CursorPos X="2" Y="2"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit8>
       <Unit9>
         <Filename Value="../../fpGUIlib/src/fpgui.pas"/>
-        <UnitName Value="fpgui"/>
         <WindowIndex Value="1"/>
         <TopLine Value="173"/>
         <CursorPos X="29" Y="177"/>
@@ -121,7 +116,6 @@
       <Unit11>
         <Filename Value="uos_jni.pas"/>
         <UnitName Value="uos_jni"/>
-        <EditorIndex Value="0"/>
         <WindowIndex Value="1"/>
         <TopLine Value="538"/>
         <CursorPos X="54" Y="558"/>
@@ -130,7 +124,6 @@
       </Unit11>
       <Unit12>
         <Filename Value="../../fpGUIlib/src/fpglib_class.pas"/>
-        <UnitName Value="fpglib_class"/>
         <WindowIndex Value="1"/>
         <TopLine Value="77"/>
         <CursorPos X="46" Y="95"/>
@@ -138,7 +131,6 @@
       </Unit12>
       <Unit13>
         <Filename Value="../../fpGUIlib/src/jni.pas"/>
-        <UnitName Value="jni"/>
         <WindowIndex Value="1"/>
         <TopLine Value="260"/>
         <CursorPos X="31" Y="285"/>
@@ -146,7 +138,6 @@
       </Unit13>
       <Unit14>
         <Filename Value="../../fpGUIlib/src/sakfpg.pas"/>
-        <UnitName Value="sakfpg"/>
         <WindowIndex Value="1"/>
         <TopLine Value="297"/>
         <CursorPos X="122" Y="130"/>
@@ -163,7 +154,7 @@
         <Loaded Value="True"/>
       </Unit15>
     </Units>
-    <JumpHistory Count="24" HistoryIndex="23">
+    <JumpHistory Count="27" HistoryIndex="26">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="330" Column="30" TopLine="323"/>
@@ -260,6 +251,18 @@
         <Filename Value="uoslib.pas"/>
         <Caret Line="179" Column="57" TopLine="179"/>
       </Position24>
+      <Position25>
+        <Filename Value="uos.pas"/>
+        <Caret Line="39" Column="54" TopLine="22"/>
+      </Position25>
+      <Position26>
+        <Filename Value="uos.pas"/>
+        <Caret Line="74" Column="21" TopLine="46"/>
+      </Position26>
+      <Position27>
+        <Filename Value="uos.pas"/>
+        <Caret Line="413" Column="22" TopLine="386"/>
+      </Position27>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -296,7 +299,6 @@
       <ConfigFile>
         <CustomConfigFile Value="True"/>
       </ConfigFile>
-      <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
   <Debugging>
@@ -312,5 +314,4 @@
       </Item3>
     </Exceptions>
   </Debugging>
-  <EditorMacros Count="0"/>
 </CONFIG>
