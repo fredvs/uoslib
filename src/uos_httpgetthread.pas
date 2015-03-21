@@ -27,6 +27,7 @@ type
     procedure Execute; override;
    public
     InHandle: THandle;
+    ReDirectURL: String ;
     constructor Create();
     procedure  WantedURL(AWantedURL: String);
     property IsRunning: Boolean read FIsRunning;
@@ -52,6 +53,7 @@ var
   Search: String = 'location:';
 begin
   Result := '';
+  ReDirectURL := '';
   for S In AResponseStrings do
   begin
     WriteLn(S);
@@ -84,14 +86,18 @@ begin
       if Http.ResponseStatusCode = 302 then
       begin
         URL := GetRedirectURL(Http.ResponseHeaders);
+        RedirectURL := RedirectURL + URL + ' ' ;
+        writeln('Redirect URL: ' + RedirectURL) ;
         if URL <> '' then
           Continue;
       end
       else
-        raise E;
+       Break;
+       // raise E;
     end
     else
-      Raise;
+    //  Raise;
+     Break;
   end;
   Break;
   until False;
