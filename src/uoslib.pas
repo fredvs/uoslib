@@ -1,37 +1,15 @@
+{This unit is part of United Openlibraries of Sound (uos)
+  This is the main uos unit.
+  License : modified LGPL.
+  Fred van Stappen fiens@hotmail.com }
+
 library uoslib ;
 
-{.$DEFINE Java}     //// uncomment if you want a Java-compatible library
+{$mode objfpc}{$H+}
+{$PACKRECORDS C}
 
-///////////////////////////////////////////////////////////////////////////////
-//                                                                           //
-//    uoslib (United Open-libraries of Sound) audio processing library       //
-//           That library unify the best audio libraries :                   //
-//              PortAudio, Sndfile, Mpg123, SoundTouch.                      //
-//                                                                           //
-//          Many thanks to Sandro Cumerlato and Tomas Hajny                  //
-//                 Fred van Stappen / fiens@hotmail.com                      //
-///////////////////////////////////////////////////////////////////////////////
-
-// License :
-
-//  uos audio processing library
-//  Copyright (c) Fred van Stappen
-
-//  This library is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU Lesser General Public
-//  License as published by the Free Software Foundation; either
-//  version 2.1 of the License, or (at your option) any later version.
-
-//  This library is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-//  Lesser General Public License for more details.
-
-//  You should have received a copy of the GNU Lesser General Public
-//  License along with this library; if not, write to the Free Software
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-////////////////////////////////////////////////////////////////////////////////
+// for custom config =>  edit define.inc ( also if you want a java-compatible library )
+{$I define.inc}
 
 uses
  // cmem,            // uncomment it if your programs use cmem...
@@ -40,7 +18,7 @@ uses
  cwstring,
  {$ENDIF}
   Classes,
-  {$IF DEFINED(Java)}
+  {$IF DEFINED(java)}
   uos,
   uos_jni,
   {$endif}
@@ -48,12 +26,12 @@ uses
 
 /////////// General public procedure/function
 
-procedure uos_checksynchro({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject {$endif}) ; cdecl;
+procedure uos_checksynchro({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject {$endif}) ; cdecl;
 begin
 checksynchronize() ;
 end;
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 procedure uos_initclass(PEnv: PJNIEnv; Obj: JObject; MClass : JString) ; cdecl;
 var
 MainClass : Pchar ;
@@ -64,44 +42,79 @@ begin
 end;
 {$endif} 
 
-function uos_GetVersion({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject {$endif}) : cint32 ; cdecl;
+function uos_GetVersion({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject {$endif}) : cint32 ; cdecl;
 begin
 result := uos_flat.uos_GetVersion() ;
 end;
 
-{$IF DEFINED(Java)}
-function uos_loadlib(PEnv: PJNIEnv; Obj: JObject; PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: JString) : cint32 ; cdecl;
+{$IF DEFINED(java)}
+function uos_loadlib(PEnv: PJNIEnv; Obj: JObject; PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: JString) : cint32 ; cdecl;
   begin
 result := uos_flat.uos_loadlib((PEnv^^).GetStringUTFChars(PEnv, PortAudioFileName, nil),
                              (PEnv^^).GetStringUTFChars(PEnv, SndFileFileName, nil),
                              (PEnv^^).GetStringUTFChars(PEnv, Mpg123FileName, nil),
-                             (PEnv^^).GetStringUTFChars(PEnv, SoundTouchFileName, nil));
+                             (PEnv^^).GetStringUTFChars(PEnv, Mp4ffFileName, nil),
+                             (PEnv^^).GetStringUTFChars(PEnv, FaadFileName, nil),
+                             (PEnv^^).GetStringUTFChars(PEnv, opusfileFileName, nil));
       (PEnv^^).ReleaseStringUTFChars(PEnv, PortAudioFileName, nil);
       (PEnv^^).ReleaseStringUTFChars(PEnv, SndFileFileName, nil);
       (PEnv^^).ReleaseStringUTFChars(PEnv, Mpg123FileName, nil);
-      (PEnv^^).ReleaseStringUTFChars(PEnv, SoundTouchFileName, nil);
+      (PEnv^^).ReleaseStringUTFChars(PEnv, Mp4ffFileName, nil);
+      (PEnv^^).ReleaseStringUTFChars(PEnv, FaadFileName, nil);
+      (PEnv^^).ReleaseStringUTFChars(PEnv, opusfileFileName, nil);
  end;
 {$else}
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar) : cint32; cdecl;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32; cdecl;
 ////// load libraries... if libraryfilename = '' or nil  =>  do not load it...
 begin
- result := uos_flat.uos_loadlib(PortAudioFileName , SndFileFileName, Mpg123FileName, SoundTouchFileName) ;
+ result := uos_flat.uos_loadlib(PortAudioFileName , SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName) ;
 end;
 {$endif}
 
-procedure uos_unloadlib({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject {$endif}); cdecl;
+
+{$IF DEFINED(java)}
+function uos_loadPlugin(PEnv: PJNIEnv; Obj: JObject; PluginName, PluginFilename: JString) : cint32; cdecl;
+        ////// load plugin...
+ begin
+result := uos_flat.uos_loadPlugin((PEnv^^).GetStringUTFChars(PEnv, PluginName, nil),
+                             (PEnv^^).GetStringUTFChars(PEnv, PluginFilename, nil));
+      (PEnv^^).ReleaseStringUTFChars(PEnv, PluginName, nil);
+      (PEnv^^).ReleaseStringUTFChars(PEnv, PluginFilename, nil);
+     
+ end;
+{$else}
+function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32; cdecl;
+begin
+ result := uos_flat.uos_loadPlugin(PluginName, PluginFilename) ;
+end;
+{$endif}
+
+{$IF DEFINED(java)}        
+procedure uos_UnloadPlugin(PEnv: PJNIEnv; Obj: JObject; PluginName: PChar); cdecl;
+ begin
+uos_flat.uos_UnloadPlugin((PEnv^^).GetStringUTFChars(PEnv, PluginName, nil));
+      (PEnv^^).ReleaseStringUTFChars(PEnv, PluginName, nil);
+end;
+{$else}
+procedure uos_UnloadPlugin(PluginName: PChar); cdecl;
+begin
+uos_flat.uos_UnloadPlugin(PluginName) ;
+end;
+{$endif}
+
+procedure uos_unloadlib({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject {$endif}); cdecl;
 ////// Unload all libraries and free everything... Do not forget to call it before close application...
 begin
   uos_flat.uos_unloadlib();
 end;
 
-procedure uos_unloadlibCust({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PortAudio : boolean; SndFile: boolean; Mpg123: boolean; SoundTouch: boolean); cdecl;
+procedure uos_unloadlibCust({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PortAudio : boolean; SndFile: boolean; Mpg123: boolean; AAC: boolean ;  opus: boolean); cdecl;
  ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
-uos_flat.uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch);
+uos_flat.uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus);
 end;
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 function uos_GetInfoDeviceStr(PEnv: PJNIEnv; Obj: JObject) : Jstring ; cdecl;
 var
 infdev : PAnsiChar;
@@ -116,14 +129,14 @@ result :=  uos_flat.uos_GetInfoDeviceStr();
 end;
 {$endif}
 
-procedure uos_CreatePlayer({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject ; {$endif}PlayerIndex: cint32) ; cdecl;
+procedure uos_CreatePlayer({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject ; {$endif}PlayerIndex: cint32) ; cdecl;
         //// PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, soundcard, ...)
         //// If PlayerIndex already exists, it will be overwriten...
 begin
 uos_flat.uos_CreatePlayer(PlayerIndex);
 end;
 
-function uos_AddIntoDevOut({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; Device: cint32; Latency: CDouble;
+function uos_AddIntoDevOut({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; Device: cint32; Latency: CDouble;
             SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ): cint32;  cdecl;
           ////// Add a Output into Device Output with default parameters
           //////////// PlayerIndex : Index of a existing Player
@@ -138,14 +151,14 @@ begin
  result :=  uos_flat.uos_AddIntoDevOut(PlayerIndex, Device, Latency, SampleRate, Channels, SampleFormat, FramesCount) ;
 end;
 
-function uos_AddIntoDevOutDef({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject ; {$endif} PlayerIndex: cint32): cint32; cdecl;
+function uos_AddIntoDevOutDef({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject ; {$endif} PlayerIndex: cint32): cint32; cdecl;
           ////// Add a Output into Device Output with default parameters
           //////////// PlayerIndex : Index of a existing Player
 begin
  result :=  uos_flat.uos_AddIntoDevOut(PlayerIndex);
 end;
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 function uos_AddFromFile(PEnv: PJNIEnv; Obj: JObject ; PlayerIndex: cint32; Filename: JString; OutputIndex: cint32;
               SampleFormat: shortint ; FramesCount: cint32): cint32;  cdecl;
             /////// Add a input from audio file with default parameters
@@ -167,7 +180,7 @@ function uos_AddFromFile(PlayerIndex: cint32; Filename: Pchar; OutputIndex: cint
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 function uos_AddFromFileDef(PEnv: PJNIEnv; Obj: JObject ;PlayerIndex: cint32; Filename: JString): cint32; cdecl;
             /////// Add a input from audio file with default parameters
             //////////// PlayerIndex : Index of a existing Player
@@ -185,9 +198,8 @@ end;
 {$endif}
 
 {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
-{$IF DEFINED(Java)}
-function uos_AddFromURL(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
-       SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
+{$IF DEFINED(java)}
+function uos_AddFromURL(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL: PChar): LongInt; cdecl;
     /////// Add a Input from Audio URL
       ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
       ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
@@ -195,20 +207,20 @@ function uos_AddFromURL(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL
       //////////// FramesCount : default : -1 (65536)
       ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
 begin
-result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL, OutputIndex, SampleFormat, FramesCount );
+result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL );
 end;
 {$else}
-function uos_AddFromURL( PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
-       SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
+function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
+  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32 ; ICYon : boolean): cint32;
  begin
- result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL, OutputIndex, SampleFormat, FramesCount );
+ result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL, OutputIndex, SampleFormat, FramesCount, AudioFormat , ICYon );
  end;
 {$ENDIF}
 {$ENDIF}
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 function uos_AddIntoFile(PEnv: PJNIEnv; Obj: JObject ; PlayerIndex: cint32; Filename: JString; SampleRate: cint32;
-                 Channels: cint32; SampleFormat: shortint ; FramesCount: cint32): cint32; cdecl;
+                 Channels: cint32; SampleFormat: shortint ; FramesCount: cint32; FileFormat: cint32): cint32; cdecl;
                /////// Add a Output into audio wav file with custom parameters
                //////////// PlayerIndex : Index of a existing Player
                ////////// FileName : filename of saved audio wav file
@@ -216,21 +228,22 @@ function uos_AddIntoFile(PEnv: PJNIEnv; Obj: JObject ; PlayerIndex: cint32; File
                //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
                //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
                //////////// FramesCount : default : -1 (= 65536)
+               // FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
                //  result :  Output Index in array
-               //////////// example : OutputIndex1 := uos_AddIntoFile(0,edit5.Text,-1,-1, 0, -1);
+               //////////// example : OutputIndex1 := uos_AddIntoFile(0,edit5.Text,-1,-1, 0, -1, -1);
 begin
- result :=  uos_flat.uos_AddIntoFile(PlayerIndex,  (PEnv^^).GetStringUTFChars(PEnv, Filename, nil), SampleRate, Channels, SampleFormat, FramesCount);
+ result :=  uos_flat.uos_AddIntoFile(PlayerIndex,  (PEnv^^).GetStringUTFChars(PEnv, Filename, nil), SampleRate, Channels, SampleFormat, FramesCount, FileFormat);
  (PEnv^^).ReleaseStringUTFChars(PEnv, Filename, nil);
 end;
  {$else}
-function uos_AddIntoFile(PlayerIndex: cint32; Filename: Pchar; SampleRate: cint32;
-                 Channels: cint32; SampleFormat: shortint ; FramesCount: cint32): cint32; cdecl;
+function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
+  Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
 begin
- result :=  uos_flat.uos_AddIntoFile(PlayerIndex, Filename, SampleRate, Channels, SampleFormat, FramesCount);
+ result :=  uos_flat.uos_AddIntoFile(PlayerIndex, Filename, SampleRate, Channels, SampleFormat, FramesCount,  FileFormat);
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 function uos_AddIntoFileDef(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; Filename: JString): cint32; cdecl;
                /////// Add a Output into audio wav file with Default parameters
               //////////// PlayerIndex : Index of a existing Player
@@ -248,47 +261,46 @@ end;
 {$endif}
 
 
-function uos_AddFromDevIn({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-             SampleRate: cint32; Channels: cint32; OutputIndex: cint32;
+function uos_AddFromDevIn({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; Device: cint32; Latency: CDouble;
+             SampleRate: cint32; OutputIndex: cint32;
              SampleFormat: shortint; FramesCount : cint32): cint32; cdecl;
               ////// Add a Input from Device Input with custom parameters
               //////////// PlayerIndex : Index of a existing Player
                //////////// Device ( -1 is default Input device )
                //////////// Latency  ( -1 is latency suggested ) )
                //////////// SampleRate : delault : -1 (44100)
-               //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
                //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
                //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
                //////////// FramesCount : default : -1 (65536)
                //  result : Output Index in array
                /// example : OutputIndex1 := uos_AddFromDevIn(-1,-1,-1,-1,-1,-1);
 begin
- result :=  uos_flat.uos_AddFromDevIn(PlayerIndex, Device, Latency, SampleRate, Channels, OutputIndex,
+ result :=  uos_flat.uos_AddFromDevIn(PlayerIndex, Device, Latency, SampleRate, OutputIndex,
                SampleFormat, FramesCount);
 end;
 
-function uos_AddFromDevInDef({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32): cint32 ; cdecl;
+function uos_AddFromDevInDef({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32): cint32 ; cdecl;
               ////// Add a Input from Device Input with default parameters
               ///////// PlayerIndex : Index of a existing Player
  begin
   result :=  uos_flat.uos_AddFromDevIn(PlayerIndex);
  end;
 
-function uos_InputGetSampleRate({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cint32; cdecl;
+function uos_InputGetSampleRate({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cint32; cdecl;
                    ////////// InputIndex : InputIndex of existing input
                   ////// result : default sample rate
 begin
  result :=  uos_flat.uos_InputGetSampleRate(PlayerIndex, InputIndex) ;
 end;
 
-function uos_InputGetChannels({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cint32; cdecl;
+function uos_InputGetChannels({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cint32; cdecl;
                    ////////// InputIndex : InputIndex of existing input
                   ////// result : default channels
 begin
  result :=  uos_flat.uos_InputGetChannels(PlayerIndex, InputIndex) ;
 end;
 
-procedure uos_AddDSPVolumeIn({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
+procedure uos_InputAddDSPVolume({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                 VolRight: double); cdecl;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
@@ -297,10 +309,10 @@ procedure uos_AddDSPVolumeIn({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$e
                ////////// VolRight : Right volume
                ////////// example  DSPIndex1 := uos_AddDSPVolumeIn(0,InputIndex1,1,1);
 begin
-uos_flat.uos_AddDSPVolumeIn(PlayerIndex, InputIndex, VolLeft, VolRight) ;
+uos_flat.uos_InputAddDSPVolume(PlayerIndex, InputIndex, VolLeft, VolRight) ;
 end;
 
-procedure uos_AddDSPVolumeOut({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
+procedure uos_OutputAddDSPVolume({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
                  VolRight: double); cdecl;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
@@ -309,10 +321,10 @@ procedure uos_AddDSPVolumeOut({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$
                ////////// VolRight : Right volume
               ////////// example  DSPIndex1 := uos_AddDSPVolumeOut(0,InputIndex1,1,1);
 begin
-uos_flat.uos_AddDSPVolumeOut(PlayerIndex, OutputIndex, VolLeft, VolRight) ;
+uos_flat.uos_OutputAddDSPVolume(PlayerIndex, OutputIndex, VolLeft, VolRight) ;
 end;
 
-procedure uos_SetDSPVolumeIn({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32;
+procedure uos_InputSetDSPVolume({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32;
                  VolLeft: double; VolRight: double; Enable: boolean); cdecl;
                ////////// InputIndex : InputIndex of a existing Input
                //////////// PlayerIndex : Index of a existing Player
@@ -321,10 +333,10 @@ procedure uos_SetDSPVolumeIn({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$e
                ////////// Enable : Enabled
                ////////// example  uos_SetDSPVolumeIn(0,InputIndex1, 1,0.8,True);
 begin
-uos_flat.uos_SetDSPVolumeIn(PlayerIndex, InputIndex, VolLeft, VolRight, Enable) ;
+uos_flat.uos_InputSetDSPVolume(PlayerIndex, InputIndex, VolLeft, VolRight, Enable) ;
 end;
 
-procedure uos_SetDSPVolumeOut({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; OutputIndex: cint32;
+procedure uos_OutputSetDSPVolume({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; OutputIndex: cint32;
                  VolLeft: double; VolRight: double; Enable: boolean); cdecl;
                ////////// OutputIndex : OutputIndex of a existing Output
                //////////// PlayerIndex : Index of a existing Player
@@ -333,10 +345,10 @@ procedure uos_SetDSPVolumeOut({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$
                ////////// Enable : Enabled
                ////////// example  uos_SetDSPVolumeOut(0,InputIndex1,1,0.8,True);
 begin
-uos_flat.uos_SetDSPVolumeOut(PlayerIndex, OutputIndex, VolLeft, VolRight, Enable) ;
+uos_flat.uos_OutputSetDSPVolume(PlayerIndex, OutputIndex, VolLeft, VolRight, Enable) ;
 end;
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 procedure uos_BeginProc(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; Proc: JString); cdecl;
             ///// Assign the procedure of object to execute  at begining, before loop
             //////////// PlayerIndex : Index of a existing Player
@@ -359,7 +371,7 @@ begin
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 procedure uos_EndProc(PEnv: PJNIEnv; Obj: JObject;PlayerIndex: cint32; Proc: JString); cdecl;
             ///// Assign the procedure of object to execute  at end, after loop
             //////////// PlayerIndex : Index of a existing Player
@@ -382,7 +394,7 @@ begin
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 procedure uos_LoopProcIn(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InIndex: cint32; Proc: JString); cdecl;
             ///// Assign the procedure of object to execute  at end, after loop
             //////////// PlayerIndex : Index of a existing Player
@@ -405,7 +417,7 @@ uos_flat.uos_LoopProcIn(PlayerIndex, InIndex, Proc);
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 procedure uos_LoopProcOut(PEnv: PJNIEnv; Obj: JObject;PlayerIndex: cint32; OutIndex: cint32; Proc: JString); cdecl;
             ///// Assign the procedure of object to execute inside the loop
             //////////// PlayerIndex : Index of a existing Player
@@ -428,7 +440,7 @@ begin
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 procedure uos_LoopBeginProc(PEnv: PJNIEnv; Obj: JObject;PlayerIndex: cint32; Proc: JString); cdecl;
              ///// Assign the procedure of object to execute inside the loop
             //////////// PlayerIndex : Index of a existing Player
@@ -451,7 +463,7 @@ uos_flat.uos_LoopBeginProc(PlayerIndex, Proc);
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 procedure uos_LoopEndProc(PEnv: PJNIEnv; Obj: JObject;PlayerIndex: cint32; Proc: JString); cdecl;
              ///// Assign the procedure of object to execute inside the loop
             //////////// PlayerIndex : Index of a existing Player
@@ -523,8 +535,8 @@ uos_flat.uos_SetDSPin(PlayerIndex, OutputIndex, DSPOutIndex, Enable);
 end;
 }
 
-{$IF DEFINED(Java)}
-function uos_AddFilterIn(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
+{$IF DEFINED(java)}
+function uos_InputAddFilter(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
                    HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
                    AlsoBuf: boolean; proc: JString): cint32;  cdecl;
 var
@@ -533,10 +545,10 @@ begin
  theproc := (PEnv^^).GetStringUTFChars(PEnv, proc, nil);
  uosPlayers[PlayerIndex].PEnv := PEnv;
  uosPlayers[PlayerIndex].Obj:= Obj;
- result := uosPlayers[PlayerIndex].AddFilterIn(InputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, (PEnv^^).GetStaticMethodID(PEnv,theclass,theproc,'()V'));
+ result := uosPlayers[PlayerIndex].InputAddFilter(InputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, (PEnv^^).GetStaticMethodID(PEnv,theclass,theproc,'()V'));
 end;
 {$else}
-function uos_AddFilterIn(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
+function uos_InputAddFilter(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
                     HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
                     AlsoBuf: boolean; LoopProc: TProc): cint32;  cdecl;
                   //////////// PlayerIndex : Index of a existing Player
@@ -551,12 +563,12 @@ function uos_AddFilterIn(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: 
                   //  result : index of DSPIn in array
                   ////////// example :FilterInIndex1 := uos_AddFilterIn(0,InputIndex1,6000,16000,1,2,true,nil);
 begin
-result := uos_flat.uos_AddFilterIn(PlayerIndex, InputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, LoopProc);
+result := uos_flat.uos_InputAddFilter(PlayerIndex, InputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, LoopProc);
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
-procedure uos_SetFilterIn(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
+{$IF DEFINED(java)}
+procedure uos_InputSetFilter(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
                     LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
                     TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; Proc: JString);  cdecl;
 var
@@ -565,10 +577,10 @@ begin
  theproc := (PEnv^^).GetStringUTFChars(PEnv, proc, nil);
  uosPlayers[PlayerIndex].PEnv := PEnv;
  uosPlayers[PlayerIndex].Obj:= Obj;
- uosPlayers[PlayerIndex].SetFilterIn(InputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable,  (PEnv^^).GetStaticMethodID(PEnv,theclass,theproc,'()V'));
+ uosPlayers[PlayerIndex].InputSetFilter(InputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable,  (PEnv^^).GetStaticMethodID(PEnv,theclass,theproc,'()V'));
 end;
 {$else}
-procedure uos_SetFilterIn( PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
+procedure uos_InputSetFilter( PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
                     LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
                     TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);  cdecl;
                   //////////// PlayerIndex : Index of a existing Player
@@ -584,12 +596,12 @@ procedure uos_SetFilterIn( PlayerIndex: cint32; InputIndex: cint32; FilterIndex:
                   ////////// Enable :  Filter enabled
                   ////////// example : SetFilterIn(0,InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 begin
-uos_flat.uos_SetFilterIn(PlayerIndex, InputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable, LoopProc);
+uos_flat.uos_InputSetFilter(PlayerIndex, InputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable, LoopProc);
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
-function uos_AddFilterOut(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
+{$IF DEFINED(java)}
+function uos_OutputAddFilter(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
                    HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
                    AlsoBuf: boolean; proc: JString): cint32;  cdecl;
 var
@@ -598,10 +610,10 @@ begin
  theproc := (PEnv^^).GetStringUTFChars(PEnv, proc, nil);
  uosPlayers[PlayerIndex].PEnv := PEnv;
  uosPlayers[PlayerIndex].Obj:= Obj;
- result := uosPlayers[PlayerIndex].AddFilterOut(OutputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, (PEnv^^).GetStaticMethodID(PEnv,theclass,theproc,'()V'));
+ result := uosPlayers[PlayerIndex].OutputAddFilter(OutputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, (PEnv^^).GetStaticMethodID(PEnv,theclass,theproc,'()V'));
 end;
 {$else}
-function uos_AddFilterOut(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
+function uos_OutputAddFilter(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
                     HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
                     AlsoBuf: boolean; LoopProc: TProc): cint32;  cdecl;
                   //////////// PlayerIndex : Index of a existing Player
@@ -616,12 +628,12 @@ function uos_AddFilterOut(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency
                   //  result :index of DSPOut in array
                   ////////// example :FilterOutIndex1 := uos_AddFilterOut(0,OutputIndex1,6000,16000,1,true,nil);
 begin
-result := uos_flat.uos_AddFilterOut(PlayerIndex, OutputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, LoopProc);
+result := uos_flat.uos_OutputAddFilter(PlayerIndex, OutputIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, LoopProc);
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
-procedure uos_SetFilterOut(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
+{$IF DEFINED(java)}
+procedure uos_OutputSetFilter(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
                     LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
                     TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; Proc: JString);  cdecl;
 var
@@ -630,10 +642,10 @@ begin
  theproc := (PEnv^^).GetStringUTFChars(PEnv, proc, nil);
  uosPlayers[PlayerIndex].PEnv := PEnv;
  uosPlayers[PlayerIndex].Obj:= Obj;
- uosPlayers[PlayerIndex].SetFilterOut(OutputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable, (PEnv^^).GetStaticMethodID(PEnv,theclass,theproc,'()V'));
+ uosPlayers[PlayerIndex].OutputSetFilter(OutputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable, (PEnv^^).GetStaticMethodID(PEnv,theclass,theproc,'()V'));
 end;
 {$else}
-procedure uos_SetFilterOut(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
+procedure uos_OutputSetFilter(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
                     LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
                     TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);  cdecl;
                   //////////// PlayerIndex : Index of a existing Player
@@ -649,11 +661,11 @@ procedure uos_SetFilterOut(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex
                   ////////// LoopProc : External procedure to execute after DSP done
                   ////////// example : SetFilterOut(0,OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
 begin
-uos_flat.uos_SetFilterOut(PlayerIndex, OutputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable, LoopProc);
+uos_flat.uos_OutputSetFilter(PlayerIndex, OutputIndex, FilterIndex, LowFrequency, HighFrequency, Gain, TypeFilter, AlsoBuf, enable, LoopProc);
 end;
 {$endif}
 
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 function uos_AddPlugin(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; PlugName: JString; SampleRate: cint32;
                        Channels: cint32): cint32;  cdecl;
                      /////// Add a plugin , result is PluginIndex
@@ -673,7 +685,7 @@ result := uos_flat.uos_AddPlugin(PlayerIndex, PlugName, SampleRate, Channels);
 end;
 {$endif}
 
-procedure uos_SetPluginSoundTouch({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; PluginIndex: cint32; Tempo: cfloat;
+procedure uos_SetPluginSoundTouch({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; PluginIndex: cint32; Tempo: cfloat;
                        Pitch: cfloat; Enable: boolean);  cdecl;
                      ////////// PluginIndex : PluginIndex Index of a existing Plugin.
                      //////////// PlayerIndex : Index of a existing Player
@@ -681,59 +693,59 @@ begin
 uos_flat.uos_SetPluginSoundTouch(PlayerIndex, PluginIndex, Tempo, Pitch, Enable);
 end;
 
-function uos_GetStatus({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32) : cint32; cdecl;
+function uos_GetStatus({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32) : cint32; cdecl;
              /////// Get the status of the player :-1 => error,  0 => has stopped, 1 => is running, 2 => is paused.
 begin
 result := uos_flat.uos_GetStatus(PlayerIndex);
 end;
 
-procedure uos_Seek(PlayerIndex: cint32; InputIndex: cint32; pos: {$if defined(cpu64)} cint64 {$else} cint32 {$endif}); cdecl;
+procedure uos_InputSeek(PlayerIndex: cint32; InputIndex: cint32; pos: {$if defined(cpu64)} cint64 {$else} cint32 {$endif}); cdecl;
                      //// change position in sample
 begin
-uos_flat.uos_Seek(PlayerIndex, InputIndex, pos);
+uos_flat.uos_InputSeek(PlayerIndex, InputIndex, pos);
 end;
 
-procedure uos_SeekSeconds({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32; pos: cfloat); cdecl;
+procedure uos_InputSeekSeconds({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32; pos: cfloat); cdecl;
                      //// change position in seconds
 begin
-uos_flat.uos_SeekSeconds(PlayerIndex, InputIndex, pos);
+uos_flat.uos_InputSeekSeconds(PlayerIndex, InputIndex, pos);
 end;
 
-procedure uos_SeekTime({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32; pos: TTime); cdecl;
+procedure uos_InputSeekTime({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32; pos: TTime); cdecl;
                      //// change position in time format
 begin
-uos_flat.uos_SeekTime(PlayerIndex, InputIndex, pos);
+uos_flat.uos_InputSeekTime(PlayerIndex, InputIndex, pos);
 end;
 
-function uos_InputLength({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): {$if defined(cpu64)} cint64 {$else} cint32 {$endif};  cdecl;
+function uos_InputLength({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): {$if defined(cpu64)} cint64 {$else} cint32 {$endif};  cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : Length of Input in samples
 begin
 result := uos_flat.uos_InputLength(PlayerIndex, InputIndex);
 end;
 
-function uos_InputLengthSeconds({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cfloat;  cdecl;
+function uos_InputLengthSeconds({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cfloat;  cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : Length of Input in seconds
 begin
 result := uos_flat.uos_InputLengthSeconds(PlayerIndex, InputIndex);
 end;
 
-function uos_InputLengthTime({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): TTime; cdecl;
+function uos_InputLengthTime({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): TTime; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : Length of Input in time format
 begin
 result := uos_flat.uos_InputLengthTime(PlayerIndex, InputIndex);
 end;
 
-function uos_InputPosition({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cint32; cdecl;
+function uos_InputPosition({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cint32; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ////// result : current postion in sample
 begin
 result := uos_flat.uos_InputPosition(PlayerIndex, InputIndex);
 end;
 
-procedure uos_InputSetLevelEnable({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);  cdecl;
+procedure uos_InputSetLevelEnable({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);  cdecl;
                       ///////// set level calculation (default is 0)
                   ////////// InputIndex : InputIndex of existing input
                           // 0 => no calcul
@@ -744,7 +756,7 @@ begin
 uos_flat.uos_InputSetLevelEnable(PlayerIndex, InputIndex, enable);
 end;
 
-procedure uos_InputSetPositionEnable({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);  cdecl;
+procedure uos_InputSetPositionEnable({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);  cdecl;
                       ///////// set position calculation (default is 0)
                   ////////// InputIndex : InputIndex of existing input
                           // 0 => no calcul
@@ -753,7 +765,7 @@ begin
 uos_flat.uos_InputSetPositionEnable(PlayerIndex, InputIndex, enable);
 end;
 
-procedure uos_InputSetArrayLevelEnable({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32 ; levelcalc : cint32);
+procedure uos_InputSetArrayLevelEnable({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32 ; levelcalc : cint32);
                 ///////// set add level calculation in level-array (default is 0)
                         // 0 => no calcul
                         // 1 => calcul before all DSP procedures.
@@ -765,68 +777,70 @@ end;
 // todo => function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: LongInt) : TDArFloat;
 
 
-function uos_InputGetLevelLeft({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): double; cdecl;
+function uos_InputGetLevelLeft({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): double; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ////// result : left volume from 0 to 1
 begin
 result := uos_flat.uos_InputGetLevelLeft(PlayerIndex, InputIndex);
 end;
 
-function uos_InputGetLevelRight({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): double; cdecl;
+function uos_InputGetLevelRight({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): double; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ////// result : right volume from 0 to 1
 begin
 result := uos_flat.uos_InputGetLevelRight(PlayerIndex, InputIndex);
 end;
 
-function uos_InputPositionSeconds({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cfloat; cdecl;
+function uos_InputPositionSeconds({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cfloat; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : current postion of Input in seconds
 begin
 result := uos_flat.uos_InputPositionSeconds(PlayerIndex, InputIndex);
 end;
 
-function uos_InputPositionTime({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): TTime; cdecl;
+function uos_InputPositionTime({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): TTime; cdecl;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : current postion of Input in time format
 begin
 result := uos_flat.uos_InputPositionTime(PlayerIndex, InputIndex);
 end;
 
-procedure uos_Play({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32); cdecl;          ///// Start playing
+procedure uos_Play({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32); cdecl;          ///// Start playing
 begin
 uos_flat.uos_Play(PlayerIndex) ;
 end;
 
-procedure uos_RePlay({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32); cdecl;                  ///// Resume playing after pause
+procedure uos_RePlay({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32); cdecl;                  ///// Resume playing after pause
 begin
 uos_flat.uos_RePlay(PlayerIndex) ;
 end;
 
-procedure uos_Stop({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32); cdecl;                    ///// Stop playing and free thread
+procedure uos_Stop({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32); cdecl;                    ///// Stop playing and free thread
 begin
 uos_flat.uos_Stop(PlayerIndex) ;
 end;
 
-procedure uos_Pause({$IF DEFINED(Java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32); cdecl;                   ///// Pause playing
+procedure uos_Pause({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32); cdecl;                   ///// Pause playing
 begin
 uos_flat.uos_Pause(PlayerIndex) ;
 end;
 
 
 exports
-{$IF DEFINED(Java)}
+{$IF DEFINED(java)}
 uos_checksynchro name 'Java_uos_checksynchro',
 uos_loadlib name 'Java_uos_loadlib',
 uos_initclass name 'Java_uos_initclass',
 uos_unloadlib name 'Java_uos_unloadlib',
 uos_unloadlibcust name 'Java_uos_unloadlibcust',
+uos_loadplugin name 'Java_uos_loadplugin',
+uos_unloadplugin name 'Java_uos_unloadplugin',
 uos_getinfodevicestr name 'Java_uos_getinfodevicestr',
 uos_createplayer name 'Java_uos_createplayer',
 uos_addintodevout name 'Java_uos_addintodevout',
 uos_addintodevoutdef name 'Java_uos_addintodevoutdef',
 {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
-uos_addfromurl name 'Java_uos_uos_addfromurl',
+uos_addfromurl name 'Java_uos_addfromurl',
 {$endif}
 uos_addfromfile name 'Java_uos_addfromfile',
 uos_addfromfiledef name 'Java_uos_addfromfiledef',
@@ -840,10 +854,10 @@ uos_loopprocin name 'Java_uos_loopprocin',
 uos_loopprocout name 'Java_uos_loopprocout',
 uos_loopbeginproc name 'Java_uos_loopbeginproc',
 uos_loopendproc name 'Java_uos_loopendproc',
-uos_adddspvolumein name 'Java_uos_adddspvolumein',
-uos_adddspvolumeout name 'Java_uos_adddspvolumeout',
-uos_setdspvolumein name 'Java_uos_setdspvolumein',
-uos_setdspvolumeout name 'Java_uos_setdspvolumeout',
+uos_inputadddspvolume name 'Java_uos_inputadddspvolume',
+uos_outputadddspvolume name 'Java_uos_outputadddspvolume',
+uos_outputsetdspvolume name 'Java_uos_outputsetdspvolume',
+uos_inputsetdspvolume name 'uos_inputsetdspvolume',
 
 { todo
 uos_adddspin name 'Java_uos_adddspin',
@@ -851,16 +865,16 @@ uos_adddspout name 'Java_uos_adddspout',
 uos_setdspin name 'Java_uos_setdspin',
 uos_setdspout name 'Java_uos_setdspout',
 }
-uos_addfilterin name 'Java_uos_addfilterin',
-uos_addfilterout name 'Java_uos_addfilterout',
-uos_setfilterin name 'Java_uos_setfilterin',
-uos_setfilterout name 'Java_uos_setfilterout',
+uos_inputaddfilter name 'Java_uos_inputaddfilter',
+uos_outputaddfilter name 'Java_uos_outputaddfilter',
+uos_inputsetfilter name 'Java_uos_inputsetfilter',
+uos_outputsetfilter name 'Java_uos_outputsetfilter',
 uos_addplugin name 'Java_uos_addplugin',
 uos_setpluginsoundtouch name 'Java_uos_setpluginsoundtouch',
-uos_seek name 'Java_uos_seek',
-uos_seekseconds name 'Java_uos_seekseconds',
+uos_inputseek name 'Java_uos_inputseek',
+uos_inputseekseconds name 'Java_uos_inputseekseconds',
 uos_getstatus name 'Java_uos_getstatus',
-uos_seektime name 'Java_uos_seektime',
+uos_inputseektime name 'Java_uos_seektime',
 uos_inputlength name 'Java_uos_inputlength',
 uos_inputlengthseconds name 'Java_uos_inputlengthseconds',
 uos_inputlengthtime name 'Java_uos_inputlengthtime',
@@ -882,6 +896,8 @@ uos_getversion name 'Java_uos_getversion';
 {$else}
 uos_loadlib name  'uos_loadlib',
 uos_unloadlib name 'uos_unloadlib',
+uos_loadplugin name 'uos_loadplugin',
+uos_unloadplugin name 'uos_unloadplugin',
 uos_checksynchro name 'uos_checksynchro',
 uos_unloadlibcust name 'uos_unloadlibcust',
 uos_getinfodevicestr name 'uos_getinfodevicestr',
@@ -903,26 +919,26 @@ uos_loopprocin name 'uos_loopprocin',
 uos_loopprocout name 'uos_loopprocout',
 uos_loopbeginproc name 'uos_loopbeginproc',
 uos_loopendproc name 'uos_loopendproc',
-uos_adddspvolumein name 'uos_adddspvolumein',
-uos_adddspvolumeout name 'uos_adddspvolumeout',
-uos_setdspvolumein name 'uos_setdspvolumein',
-uos_setdspvolumeout name 'uos_setdspvolumeout',
+uos_inputadddspvolume name 'uos_inputadddspvolume',
+uos_outputadddspvolume name 'uos_outputadddspvolume',
+uos_inputsetdspvolume name 'uos_inputsetdspvolume',
+uos_outputsetdspvolume name 'uos_outputsetdspvolume',
 { todo
 uos_adddspin name 'uos_adddspin',
 uos_adddspout name 'uos_adddspout',
 uos_setdspin name 'uos_setdspin',
 uos_setdspout name 'uos_setdspout',
 }
-uos_addfilterin name 'uos_addfilterin',
-uos_addfilterout name 'uos_addfilterout',
-uos_setfilterin name 'uos_setfilterin',
-uos_setfilterout name 'uos_setfilterout',
+uos_inputaddfilter name 'uos_inputaddfilter',
+uos_outputaddfilter name 'uos_outputaddfilter',
+uos_inputsetfilter name 'uos_inputsetfilter',
+uos_outputsetfilter name 'uos_outputsetfilter',
 uos_addplugin name 'uos_addplugin',
 uos_setpluginsoundtouch name 'uos_setpluginsoundtouch',
-uos_seek name 'uos_seek',
-uos_seekseconds name 'uos_seekseconds',
+uos_inputseek name 'uos_inputseek',
+uos_inputseekseconds name 'uos_inputseekseconds',
 uos_getstatus name 'uos_getstatus',
-uos_seektime name 'uos_seektime',
+uos_inputseektime name 'uos_inputseektime',
 uos_inputlength name 'uos_inputlength',
 uos_inputlengthseconds name 'uos_inputlengthseconds',
 uos_inputlengthtime name 'uos_inputlengthtime',

@@ -75,7 +75,7 @@ var
   uos_addfromfile: function(playerindex: longint; filename: pchar;
   outputindex: longint; sampleformat: shortint; framescount: longint): longint; cdecl;
 
-   {$IFDEF UNIX}
+   {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
   uos_addfromurl: function(playerindex: longint; URL: PChar; OutputIndex: LongInt;
    SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
     {$endif}
@@ -88,7 +88,7 @@ var
   uos_addintofiledef: function(playerindex: longint; filename: pchar): longint; cdecl;
 
   uos_addfromdevin: function(playerindex: longint; device: longint; latency: cdouble;
-             samplerate: longint; channels: longint; outputindex: longint;
+             samplerate: longint; outputindex: longint;
              sampleformat: shortint; framescount : longint): longint; cdecl;
 
   uos_addfromdevindef: function(playerindex: longint): longint; cdecl;
@@ -173,11 +173,16 @@ var
 
   uos_checksynchro: procedure(); cdecl;
 
-  uos_unloadlibcust: procedure(portaudio : boolean; sndfile: boolean; mpg123: boolean; soundtouch: boolean); cdecl;
+  uos_unloadlibcust: procedure(portaudio : boolean; sndfile: boolean; mpg123: boolean;  Mp4ffFileName: boolean; FaadFileName: boolean); cdecl;
 
   ///// this functions should not be used, use uos_loadlibs and uos_unloadlibs instead...
-  uos_loadlib: function(portaudiofilename, sndfilefilename, mpg123filename, soundtouchfilename: pchar): longint; cdecl;
+  uos_loadlib: function(portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName: pchar): longint; cdecl;
+
+  uos_loadplugin: function(PluginName, PluginFilename: pchar): longint; cdecl;
+
   uos_unloadlib: procedure(); cdecl;
+
+  uos_unloadPlugin: procedure(PluginName: pchar); cdecl;
   ////////////////////////
 
   uos_getversion:  function(): longint ; cdecl;    /// uos version
@@ -186,7 +191,7 @@ var
   referencecounter: longint = 0;  // reference counter
 
 function uos_isloaded: boolean; inline;
-function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename, soundtouchfilename: pchar): boolean;
+function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName: pchar): boolean;
 // load the all the libraries (if filename = '' => do not load that library)
 
 procedure uos_unloadlibs();
@@ -219,7 +224,7 @@ begin
   result := (libhandle <> dynlibs.nilhandle);
 end;
 
-function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename, soundtouchfilename: pchar): boolean;
+function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName: pchar): boolean;
 begin
   result := false;
   if libhandle <> 0 then
@@ -243,6 +248,12 @@ begin
         pointer(uos_unloadlib) :=
           getprocaddress(libhandle, 'uos_unloadlib');
 
+        pointer(uos_loadplugin) :=
+          getprocaddress(libhandle, 'uos_loadplugin');
+
+        pointer(uos_unloadplugin) :=
+          getprocaddress(libhandle, 'uos_unloadplugin');
+
         pointer(uos_unloadlibcust) :=
           getprocaddress(libhandle, 'uos_unloadlibcust');
 
@@ -261,7 +272,7 @@ begin
         pointer(uos_addfromfiledef) :=
           getprocaddress(libhandle, 'uos_addfromfiledef');
 
-        {$IFDEF UNIX}
+         {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
           pointer(uos_addfromurl) :=
           getprocaddress(libhandle, 'uos_addfromurl');
          {$endif}
@@ -409,7 +420,7 @@ begin
         referencecounter := 1;
 
         ///// load the audio libraries
-        uos_loadlib(pchar(portaudiofilename), pchar(sndfilefilename), pchar(mpg123filename), pchar(soundtouchfilename));
+       uos_loadlib(pchar(portaudiofilename), pchar(sndfilefilename), pchar(mpg123filename),  pchar(Mp4ffFileName), pchar(FaadFileName));
 
         result := uos_isloaded;
       except

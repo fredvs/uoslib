@@ -58,7 +58,6 @@
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <GenerateDebugInfo Value="False"/>
         <StripSymbols Value="True"/>
         <UseExternalDbgSyms Value="True"/>
       </Debugging>
@@ -72,7 +71,6 @@
     <Other>
       <WriteFPCLogo Value="False"/>
       <CustomOptions Value="-FUunits"/>
-      <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
 </CONFIG>

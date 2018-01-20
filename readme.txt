@@ -2,29 +2,43 @@ This is the library version  of uos : United OpenLib of Sound.
 
 => https://github.com/fredvs/uos
  
+uos : United OpenLib of Sound.
+
 uos unifies the best open-source audio libraries.
+
+For fpc, fpGUI, MSEgui and LCL.
 
 With uos you can:
 
-. Listen to mp3, ogg, wav, flac,... audio files.
+. Listen to mp3, ogg, wav, flac, m4a, opus, cda ... audio files.
 
-. Do internet audio streaming (unix only).
+. Deal with 16, 32 integer or float 32 bit resolution.
 
-. With 16, 32 or float 32 bit resolution.
+. Do internet audio streaming of mp3 and opus files.
 
-. Record all types of input into file.
+. Record all types of input into wav file with 16 or 32 bit resolution.
 
 . Add DSP effects and filters, however many you want and record it.
 
-. Listen to multiple inputs and outputs.
+. Listen to multiple input and output.
 
-uos uses the SoundTouch, PortAudio, SndFile and Mpg123 audio libraries.
+. Produce sound from built-in synthesizer.
+
+uos can use:
+PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile audio libraries and
+SoundTouch, Bs2b audio-effect libraries.
 
 Included in the package:
-. Examples Pascal fpGUI, LCL(Lazarus) and console.
+. Examples fpGUI, MSEgui, LCL and console.
+. Binaries of libraries for Linux, arm-Rapsberry Pi, Windows, Mac osX, FreeBSD.
+ 
+See you at uos forum:
+http://uos.2369694.n4.nabble.com
+
+
+There are pre-compiled libraries also here:
+=> https://github.com/fredvs/uos/releases/
 
 Fred van Stappen
 fiens@hotmail.com
-
-
 

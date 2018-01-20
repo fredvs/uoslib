@@ -143,6 +143,7 @@ begin
   form1.shapeleft.top := 280;
   form1.shaperight.top := 280;
   form1.lposition.caption := '00:00:00.000';
+    application.processmessages;
 end;
 
 procedure tform1.formactivate(sender: tobject);
@@ -257,7 +258,8 @@ begin
   // load the libraries
   // function uos_loadlib(portaudiofilename: string; sndfilefilename: string; mpg123filename: string; soundtouchfilename: string) : integer;
   // you may load one or more libraries . when you want... :
-if uos_loadlibs(pchar(uoslibfilename), pchar(edit1.text), pchar(edit2.text), pchar(edit3.text), pchar(edit5.text)) then
+if (uos_loadlibs(pchar(uoslibfilename), pchar(edit1.text), pchar(edit2.text), pchar(edit3.text), nil, nil)) and
+(uos_loadplugin('soundtouch', pchar(edit5.text)) > -1 ) then
   begin
     hide;
     button1.caption :=
@@ -364,7 +366,7 @@ begin
     ////////// volright : right volume
     ////////// enable : enabled
 
-    plugin1index := uos_addplugin(playerindex1, 'soundtouch', -1, -1);
+   plugin1index := uos_addplugin(playerindex1, 'soundtouch', -1, -1);
     ///// add soundtouch plugin with default samplerate(44100) / channels(2 = stereo)
 
 

@@ -1,52 +1,67 @@
+{This unit is part of United Openlibraries of Sound (uos)}
+
+{This is the Dynamic loading + Unix compatible version of SoundTouch Pascal Wrapper
+ from Sandro Cumerlato <sandro.cumerlato@gmail.com>.
+ of the original C version of Olli Parviainen <oparviai@iki.fi>.
+
+ Added BPMdetect method too.
+ Load library with St_load() and release with St_unload().
+ License : modified LGPL.
+ Fred van Stappen / fiens@hotmail.com}
 
 unit uos_soundtouch;
-{This is the Dynamic loading version of SoundTouch wrapper.
-Load SoundTouch library with St_load() and release it with St_unload().
-With reference counter too...
 
- Fred van Stappen / fiens@hotmail.com
-}
-///////////////////////////////////////////////////////////////////////////////
-//                                                                           //
-//      SoundTouch pascal wrapper for accessing routines from FPC            //
-//                                                                           //
-//          Author : Sandro Cumerlato <sandro.cumerlato@gmail.com>           //
-//                                                                           //
-///////////////////////////////////////////////////////////////////////////////
+{$mode objfpc}{$H+}
 
-// License :
-
-//  SoundTouch audio processing library
-//  Copyright (c) Olli Parviainen
-
-//  This library is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU Lesser General Public
-//  License as published by the Free Software Foundation; either
-//  version 2.1 of the License, or (at your option) any later version.
-
-//  This library is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-//  Lesser General Public License for more details.
-
-//  You should have received a copy of the GNU Lesser General Public
-//  License along with this library; if not, write to the Free Software
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-////////////////////////////////////////////////////////////////////////////////
+{$PACKRECORDS C}
 
 interface
 
 uses
-  DynLibs;
+ ctypes, DynLibs;
+ 
+const
+libst=
+ {$IFDEF unix}
+ 'SoundTouchDll.so';
+  {$ELSE}
+  {$if defined(cpu64)}
+   'SoundTouch_x64.dll';
+     {$else}
+   'SoundTouch.dll';
+     {$endif}
+  {$ENDIF}     
 
 {$IF not DEFINED(windows)}
 type
   THandle = pointer;
-  TArray = single;
 {$endif}
 
+type
+  Tt_bs2bdp = ^Tt_bs2bd;
+  Tt_bs2bd = packed record
+      level : CInt32;
+      srate : CInt32;
+      a0_lo : CDouble;
+      b1_lo : CDouble;
+      a0_hi : CDouble;
+      a1_hi : CDouble;
+      b1_hi : CDouble;
+      gain : CDouble;
+      lfs : packed record
+          asis : array[0..1] of cdouble;
+          lo : array[0..1] of cdouble;
+          hi : array[0..1] of cdouble;
+        end;
+    end;
+
 var
+  bpm_createInstance: function(chan: CInt32; sampleRate : CInt32): THandle; cdecl;
+  bpm_destroyInstance: procedure(h: THandle); cdecl;
+  bpm_getBpm: function(h: THandle): cfloat; cdecl;
+  bpm_putSamples: procedure(h: THandle; const samples: pcfloat;
+  numSamples: cardinal); cdecl;
+
   soundtouch_clear: procedure(h: THandle); cdecl;
   soundtouch_createInstance: function(): THandle; cdecl;
   soundtouch_flush: procedure(h: THandle); cdecl;
@@ -58,9 +73,9 @@ var
   soundtouch_isEmpty: function(h: THandle): integer; cdecl;
   soundtouch_numSamples: function(h: THandle): cardinal; cdecl;
   soundtouch_numUnprocessedSamples: function(h: THandle): cardinal; cdecl;
-  soundtouch_putSamples: procedure(h: THandle; const samples: PSingle;
+  soundtouch_putSamples: procedure(h: THandle; const samples: pcfloat;
   numSamples: cardinal); cdecl;
-  soundtouch_receiveSamples: function(h: THandle; outBuffer: PSingle;
+  soundtouch_receiveSamples: function(h: THandle; outBuffer: pcfloat;
   maxSamples: cardinal): cardinal; cdecl;
   soundtouch_setChannels: procedure(h: THandle; numChannels: cardinal); cdecl;
   soundtouch_setPitch: procedure(h: THandle; newPitch: single); cdecl;
@@ -70,8 +85,7 @@ var
   soundtouch_setRateChange: procedure(h: THandle; newRate: single); cdecl;
   soundtouch_setSampleRate: procedure(h: THandle; srate: cardinal); cdecl;
   soundtouch_destroyInstance: procedure(h: THandle); cdecl;
-  soundtouch_setSetting: function(h: THandle; settingId: integer;
-  Value: integer): boolean; cdecl;
+  soundtouch_setSetting: function(h: THandle; settingId: integer; Value: integer): boolean; cdecl;
   soundtouch_setTempo: procedure(h: THandle; newTempo: single); cdecl;
   soundtouch_setTempoChange: procedure(h: THandle; newTempo: single); cdecl;
 
@@ -80,8 +94,7 @@ var
          
 function ST_IsLoaded : boolean; inline; 
 function ST_Load(const libfilename: string): boolean; // load the lib
-procedure ST_Unload();
-// unload and frees the lib from memory : do not forget to call it before close application.
+procedure ST_Unload(); // unload and frees the lib from memory : do not forget to call it before close application.
 
 implementation
 
@@ -91,6 +104,8 @@ begin
 end;
 
 function ST_Load(const libfilename: string): boolean;
+var
+thelib: string; 
 begin
    Result := False;
   if LibHandle<>0 then 
@@ -98,16 +113,22 @@ begin
  Inc(ReferenceCounter);
 result:=true 
 end  else begin 
-    if Length(libfilename) = 0 then exit;
-    LibHandle:=DynLibs.LoadLibrary(libfilename); // obtain the handle we want
+      if Length(libfilename) = 0 then thelib := libst else thelib := libfilename;
+    LibHandle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want.
   	if LibHandle <> DynLibs.NilHandle then
        begin
     try
-      Pointer(soundtouch_clear) :=
-        GetProcAddress(LibHandle, 'soundtouch_clear');
-      Pointer(soundtouch_createInstance) :=
+    Pointer(soundtouch_createInstance) :=
         GetProcAddress(LibHandle, 'soundtouch_createInstance');
-      Pointer(soundtouch_destroyInstance) :=
+      if   Pointer(soundtouch_createInstance) = nil then  // not the SoundTouchDLL library.
+      begin
+        ST_Unload;
+       result := false end
+      else
+       begin
+         Pointer(soundtouch_clear) :=
+        GetProcAddress(LibHandle, 'soundtouch_clear');
+         Pointer(soundtouch_destroyInstance) :=
         GetProcAddress(LibHandle, 'soundtouch_destroyInstance');
       Pointer(soundtouch_flush) :=
         GetProcAddress(LibHandle, 'soundtouch_flush');
@@ -150,8 +171,20 @@ end  else begin
       Pointer(soundtouch_setTempoChange) :=
         GetProcAddress(LibHandle, 'soundtouch_setTempoChange');
 
+       Pointer(bpm_createInstance) :=
+        GetProcAddress(LibHandle, 'bpm_createInstance');
+      Pointer(bpm_destroyInstance) :=
+        GetProcAddress(LibHandle, 'bpm_destroyInstance');
+      Pointer(bpm_getBpm) :=
+        GetProcAddress(LibHandle, 'bpm_getBpm');
+      Pointer(bpm_putSamples) :=
+        GetProcAddress(LibHandle, 'bpm_putSamples');
+
     Result := St_IsLoaded;
-    ReferenceCounter:=1;   
+    ReferenceCounter:=1;
+
+       end;
+
       except
       ST_Unload;
     end;
@@ -175,4 +208,4 @@ begin
   end;
 end;
 
-end.
+end.

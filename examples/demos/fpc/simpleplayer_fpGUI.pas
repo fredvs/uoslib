@@ -150,7 +150,7 @@ var
   begin
     timersynchro.enabled := false;
     uos_seek(playerindex1, in1index, trackbar1.position);
-    timersynchro.enabled := true;
+   timersynchro.enabled := true;
     trackbar1.tag := 0;
   end;
 
@@ -206,7 +206,7 @@ procedure tsimpleplayer.btncloseclick(sender: tobject; var closeit :tcloseaction
   begin
      timersynchro.enabled:=false;
      timersynchro.free;
-        sleep(100);
+       sleep(100);
     if btnload.enabled = false then
       uos_unloadlibs();
       closeit := cafree;
@@ -217,10 +217,13 @@ procedure tsimpleplayer.btncloseclick(sender: tobject; var closeit :tcloseaction
     str: string;
   begin
     // load the libraries
-    // function uos_loadlib(portaudiofilename: string; sndfilefilename: string; mpg123filename: string; soundtouchfilename: string) : integer;
-    if uos_loadlibs(pchar(uoslibfilename), pchar(filenameedit1.filename), pchar(filenameedit2.filename),
-      pchar(filenameedit3.filename), pchar(filenameedit5.filename)) then
-    begin
+    // function uos_loadlib(portaudiofilename: string; sndfilefilename: string; mpg123filename: string; aacfilename ; aac2filename: string) : integer;
+
+
+if (uos_loadlibs(pchar(uoslibfilename), pchar(filenameedit1.filename), pchar(filenameedit2.filename), pchar(filenameedit3.filename), nil, nil)) and
+(uos_loadplugin('soundtouch', pchar(filenameedit5.filename)) > -1 ) then
+
+   begin
 
       height := 403;
       btnstart.enabled := true;
@@ -243,7 +246,7 @@ procedure tsimpleplayer.btncloseclick(sender: tobject; var closeit :tcloseaction
   begin
     with frm do begin
   timersynchro.enabled:=false;
-  sleep(150);
+ // sleep(150);
     trackbar1.visible := false;
     lposition.visible := false;
 
@@ -396,7 +399,7 @@ procedure tsimpleplayer.btncloseclick(sender: tobject; var closeit :tcloseaction
     uos_endproc(playerindex1,@closeplayer1);
 
     uos_play(playerindex1);  /////// everything is ready, here we are, lets play it...
-    timersynchro.enabled := true;
+   timersynchro.enabled := true;
 
   end;
 

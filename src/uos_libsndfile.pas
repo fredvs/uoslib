@@ -1,54 +1,15 @@
-{
+{This unit is part of United Openlibraries of Sound (uos)}
 
-This is the Dynamic loading version with reference counting of LibSndFile.pas.
-With reference counter too.
- Load the LibSndFile library with sf_load() and
- release it with sf_unload().
-
- Fred van Stappen / fiens@hotmail.com / 2013
-
- }
+{This is the Dynamic loading version with reference counting of LibSndFile.pas.
+ Load the library with sf_load() and release with sf_unload().
+ Thanks to Phoenix for sf_open_virtual (TMemoryStream as input)
+ License : modified LGPL.
+ Fred van Stappen / fiens@hotmail.com }
 
 unit uos_libsndfile;
 
-(*
- - Translation for sndfile.h version 1.0.17 by Ido Kanner idokan at gmail dot com
-*)
-{
-** Copyright (C) 1999-2006 Erik de Castro Lopo <erikd@mega-nerd.com>
-**
-** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU Lesser General Public License as published by
-** the Free Software Foundation; either version 2.1 of the License, or
-** (at your option) any later version.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU Lesser General Public License for more details.
-**
-** You should have received a copy of the GNU Lesser General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-
-** sndfile.h -- system-wide definitions
-**
-** API documentation is in the doc/ directory of the source code tarball
-** and at http://www.mega-nerd.com/libsndfile/api.html.
-
- This is the version 1.0.X header file.
- 
- For the Metrowerks CodeWarrior Pro Compiler (mainly MacOS)
- 
-** The following file types can be read and written.
-** A file type would consist of a major type (ie SF_FORMAT_WAV) bitwise
-** ORed with a minor type (ie SF_FORMAT_PCM). SF_FORMAT_TYPEMASK and
-** SF_FORMAT_SUBMASK can be used to separate the major and minor file
-** types.
-}
-
 {$IFDEF FPC}
-  {$MODE objfpc}
+  {$mode objfpc}{$H+}
   {$PACKENUM 4}(* use 4-byte enums *)
   {$PACKRECORDS C}(* C/C++-compatible record packing *)
   {$MACRO ON}//don't know whatfor !
@@ -57,15 +18,13 @@ unit uos_libsndfile;
 {** MINENUMSIZE is equivalent to Z+}
 {$ENDIF}
 
-{$LONGSTRINGS ON}(* remember: in Lazarus this is not default ! *)
+{$LONGSTRINGS ON}
 {** LONGSTRINGS is equivalent to H+}
-
-
 
 interface
 
 uses
-  dynlibs,
+  dynlibs, classes,
   {$IFDEF UNIX}
     {$IFDEF UseCThreads}
   cthreads,
@@ -76,12 +35,21 @@ uses
   ctypes;
 
   {$ENDIF}
-
+  
+const
+libsf=
+ {$IFDEF unix}
+ 'libsndfile.so.1';
+  {$ELSE}
+ 'sndfile.dll';
+  {$ENDIF}    
+  
+type   
+PMemoryStream = ^TMemoryStream;
+ 
   {$IF Defined(MSWINDOWS)}
-type
   off_t = int64;
    {$IFEND}
-
 
 const
   //* Major formats. *//
@@ -106,7 +74,6 @@ const
   SF_FORMAT_SD2 = $160000;    // Sound Designer 2
   SF_FORMAT_FLAC = $170000;    // FLAC lossless file format
   SF_FORMAT_CAF = $180000;    // Core Audio File format
-
 
 const
   //Subtypes from here on.
@@ -140,7 +107,6 @@ const
   SF_FORMAT_DPCM_8 = $0050;    // 8 bit differential PCM (XI only)
   SF_FORMAT_DPCM_16 = $0051;    // 16 bit differential PCM (XI only)
 
-
 const
   //* Endian-ness options. *//
   SF_ENDIAN_FILE = $00000000;  // Default file endian-ness.
@@ -151,7 +117,6 @@ const
   SF_FORMAT_SUBMASK = $0000FFFF;
   SF_FORMAT_TYPEMASK = $0FFF0000;
   SF_FORMAT_ENDMASK = $30000000;
-
 
 {
 ** The following are the valid command numbers for the sf_command()
@@ -439,31 +404,34 @@ type
     coding_history: array[0..255] of char;//ctypes.cchar;
   end;
 
-type
-  Tsf_vio_get_filelen = function(user_date: pointer): Tsf_count_t; cdecl;
-
-  Tsf_vio_seek = function(offest: Tsf_count_t; whence: ctypes.cint;
-    user_date: pointer): Tsf_count_t; cdecl;
-
-  Tsf_vio_read = function(ptr: Pointer; Count: Tsf_count_t;
-    user_date: pointer): Tsf_count_t; cdecl;
-
-  Tsf_vio_write = function(ptr: Pointer; Count: Tsf_count_t;
-    user_date: pointer): Tsf_count_t; cdecl;
-
-  Tsf_vio_tell = function(user_data: Pointer): Tsf_count_t; cdecl;
-
-
-  PSF_VIRTUAL_IO = ^TSF_VIRTUAL_IO;
-
-  TSF_VIRTUAL_IO = record
-    get_filelen: Tsf_vio_get_filelen;
-    seek: Tsf_vio_seek;
-    Read: Tsf_vio_read;
-    Write: Tsf_vio_write;
-    tell: Tsf_vio_tell;
-  end;
-
+ // Thanks to Phoenix
+ type
+ //pm_get_filelen = ^tm_get_filelen;
+ tm_get_filelen =
+  function (pms: PMemoryStream): Tsf_count_t; cdecl; 
+ //pm_seek = ^tm_seek;
+ tm_seek =
+  function (offset: Tsf_count_t; whence: cint32; pms: PMemoryStream): Tsf_count_t; cdecl; 
+ //pm_read = ^tm_read;
+ tm_read =
+  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
+ //pm_write = ^tm_write;
+ tm_write =
+  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
+ //pm_tell = ^tm_tell;
+ tm_tell =
+  function (pms: PMemoryStream): Tsf_count_t; cdecl; 
+ 
+ TSF_VIRTUAL = packed record
+  sf_vio_get_filelen  : tm_get_filelen;
+  seek         : tm_seek;
+  read         : tm_read;
+  write        : tm_write;
+  tell         : tm_tell;
+ end;
+ 
+ PSF_VIRTUAL = ^TSF_VIRTUAL;  
+ 
 {
 ** Open the specified file for read, write or both. On error, this will
 ** return a NULL pointer. To find the error number, pass a NULL SNDFILE
@@ -485,7 +453,7 @@ var
   close_desc: ctypes.cint): TSNDFILE_HANDLE; cdecl;
 
 var
-  sf_open_virtual: function(sfvirtual: PSF_VIRTUAL_IO; mode: ctypes.cint;
+  sf_open_virtual: function(sfvirtual: PSF_VIRTUAL; mode: ctypes.cint;
   sfinfo: PSF_INFO; user_data: Pointer): TSNDFILE_HANDLE; cdecl;
 
 var
@@ -528,7 +496,6 @@ var
 var
   sf_format_check: function(var info: TSF_INFO): ctypes.cint; cdecl;
 
-
 {
 ** Seek within the waveform data chunk of the SNDFILE. sf_seek () uses
 ** the same values for whence (SEEK_SET, SEEK_CUR and SEEK_END) as
@@ -564,7 +531,6 @@ var
   sf_seek: function(sndfile: TSNDFILE_HANDLE; frame: Tsf_count_t;
   whence: ctypes.cint): Tsf_count_t; cdecl;
 
-
 {
 ** Functions for retrieving and setting string data within sound files.
 ** Not all file types support this features; AIFF and WAV do. For both
@@ -588,7 +554,6 @@ var
 var
   sf_write_raw: function(sndfile: TSNDFILE_HANDLE; ptr: Pointer;
   bytes: Tsf_count_t): Tsf_count_t; cdecl;
-
 
 {
 ** Functions for reading and writing the data chunk in terms of frames.
@@ -632,7 +597,6 @@ var
   sf_writef_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
   frames: Tsf_count_t): Tsf_count_t; cdecl;
 
-
 {
 ** Functions for reading and writing the data chunk in terms of items.
 ** Otherwise similar to above.
@@ -670,7 +634,6 @@ var
   sf_write_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
   frames: Tsf_count_t): Tsf_count_t; cdecl;
 
-
 {
 ** Close the SNDFILE and clean up all memory allocations associated
 ** with this file.
@@ -679,7 +642,6 @@ var
 var
   sf_close: function(sndfile: TSNDFILE_HANDLE): ctypes.cint; cdecl;
 
-
 {
 ** If the file is opened SFM_WRITE or SFM_RDWR, call fsync() on the file
 ** to force the writing of data to disk. If the file is opened SFM_READ
@@ -687,7 +649,6 @@ var
 }
 var
   sf_write_sync: function(sndfile: TSNDFILE_HANDLE): ctypes.cint; cdecl;
-
 
 /////////////////////////////////////////////////////
 {Special function for dynamic loading of lib ...}
@@ -705,13 +666,14 @@ procedure sf_Unload();
 
 function sf_IsLoaded: boolean; inline;
 
-
 implementation
 
 var
   ReferenceCounter: cardinal = 0;  // Reference counter
 
 function sf_Load(const libfilename: string): boolean;
+var
+thelib: string; 
 begin
   Result := False;
   if sf_Handle <> 0 then
@@ -722,9 +684,8 @@ begin
   end
   else
   begin {go & load the library}
-    if Length(libfilename) = 0 then
-      exit;
-    sf_Handle := DynLibs.LoadLibrary(libfilename); // obtain the handle we want
+   if Length(libfilename) = 0 then thelib := libsf else thelib := libfilename;
+    sf_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
     if sf_Handle <> DynLibs.NilHandle then
     begin {now we tie the functions to the VARs from above}
 

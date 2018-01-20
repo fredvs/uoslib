@@ -35,17 +35,16 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
-        <CursorPos X="56" Y="198"/>
+        <TopLine Value="274"/>
+        <CursorPos X="81" Y="281"/>
         <UsageCount Value="60"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="uos.pas"/>
-        <UnitName Value="uos"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="179"/>
+        <TopLine Value="191"/>
         <CursorPos X="5" Y="206"/>
         <UsageCount Value="28"/>
         <Loaded Value="True"/>
@@ -81,7 +80,6 @@
       </Unit6>
       <Unit7>
         <Filename Value="uoslib_h.pas"/>
-        <UnitName Value="uoslib_h"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
         <TopLine Value="53"/>
@@ -91,10 +89,11 @@
       </Unit7>
       <Unit8>
         <Filename Value="uos_flat.pas"/>
-        <UnitName Value="uos_flat"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="1"/>
-        <CursorPos X="2" Y="2"/>
+        <TopLine Value="93"/>
+        <CursorPos X="6" Y="108"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit8>
@@ -115,7 +114,6 @@
       </Unit10>
       <Unit11>
         <Filename Value="uos_jni.pas"/>
-        <UnitName Value="uos_jni"/>
         <WindowIndex Value="1"/>
         <TopLine Value="538"/>
         <CursorPos X="54" Y="558"/>
@@ -145,7 +143,6 @@
       </Unit14>
       <Unit15>
         <Filename Value="uos_mpg123.pas"/>
-        <UnitName Value="uos_mpg123"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="815"/>
@@ -154,7 +151,7 @@
         <Loaded Value="True"/>
       </Unit15>
     </Units>
-    <JumpHistory Count="27" HistoryIndex="26">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="330" Column="30" TopLine="323"/>
@@ -263,6 +260,18 @@
         <Filename Value="uos.pas"/>
         <Caret Line="413" Column="22" TopLine="386"/>
       </Position27>
+      <Position28>
+        <Filename Value="uos.pas"/>
+        <Caret Line="206" Column="5" TopLine="191"/>
+      </Position28>
+      <Position29>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="103" Column="37" TopLine="95"/>
+      </Position29>
+      <Position30>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="281" Column="81" TopLine="274"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

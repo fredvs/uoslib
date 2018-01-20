@@ -1,5 +1,5 @@
-  GNU LESSER GENERAL PUBLIC LICENSE
-                       Version 2.1, February 1999
+ GNU LESSER GENERAL PUBLIC LICENSE
+                      Version 2.1, February 1999
 
  Copyright (C) 1991, 1999 Free Software Foundation, Inc.
  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -468,5 +468,3 @@ SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGES.
 
                      END OF TERMS AND CONDITIONS
-
-

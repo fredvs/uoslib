@@ -1,33 +1,31 @@
+{This unit is part of United Openlibraries of Sound (uos)}
+
+{ This is the dynamical loader for mpg123 library with reference counting.
+  Load the library with mp_load() and release with mp_unload().
+  License : modified LGPL.
+  Fred van Stappen  fiens@hotmail.com }
+
 unit uos_mpg123;
-
-/////// This is the dynamical loader for mpg123 library with reference counting.
-
-//////  Tested in both 32 and 64 bits environnements (Windows, Linux and Macosx).
-
-//////   Based on the --  mpg123rt.pas -- header (many thanks).
-
-/////// Just call the functions Lp_load(your_lib_filename) / Lp_unload(your_lib_filename).                         *
-
-//////         Fred van Stappen     fiens@hotmail.com
-{*******************************************************************************
-*                        --  mpg123rt.pas --                                   *
-*                                                                              *
-*  libmpg123:  MPEG Audio Decoder library (version 1.13.0)                     *
-*                                                                              *
-*                                                                              *
-*  This file is for linking the dll ON RUNTIME                                 *
-*******************************************************************************}
 
 interface
 
+  {$DEFINE newversion}   // uncomment for mpg123 new version
 
   {$PACKENUM 4}(* use 4-byte enums *)
   {$PACKRECORDS C}(* C/C++-compatible record packing *)
-  {$MODE objfpc}
+  {$mode objfpc}{$H+}
 
 {$LONGSTRINGS ON}
 uses
-  dynlibs;
+ ctypes, dynlibs;
+ 
+const
+libmp=
+ {$IFDEF unix}
+ 'libmpg123.so.0';
+  {$ELSE}
+ 'mpg123.dll';
+  {$ENDIF}     
 
 type
   Tmpg123_handle = Pointer;
@@ -75,7 +73,6 @@ const
   // full index with every individual frame.
   MPG123_PREFRAMES = 16;
 
-
 {** mpg123_param_flags - Flag bits for MPG123_FLAGS, use the usual binary or to combine. **}
 const
   MPG123_FORCE_MONO = $7;   //     0111 Force some mono mode: This is a test bitmask
@@ -102,6 +99,11 @@ const
   MPG123_IGNORE_STREAMLENGTH = $1000;
   MPG123_SKIP_ID3V2 = $2000;
 
+   {$IF DEFINED(newversion)}
+      MPG123_IGNORE_INFOFRAME = $4000;
+        MPG123_AUTO_RESAMPLE = $8000;
+        MPG123_PICTURE = $10000;
+    {$endif}
 
 {** mpg123_param_rva - Choices for MPG123_RVA **}
 const
@@ -250,6 +252,7 @@ const  // mpg123_enc_enum
 const
   MPG123_LEFT = $1;
   MPG123_RIGHT = $2;
+  MPG123_LR = $3;
 
 type
 
@@ -264,7 +267,7 @@ type
   psize_t = ^size_t;
 
 type
-  coff_t = integer;  //Int64;
+  coff_t = size_t;  //Int64;
 
 type
 
@@ -296,7 +299,6 @@ type
   Tmpg123_format_support = function(mh: Tmpg123_handle; rate: cardinal;
     encoding: integer): integer; cdecl;
 
-
 type
   Tmpg123_getformat = function(mh: Tmpg123_handle; var rate: cardinal;
     var channels, encoding: integer): integer; cdecl;
@@ -307,6 +309,29 @@ type
 type
   Tmpg123_open_fd = function(mh: Tmpg123_handle; fd: integer): integer; cdecl;
 
+{$IF DEFINED(newversion)}
+  type
+  Tmpg123_open_handle = function(mh: Tmpg123_handle; pha: pointer): integer; cdecl;
+   {* Use an opaque handle as bitstream input. This works only with the
+     *  replaced I/O from mpg123_replace_reader_handle()!
+     *  mpg123_close() will call the cleanup callback for your handle (if you gave one).
+     *  \return MPG123_OK on success
+      }
+
+   type
+  Tmpg123_replace_reader_handle = function(mh : Tmpg123_handle;   r_read : pointer;
+    r_lseek : pointer ; cleanup :  pointer): integer; cdecl;
+   {* Replace I/O functions with your own ones operating on some kind of handle instead of integer descriptors.
+     *  The handle is a void pointer, so you can pass any data you want...
+     *  mpg123_open_handle() is the call you make to use the I/O defined here.
+     *  There is no fallback to internal read/seek here.
+     *  Note: As it would be troublesome to mess with this while having a file open,
+     *  this mpg123_close() is implied here.
+     *  \param r_read The callback for reading (behaviour like posix read).
+     *  \param r_lseek The callback for seeking (like posix lseek).
+     *  \param cleanup A callback to clean up an I/O handle on mpg123_close, can be NULL for none (you take care of cleaning your handles).  }
+ {$endif}
+
 type
   Tmpg123_open_feed = function(mh: Tmpg123_handle): integer; cdecl;
 
@@ -314,7 +339,7 @@ type
   Tmpg123_close = function(mh: Tmpg123_handle): integer; cdecl;
 
 type
-  Tmpg123_read = function(mh: Tmpg123_handle; outmemory: Pointer;
+  Tmpg123_read = function(mh: Tmpg123_handle; outmemory: pcfloat;
     outmemsize: size_t; var done: size_t): integer; cdecl;
 
 type
@@ -415,8 +440,7 @@ const
 (** Data structure for storing information about a frame of MPEG Audio *)
 type
   pmpg123_frameinfo = ^Tmpg123_frameinfo;
-
-  Tmpg123_frameinfo = packed record
+   Tmpg123_frameinfo = packed record
     mpg123_version_version: longword;  (**< The MPEG version (1.0/2.0/2.5). *)
     layer: integer;   (**< The MPEG Audio Layer (MP1/MP2/MP3). *)
     rate: longword;  (**< The sampling rate in Hz. *)
@@ -473,7 +497,6 @@ type
 
 type
   Tmpg123_init_string = procedure(psb: Pmpg123_string); cdecl;
-
 
 type
   Tmpg123_free_string = procedure(psb: Pmpg123_string); cdecl;
@@ -540,40 +563,91 @@ type
     Text: Tmpg123_string;       (**< ... *)
   end;
 
+    {$IF DEFINED(newversion)}
+       {* The picture type values from ID3v2.  }
+      mpg123_id3_pic_type =  Longint;
+      Const
+        mpg123_id3_pic_other = 0;
+        mpg123_id3_pic_icon = 1;
+        mpg123_id3_pic_other_icon = 2;
+        mpg123_id3_pic_front_cover = 3;
+        mpg123_id3_pic_back_cover = 4;
+        mpg123_id3_pic_leaflet = 5;
+        mpg123_id3_pic_media = 6;
+        mpg123_id3_pic_lead = 7;
+        mpg123_id3_pic_artist = 8;
+        mpg123_id3_pic_conductor = 9;
+        mpg123_id3_pic_orchestra = 10;
+        mpg123_id3_pic_composer = 11;
+        mpg123_id3_pic_lyricist = 12;
+        mpg123_id3_pic_location = 13;
+        mpg123_id3_pic_recording = 14;
+        mpg123_id3_pic_performance = 15;
+        mpg123_id3_pic_video = 16;
+        mpg123_id3_pic_fish = 17;
+        mpg123_id3_pic_illustration = 18;
+        mpg123_id3_pic_artist_logo = 19;
+        mpg123_id3_pic_publisher_logo = 20;
+
+     {* Sub data structure for ID3v2, for storing picture data including comment.
+     *  This is for the ID3v2 APIC field. You should consult the ID3v2 specification
+     *  for the use of the APIC field ("frames" in ID3v2 documentation, I use "fields"
+     *  here to separate from MPEG frames).  }
+
+    type
+      PPmpg123_picture = ^Pmpg123_picture;
+      Pmpg123_picture = ^Tmpg123_picture;
+
+      Tmpg123_picture = packed record
+          pictype : char;
+          description : Tmpg123_string;
+          mime_type : Tmpg123_string;
+          size : size_t;
+          data : Pbyte;
+        end;
+
+   {$endif}
+
 type
-  PPmpg123_id3v2 = ^Pmpg123_id3v2;
-  Pmpg123_id3v2 = ^Tmpg123_id3v2;
+    PPmpg123_id3v2 = ^Pmpg123_id3v2;
+     Pmpg123_id3v2 = ^Tmpg123_id3v2;
 
   Tmpg123_id3v2 = packed record
     Version: byte;            (**< 3 or 4 for ID3v2.3 or ID3v2.4. *)
-    pTitle: Pmpg123_string;
+    Title: Pmpg123_string;
     (**< Title string (pointer into text_list). *)
-    pArtist: Pmpg123_string;
+    Artist: Pmpg123_string;
     (**< Artist string (pointer into text_list). *)
-    pAlbum: Pmpg123_string;
+    Album: Pmpg123_string;
     (**< Album string (pointer into text_list). *)
-    pYear: Pmpg123_string;
+    Year: Pmpg123_string;
     (**< The year as a string (pointer into text_list). *)
-    pGenre: Pmpg123_string;   (**< Genre String (pointer into text_list). The genre string(s)
+    Genre: Pmpg123_string;   (**< Genre String (pointer into text_list). The genre string(s)
                                                     may very well need postprocessing, esp. for ID3v2.3. *)
-    pComment: Pmpg123_string;
+    Comment: Pmpg123_string;
     (**< Pointer to last encountered comment text with empty description. *)
                     (* Encountered ID3v2 fields are appended to these lists.
                        There can be multiple occurences, the pointers above always point
                        to the last encountered data. *)
-    pComment_list: Pmpg123_text;  (**< Array of comments. *)
+    Comment_list: Pmpg123_text;  (**< Array of comments. *)
     NumComments: size_t;        (**< Number of comments. *)
-    pText: Pmpg123_text;  (**< Array of ID3v2 text fields *)
+    Text: Pmpg123_text;  (**< Array of ID3v2 text fields *)
     NumTexts: size_t;        (**< Numer of text fields. *)
-    pExtra: Pmpg123_text;
+    Extra: Pmpg123_text;
     (**< The array of extra (TXXX) fields. *)
     NumExtras: size_t;
     (**< Number of extra text (TXXX) fields. *)
+
+     {$IF DEFINED(newversion)}
+      picture : Pmpg123_picture;
+      pictures : size_t;
+     {$endif}
+
   end;
 
 type
-  PPmpg123_id3v1 = ^Pmpg123_id3v1;
-  Pmpg123_id3v1 = ^Tmpg123_id3v1;
+     PPmpg123_id3v1 = ^Pmpg123_id3v1;
+     Pmpg123_id3v1 = ^Tmpg123_id3v1;
 
   Tmpg123_id3v1 = packed record
     tag: array[0..2] of char;
@@ -604,8 +678,8 @@ type
     v2: PPmpg123_id3v2): integer; cdecl;
 
 type
-  Tmpg123_icy = function(mh: Tmpg123_handle; var icy_meta: PPChar): integer; cdecl;
-
+   Tmpg123_icy = function(mh: Tmpg123_handle; var icy_meta: PChar): integer; cdecl;
+  // Tmpg123_icy = function(mh: Tmpg123_handle; icy_meta: PPChar): integer; cdecl; 
 type
   Tmpg123_icy2utf8 = function(icy_text: PChar): PChar; cdecl;
 
@@ -721,6 +795,12 @@ var
 var
   mpg123_open: Tmpg123_open;
   mpg123_open_fd: Tmpg123_open_fd;
+
+ {$IF DEFINED(newversion)}
+  mpg123_open_handle: Tmpg123_open_handle;
+  mpg123_replace_reader_handle: Tmpg123_replace_reader_handle;
+  {$endif}
+
   mpg123_open_feed: Tmpg123_open_feed;
   mpg123_close: Tmpg123_close;
   mpg123_read: Tmpg123_read;
@@ -796,7 +876,6 @@ var
 
 {Special function for dynamic loading of lib ...}
 
-
 var
   Mp_Handle: TLibHandle;
   // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
@@ -817,6 +896,7 @@ end;
 
 function mp_unload(): boolean;
 begin
+result := false;
   // < Reference counting
   if ReferenceCounter > 0 then
     Dec(ReferenceCounter);
@@ -825,14 +905,16 @@ begin
   // >
   if mp_IsLoaded then
   begin
+    mpg123_exit ;
     DynLibs.UnloadLibrary(mp_Handle);
     mp_Handle := DynLibs.NilHandle;
+    result := true;
   end;
-
 end;
 
 function Mp_Load(const libfilename: string): boolean;
-
+var
+thelib: string; 
 begin
   Result := False;
   if Mp_Handle <> 0 then
@@ -842,9 +924,8 @@ begin
   end
   else
   begin {go & load the library}
-    if Length(libfilename) = 0 then
-      exit;
-    Mp_Handle := DynLibs.LoadLibrary(libfilename); // obtain the handle we want
+    if Length(libfilename) = 0 then thelib := libmp else thelib := libfilename;
+    Mp_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
     if Mp_Handle <> DynLibs.NilHandle then
 
     begin
@@ -879,6 +960,13 @@ begin
         GetProcAddress(Mp_Handle, 'mpg123_getformat'));
       mpg123_open := Tmpg123_open(GetProcAddress(Mp_Handle, 'mpg123_open'));
       mpg123_open_fd := Tmpg123_open_fd(GetProcAddress(Mp_Handle, 'mpg123_open_fd'));
+
+     {$IF DEFINED(newversion)}
+      mpg123_open_handle := Tmpg123_open_handle(GetProcAddress(Mp_Handle, 'mpg123_open_handle'));
+     mpg123_replace_reader_handle := Tmpg123_replace_reader_handle(GetProcAddress(Mp_Handle,
+     'mpg123_replace_reader_handle'));
+     {$endif}
+
       mpg123_open_feed := Tmpg123_open_feed(
         GetProcAddress(Mp_Handle, 'mpg123_open_feed'));
       mpg123_close := Tmpg123_close(GetProcAddress(Mp_Handle, 'mpg123_close'));
@@ -955,5 +1043,4 @@ begin
   end;
 end;
 
-
-end.
+end.
