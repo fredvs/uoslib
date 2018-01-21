@@ -75,11 +75,9 @@ var
   uos_addfromfile: function(playerindex: longint; filename: pchar;
   outputindex: longint; sampleformat: shortint; framescount: longint): longint; cdecl;
 
-   {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
-  uos_addfromurl: function(playerindex: longint; URL: PChar; OutputIndex: LongInt;
+   uos_addfromurl: function(playerindex: longint; URL: PChar; OutputIndex: LongInt;
    SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
-    {$endif}
-
+  
     uos_addfromfiledef: function(playerindex: longint; filename: pchar): longint; cdecl;
 
   uos_addintofile: function(playerindex: longint; filename: pchar; samplerate: longint;

@@ -6,7 +6,7 @@ print 'This is a demo of uos with Python...'
 di = sys.path[0]
 dll = cdll.LoadLibrary(di + "/libuoslib.so")
 print 'ok load uos library'
-dll.uos_loadlib(di + '/lib/Linux/64bit/LibPortaudio-64.so', di + '/lib/Linux/64bit/LibSndFile-64.so', di + '/lib/Linux/64bit/LibMpg123-64.so' ,'') 
+dll.uos_loadlib(di + '/lib/Linux/64bit/LibPortaudio-64.so', di + '/lib/Linux/64bit/LibSndFile-64.so', di + '/lib/Linux/64bit/LibMpg123-64.so' ,'' ,'' ,'') 
 print 'ok load all other libraries'
 dll.uos_createplayer(0)
 print 'ok CreatePlayer'

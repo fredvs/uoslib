@@ -197,7 +197,6 @@ begin
 end;
 {$endif}
 
-{$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
 {$IF DEFINED(java)}
 function uos_AddFromURL(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL: PChar): LongInt; cdecl;
     /////// Add a Input from Audio URL
@@ -215,7 +214,6 @@ function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
  begin
  result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL, OutputIndex, SampleFormat, FramesCount, AudioFormat , ICYon );
  end;
-{$ENDIF}
 {$ENDIF}
 
 {$IF DEFINED(java)}
@@ -685,6 +683,7 @@ result := uos_flat.uos_AddPlugin(PlayerIndex, PlugName, SampleRate, Channels);
 end;
 {$endif}
 
+{$IF DEFINED(soundtouch)}
 procedure uos_SetPluginSoundTouch({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; PluginIndex: cint32; Tempo: cfloat;
                        Pitch: cfloat; Enable: boolean);  cdecl;
                      ////////// PluginIndex : PluginIndex Index of a existing Plugin.
@@ -692,6 +691,8 @@ procedure uos_SetPluginSoundTouch({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject
 begin
 uos_flat.uos_SetPluginSoundTouch(PlayerIndex, PluginIndex, Tempo, Pitch, Enable);
 end;
+{$endif}
+
 
 function uos_GetStatus({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32) : cint32; cdecl;
              /////// Get the status of the player :-1 => error,  0 => has stopped, 1 => is running, 2 => is paused.
@@ -839,9 +840,7 @@ uos_getinfodevicestr name 'Java_uos_getinfodevicestr',
 uos_createplayer name 'Java_uos_createplayer',
 uos_addintodevout name 'Java_uos_addintodevout',
 uos_addintodevoutdef name 'Java_uos_addintodevoutdef',
-{$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
 uos_addfromurl name 'Java_uos_addfromurl',
-{$endif}
 uos_addfromfile name 'Java_uos_addfromfile',
 uos_addfromfiledef name 'Java_uos_addfromfiledef',
 uos_addintofile name 'Java_uos_addintofile',
@@ -870,7 +869,9 @@ uos_outputaddfilter name 'Java_uos_outputaddfilter',
 uos_inputsetfilter name 'Java_uos_inputsetfilter',
 uos_outputsetfilter name 'Java_uos_outputsetfilter',
 uos_addplugin name 'Java_uos_addplugin',
+{$IF DEFINED(soundtouch)}
 uos_setpluginsoundtouch name 'Java_uos_setpluginsoundtouch',
+{$endif}
 uos_inputseek name 'Java_uos_inputseek',
 uos_inputseekseconds name 'Java_uos_inputseekseconds',
 uos_getstatus name 'Java_uos_getstatus',
@@ -908,9 +909,7 @@ uos_addfromfile name 'uos_addfromfile',
 uos_addfromfiledef name 'uos_addfromfiledef',
 uos_addintofile name 'uos_addintofile',
 uos_addintofiledef name 'uos_addintofiledef',
-{$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
 uos_addfromurl name 'uos_addfromurl',
-{$endif}
 uos_addfromdevin name 'uos_addfromdevin',
 uos_addfromdevindef name 'uos_addfromdevindef',
 uos_beginproc name 'uos_beginproc',
@@ -934,7 +933,9 @@ uos_outputaddfilter name 'uos_outputaddfilter',
 uos_inputsetfilter name 'uos_inputsetfilter',
 uos_outputsetfilter name 'uos_outputsetfilter',
 uos_addplugin name 'uos_addplugin',
+{$IF DEFINED(soundtouch)}
 uos_setpluginsoundtouch name 'uos_setpluginsoundtouch',
+{$endif}
 uos_inputseek name 'uos_inputseek',
 uos_inputseekseconds name 'uos_inputseekseconds',
 uos_getstatus name 'uos_getstatus',

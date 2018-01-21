@@ -516,8 +516,8 @@ makeoptionson=9
  63
  1
  4095
- 34
- 50
+ 38
+ 54
  63
 compilerusedon=29
  4095
@@ -887,8 +887,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=java_
+finddtext=getbpm
 findhistory=20
+ getbpm
  java_
  uos_loadlib
  loadlib
@@ -908,12 +909,13 @@ findhistory=20
  Tuos_Player.Create
  theparent
  destruct
- constru
 findoptions=1
-editpos=7
- 0,830
+editpos=9
  0,-1073741823
- 0,3
+ 0,-1073741823
+ 0,10
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -925,15 +927,19 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
+bookmarks7=0
+bookmarks8=0
+sourcefiles=9
  ${PROJECTDIR}/uoslib.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
+ /home/fred/uoslib/src/define.inc
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
-relpaths=7
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=9
  uoslib.pas
  uos_flat.pas
  define.inc
@@ -941,7 +947,11 @@ relpaths=7
  uos_flat.pas
  uos_flat.pas
  uos.pas
-ismoduletexts=7
+ uos.pas
+ uos_flat.pas
+ismoduletexts=9
+ 0
+ 0
  0
  0
  0
@@ -958,8 +968,10 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=7
+order=9
  0
+ 7
+ 8
  5
  6
  4
@@ -967,7 +979,7 @@ order=7
  3
  1
 firsttab=0
-index=0
+index=6
 [layout]
 windowlayout=562
  [mainfo.basedock]
@@ -982,8 +994,8 @@ windowlayout=562
  ncy=0
  x=0
  y=0
- cx=1356
- cy=784
+ cx=1147
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -995,16 +1007,16 @@ windowlayout=562
  ny=0
  ncx=0
  ncy=0
- x=40
- y=24
+ x=125
+ y=46
  cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,784
+  basedock,0,0,1147,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1118,7 +1130,7 @@ windowlayout=562
  x=0
  y=0
  cx=205
- cy=598
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1128,8 +1140,8 @@ windowlayout=562
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=1
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1327,9 +1339,9 @@ windowlayout=562
  ncx=0
  ncy=0
  x=0
- y=671
- cx=1356
- cy=113
+ y=512
+ cx=1147
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1428,8 +1440,8 @@ windowlayout=562
  ncy=0
  x=0
  y=0
- cx=1356
- cy=67
+ cx=1147
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1440,12 +1452,12 @@ windowlayout=562
  mdistate=0
  nx=0
  ny=0
- ncx=1356
- ncy=62
+ ncx=1147
+ ncy=54
  x=0
  y=0
- cx=1356
- cy=70
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1455,7 +1467,7 @@ windowlayout=562
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uoslib/src/uoslib.pas
+ value=/home/fred/uoslib/src/define.inc
  history=0
  [debuggerfo.project_options]
  value=1
@@ -1473,8 +1485,8 @@ windowlayout=562
  ncy=0
  x=208
  y=0
- cx=1148
- cy=598
+ cx=939
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1508,9 +1520,9 @@ windowlayout=562
  ncx=0
  ncy=0
  x=0
- y=70
- cx=1356
- cy=598
+ y=54
+ cx=1147
+ cy=455
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
