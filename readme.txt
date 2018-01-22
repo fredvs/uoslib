@@ -1,12 +1,11 @@
-This is the library version  of uos : United OpenLib of Sound.
-
+uoslib is the library version  of uos : United OpenLib of Sound.
 => https://github.com/fredvs/uos
- 
+
+uoslib is a Java or/and system library for various OS, including Unix and Windows.
+
 uos : United OpenLib of Sound.
 
 uos unifies the best open-source audio libraries.
-
-For fpc, fpGUI, MSEgui and LCL.
 
 With uos you can:
 
@@ -29,15 +28,10 @@ PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile audio libraries and
 SoundTouch, Bs2b audio-effect libraries.
 
 Included in the package:
-. Examples fpGUI, MSEgui, LCL and console.
-. Binaries of libraries for Linux, arm-Rapsberry Pi, Windows, Mac osX, FreeBSD.
- 
+. Examples using system native (FPC, Python) and Java native library (Java class).
+
 See you at uos forum:
 http://uos.2369694.n4.nabble.com
-
-
-There are pre-compiled libraries also here:
-=> https://github.com/fredvs/uos/releases/
 
 Fred van Stappen
 fiens@hotmail.com

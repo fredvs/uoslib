@@ -217,8 +217,8 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=292
- y=97
+ x=321
+ y=115
  cx=773
  cy=497
 programparameters=18
@@ -512,7 +512,7 @@ befcommandon=0
 makeoptionson=9
  63
  63
- 4095
+ 4084
  63
  1
  4095
@@ -910,15 +910,16 @@ findhistory=20
  theparent
  destruct
 findoptions=1
-editpos=9
- 0,-1073741823
- 0,-1073741823
- 0,10
+editpos=10
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,766
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -929,17 +930,19 @@ bookmarks5=0
 bookmarks6=0
 bookmarks7=0
 bookmarks8=0
-sourcefiles=9
+bookmarks9=0
+sourcefiles=10
  ${PROJECTDIR}/uoslib.pas
  ${PROJECTDIR}/uos_flat.pas
- /home/fred/uoslib/src/define.inc
+ ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
-relpaths=9
+ /home/fred/uoslib/src/uos_flat.pas
+ ${PROJECTDIR}/uoslib.pas
+relpaths=10
  uoslib.pas
  uos_flat.pas
  define.inc
@@ -949,7 +952,9 @@ relpaths=9
  uos.pas
  uos.pas
  uos_flat.pas
-ismoduletexts=9
+ uoslib.pas
+ismoduletexts=10
+ 0
  0
  0
  0
@@ -968,7 +973,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=9
+order=10
  0
  7
  8
@@ -976,10 +981,11 @@ order=9
  6
  4
  2
+ 9
  3
  1
 firsttab=0
-index=6
+index=2
 [layout]
 windowlayout=562
  [mainfo.basedock]
@@ -1007,8 +1013,8 @@ windowlayout=562
  ny=0
  ncx=0
  ncy=0
- x=125
- y=46
+ x=127
+ y=68
  cx=1157
  cy=621
  rcx=0
@@ -1467,7 +1473,7 @@ windowlayout=562
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uoslib/src/define.inc
+ value=/home/fred/uoslib/src/uos_flat.pas
  history=0
  [debuggerfo.project_options]
  value=1
