@@ -29,6 +29,7 @@ SoundTouch, Bs2b audio-effect libraries.
 
 Included in the package:
 . Examples using system native (FPC, Python) and Java native library (Java class).
+. Binary of audio libraries used by uos for various OS.
 
 See you at uos forum:
 http://uos.2369694.n4.nabble.com

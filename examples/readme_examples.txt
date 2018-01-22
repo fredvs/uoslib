@@ -9,7 +9,7 @@ into
 
 ____________________________________________
 
-You may also copy compiled libuoslib.so or uoslib.dll into
+You may also copy compiled libuos.so or libuos.dll into
 
 /examples/demos/xxxlanguage/
 

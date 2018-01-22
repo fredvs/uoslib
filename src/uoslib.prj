@@ -290,7 +290,7 @@ sysenvmanagereditor=34
  active=1
  visible=1
 mainfile=${PROJECTDIR}uoslib.pas
-targetfile=${PROJECTDIR}/libuoslib
+targetfile=${PROJECTDIR}/libuos
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
@@ -512,19 +512,19 @@ befcommandon=0
 makeoptionson=9
  63
  63
- 4084
- 63
- 1
+ 4044
  4095
- 38
- 54
+ 2
+ 4095
+ 62
+ 62
  63
 compilerusedon=29
- 4095
+ 4039
  0
- 0
- 0
- 0
+ 8
+ 16
+ 32
  0
  0
  0
@@ -565,8 +565,8 @@ exeusedon=14
  0
  0
  0
- 63
- 0
+ 15
+ 48
  0
  0
  0
@@ -887,8 +887,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=getbpm
+finddtext=uos_free
 findhistory=20
+ uos_free
  getbpm
  java_
  uos_loadlib
@@ -908,18 +909,17 @@ findhistory=20
  evPause
  Tuos_Player.Create
  theparent
- destruct
 findoptions=1
 editpos=10
+ 0,910
+ 0,-1073741823
+ 0,10
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,766
+ 0,2140
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -940,7 +940,7 @@ sourcefiles=10
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos.pas
- /home/fred/uoslib/src/uos_flat.pas
+ ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uoslib.pas
 relpaths=10
  uoslib.pas
@@ -985,7 +985,7 @@ order=10
  3
  1
 firsttab=0
-index=2
+index=6
 [layout]
 windowlayout=562
  [mainfo.basedock]
@@ -1013,8 +1013,8 @@ windowlayout=562
  ny=0
  ncx=0
  ncy=0
- x=127
- y=68
+ x=126
+ y=69
  cx=1157
  cy=621
  rcx=0
@@ -1473,7 +1473,7 @@ windowlayout=562
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uoslib/src/uos_flat.pas
+ value=/home/fred/uoslib/src/define.inc
  history=0
  [debuggerfo.project_options]
  value=1
@@ -1534,7 +1534,7 @@ windowlayout=562
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

@@ -103,7 +103,7 @@ end;
 {$endif}
 
 procedure uos_unloadlib({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject {$endif}); cdecl;
-////// Unload all libraries and free everything... Do not forget to call it before close application...
+////// Unload all libraries and free everything...
 begin
   uos_flat.uos_unloadlib();
 end;
@@ -112,6 +112,12 @@ procedure uos_unloadlibCust({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$en
  ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
 uos_flat.uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus);
+end;
+
+procedure uos_free({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject {$endif}); cdecl;
+////// Unload all libraries and free everything... Do not forget to call it before close application...
+begin
+  uos_flat.uos_free();
 end;
 
 {$IF DEFINED(java)}
@@ -834,6 +840,7 @@ uos_loadlib name 'Java_uos_loadlib',
 uos_initclass name 'Java_uos_initclass',
 uos_unloadlib name 'Java_uos_unloadlib',
 uos_unloadlibcust name 'Java_uos_unloadlibcust',
+uos_free name 'Java_uos_free',
 uos_loadplugin name 'Java_uos_loadplugin',
 uos_unloadplugin name 'Java_uos_unloadplugin',
 uos_getinfodevicestr name 'Java_uos_getinfodevicestr',
@@ -901,6 +908,7 @@ uos_loadplugin name 'uos_loadplugin',
 uos_unloadplugin name 'uos_unloadplugin',
 uos_checksynchro name 'uos_checksynchro',
 uos_unloadlibcust name 'uos_unloadlibcust',
+uos_free name 'uos_free',
 uos_getinfodevicestr name 'uos_getinfodevicestr',
 uos_createplayer name 'uos_createplayer',
 uos_addintodevout name 'uos_addintodevout',
