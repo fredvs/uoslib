@@ -168,7 +168,7 @@ function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
 procedure uos_unloadlib();
   // Unload all libraries... Do not forget to call it before close application...
 
-procedure uos_free;  
+procedure uos_free();  
   // Free uos;
   // To use when program terminate.
 

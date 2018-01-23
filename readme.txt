@@ -1,9 +1,7 @@
 uoslib is the library version  of uos : United OpenLib of Sound.
 => https://github.com/fredvs/uos
 
-uoslib is a Java or/and system library for various OS, including Unix and Windows.
-
-uos : United OpenLib of Sound.
+uoslib is a native Java or/and system library for various OS, including Unix and Windows.
 
 uos unifies the best open-source audio libraries.
 

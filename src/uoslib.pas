@@ -22,7 +22,7 @@ uses
   uos,
   uos_jni,
   {$endif}
-  ctypes, uos_flat;
+  ctypes, math, SysUtils, uos_flat;
 
 /////////// General public procedure/function
 
@@ -204,19 +204,36 @@ end;
 {$endif}
 
 {$IF DEFINED(java)}
-function uos_AddFromURL(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL: PChar): LongInt; cdecl;
+function uos_AddFromURLDef(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL: PChar): LongInt; cdecl;
     /////// Add a Input from Audio URL
-      ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
-      ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
-      ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
-      //////////// FramesCount : default : -1 (65536)
-      ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
+    ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
+    
 begin
 result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL );
 end;
 {$else}
+function uos_AddFromURLDef(PlayerIndex: cint32; URL: PChar): cint32; cdecl;
+ begin
+ result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL);
+ end;
+{$ENDIF}
+
+{$IF DEFINED(java)}
+function uos_AddFromURL(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL: PChar ; OutputIndex: cint32;
+  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32 ; ICYon : boolean): cint32; cdecl;
+ // Add a Input from Audio URL with custom parameters
+  // URL : URL of audio file 
+  // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
+  // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
+  // FramesCount : default : -1 (4096)
+  // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+  // example : InputIndex := AddFromURL(0,'http://someserver/somesound.mp3',-1,-1,-1,-1);
+begin
+ result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL, OutputIndex, SampleFormat, FramesCount, AudioFormat , ICYon );
+end;
+{$else}
 function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
-  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32 ; ICYon : boolean): cint32;
+  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32 ; ICYon : boolean): cint32;  cdecl;
  begin
  result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL, OutputIndex, SampleFormat, FramesCount, AudioFormat , ICYon );
  end;
@@ -289,6 +306,47 @@ function uos_AddFromDevInDef({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$e
  begin
   result :=  uos_flat.uos_AddFromDevIn(PlayerIndex);
  end;
+ 
+ function uos_AddFromEndlessMuted({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif}PlayerIndex: cint32; Channels : cint32; FramesCount: cint32): cint32; cdecl;
+  // Add a input from Endless Muted dummy sine wav
+  // FramesCount = FramesCount of input-to-follow 
+  // Channels = Channels of input-to-follow.
+ begin
+  result :=  uos_flat.uos_AddFromEndlessMuted(PlayerIndex, Channels, FramesCount);
+ end;  
+  
+{$IF DEFINED(synthesizer)}
+function uos_AddFromSynth({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif}PlayerIndex: cint32; Frequency: cfloat; VolumeL: cfloat; VolumeR: cfloat;
+Duration : cint32;  OutputIndex: cint32;
+  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32; cdecl;
+  // Add a input from Synthesizer with custom parameters
+  // Frequency : default : -1 (440 htz)
+  // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
+  // VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+  // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+  // SampleRate : delault : -1 (44100)
+  // FramesCount : -1 default : 1024
+  //  result :  Input Index in array  -1 = error
+  // example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
+begin
+ result :=  uos_flat.uos_AddFromSynth(PlayerIndex, Frequency, VolumeL, VolumeR, Duration, OutputIndex, SampleFormat, SampleRate, FramesCount) ;
+end;
+
+procedure uos_InputSetSynth({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif}PlayerIndex: cint32; InputIndex: cint32; Frequency: float; 
+ VolumeL: float; VolumeR: float; Duration: cint32; Enable : boolean); cdecl;
+  // Frequency : in Hertz (-1 = do not change)
+  // VolumeL :  from 0 to 1 (-1 = do not change)
+  // VolumeR :  from 0 to 1 (-1 = do not change)
+  // Duration : in msec (-1 = do not change)
+  // Enabled : true or false 
+begin
+ uos_flat.uos_InputSetSynth(PlayerIndex, InputIndex, Frequency, VolumeL, VolumeR, Duration, Enable) ;
+end;  
+
+  
+{$endif}  
 
 function uos_InputGetSampleRate({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32): cint32; cdecl;
                    ////////// InputIndex : InputIndex of existing input
@@ -303,6 +361,7 @@ function uos_InputGetChannels({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$
 begin
  result :=  uos_flat.uos_InputGetChannels(PlayerIndex, InputIndex) ;
 end;
+
 
 procedure uos_InputAddDSPVolume({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                 VolRight: double); cdecl;
@@ -812,6 +871,96 @@ begin
 result := uos_flat.uos_InputPositionTime(PlayerIndex, InputIndex);
 end;
 
+{$IF DEFINED(java)}
+function uos_InputGetTagTitle(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32 ) : Jstring ; cdecl;
+var
+infdev : PAnsiChar;
+begin
+infdev :=  uos_flat.uos_InputGetTagTitle(PlayerIndex, InputIndex );
+result := JNI_StringToJString(PEnv, infdev) ;
+end;
+{$else}
+function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32) : PChar ; cdecl;
+begin
+result := uos_flat.uos_InputGetTagTitle(PlayerIndex, InputIndex );
+end;
+{$endif}
+
+{$IF DEFINED(java)}
+function uos_InputGetTagArtist(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32 ) : Jstring ; cdecl;
+var
+infdev : PAnsiChar;
+begin
+infdev :=  uos_flat.uos_InputGetTagArtist(PlayerIndex, InputIndex );
+result := JNI_StringToJString(PEnv, infdev) ;
+end;
+{$else}
+function uos_InputGetTagArtist(PlayerIndex: cint32; InputIndex: cint32) : PChar ; cdecl;
+begin
+result := uos_flat.uos_InputGetTagArtist(PlayerIndex, InputIndex );
+end;
+{$endif}
+
+{$IF DEFINED(java)}
+function uos_InputGetTagAlbum(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32 ) : Jstring ; cdecl;
+var
+infdev : PAnsiChar;
+begin
+infdev :=  uos_flat.uos_InputGetTagAlbum(PlayerIndex, InputIndex );
+result := JNI_StringToJString(PEnv, infdev) ;
+end;
+{$else}
+function uos_InputGetTagAlbum(PlayerIndex: cint32; InputIndex: cint32) : PChar ; cdecl;
+begin
+result := uos_flat.uos_InputGetTagAlbum(PlayerIndex, InputIndex );
+end;
+{$endif}
+
+{$IF DEFINED(java)}
+function uos_InputGetTagDate(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32 ) : Jstring ; cdecl;
+var
+infdev : PAnsiChar;
+begin
+infdev :=  uos_flat.uos_InputGetTagDate(PlayerIndex, InputIndex );
+result := JNI_StringToJString(PEnv, infdev) ;
+end;
+{$else}
+function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32) : PChar ; cdecl;
+begin
+result := uos_flat.uos_InputGetTagDate(PlayerIndex, InputIndex );
+end;
+{$endif}
+
+{$IF DEFINED(java)}
+function uos_InputGetTagComment(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32 ) : Jstring ; cdecl;
+var
+infdev : PAnsiChar;
+begin
+infdev :=  uos_flat.uos_InputGetTagComment(PlayerIndex, InputIndex );
+result := JNI_StringToJString(PEnv, infdev) ;
+end;
+{$else}
+function uos_InputGetTagComment(PlayerIndex: cint32; InputIndex: cint32) : PChar ; cdecl;
+begin
+result := uos_flat.uos_InputGetTagComment(PlayerIndex, InputIndex );
+end;
+{$endif}
+
+{$IF DEFINED(java)}
+function uos_InputGetTagTag(PEnv: PJNIEnv; Obj: JObject; PlayerIndex: cint32; InputIndex: cint32 ) : Jstring ; cdecl;
+var
+infdev : PAnsiChar;
+begin
+infdev :=  uos_flat.uos_InputGetTagTag(PlayerIndex, InputIndex );
+result := JNI_StringToJString(PEnv, infdev) ;
+end;
+{$else}
+function uos_InputGetTagTag(PlayerIndex: cint32; InputIndex: cint32) : PChar ; cdecl;
+begin
+result := uos_flat.uos_InputGetTagTag(PlayerIndex, InputIndex );
+end;
+{$endif}
+
 procedure uos_Play({$IF DEFINED(java)}PEnv: PJNIEnv; Obj: JObject; {$endif} PlayerIndex: cint32); cdecl;          ///// Start playing
 begin
 uos_flat.uos_Play(PlayerIndex) ;
@@ -848,10 +997,14 @@ uos_createplayer name 'Java_uos_createplayer',
 uos_addintodevout name 'Java_uos_addintodevout',
 uos_addintodevoutdef name 'Java_uos_addintodevoutdef',
 uos_addfromurl name 'Java_uos_addfromurl',
+uos_addfromurldef name 'Java_uos_addfromurldef',
+uos_addfromsynth name 'Java_uos_addfromsynth',
+uos_inputsetsynth name 'Java_uos_inputsetsynth',
 uos_addfromfile name 'Java_uos_addfromfile',
 uos_addfromfiledef name 'Java_uos_addfromfiledef',
 uos_addintofile name 'Java_uos_addintofile',
 uos_addintofiledef name 'Java_uos_addintofiledef',
+uos_addfromendlessmuted  name 'Java_uos_addfromendlessmuted',
 uos_addfromdevin name 'Java_uos_addfromdevin',
 uos_addfromdevindef name 'Java_uos_addfromdevindef',
 uos_beginproc name 'Java_uos_beginproc',
@@ -896,6 +1049,12 @@ uos_inputpositionseconds name 'Java_uos_inputpositionseconds',
 uos_inputpositiontime name 'Java_uos_inputpositiontime',
 uos_inputgetsamplerate name 'Java_uos_inputgetsamplerate',
 uos_inputgetchannels name 'Java_uos_inputgetchannels',
+uos_inputgettagtitle name 'Java_uos_inputgettagtitle',
+uos_inputgettagartist name 'Java_uos_inputgettagartist',
+uos_inputgettagalbum name 'Java_uos_inputgettagalbum',
+uos_inputgettagdate name 'Java_uos_inputgettagdate',
+uos_inputgettagcomment name 'Java_uos_inputgettagcomment',
+uos_inputgettagtag name 'Java_uos_inputgettagtag',
 uos_play name 'Java_uos_play',
 uos_replay name 'Java_uos_replay',
 uos_stop name 'Java_uos_stop',
@@ -918,8 +1077,12 @@ uos_addfromfiledef name 'uos_addfromfiledef',
 uos_addintofile name 'uos_addintofile',
 uos_addintofiledef name 'uos_addintofiledef',
 uos_addfromurl name 'uos_addfromurl',
+uos_addfromurldef name 'uos_addfromurldef',
+uos_addfromendlessmuted name 'uos_addfromendlessmuted',
 uos_addfromdevin name 'uos_addfromdevin',
 uos_addfromdevindef name 'uos_addfromdevindef',
+uos_addfromsynth name 'Java_uos_addfromsynth',
+uos_inputsetsynth name 'Java_uos_inputsetsynth',
 uos_beginproc name 'uos_beginproc',
 uos_endproc name 'uos_endproc',
 uos_loopprocin name 'uos_loopprocin',
@@ -961,6 +1124,12 @@ uos_inputpositionseconds name 'uos_inputpositionseconds',
 uos_inputpositiontime name 'uos_inputpositiontime',
 uos_inputgetsamplerate name 'uos_inputgetsamplerate',
 uos_inputgetchannels name 'uos_inputgetchannels',
+uos_inputgettagtitle name 'uos_inputgettagtitle',
+uos_inputgettagartist name 'uos_inputgettagartist',
+uos_inputgettagalbum name 'uos_inputgettagalbum',
+uos_inputgettagdate name 'uos_inputgettagdate',
+uos_inputgettagcomment name 'uos_inputgettagcomment',
+uos_inputgettagtag name 'uos_inputgettagtag',
 uos_play name 'uos_play',
 uos_replay name 'uos_replay',
 uos_stop name 'uos_stop',

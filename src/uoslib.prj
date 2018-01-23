@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uoslib/src
 projectfilename=/home/fred/uoslib/src/uoslib.prj
-findinfiledialog=46
+findinfiledialog=49
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,29 +29,32 @@ findinfiledialog=46
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=1
+ value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/uos/examples/
- filecolwidth=0
+  /home/fred/msegui/lib/
+ filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
+ filehistory=1
+  /home/fred/msegui/lib/
  filefilterindex=0
- filefilter=
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=defined(cpu64) and if defined(linux)
- history=8
+ value=mr_all
+ history=10
+  mr_all
+  confirmation
   defined(cpu64) and if defined(linux)
   defined(cpu64) and defined(linux)
   (cpu32)
@@ -65,7 +68,7 @@ findinfiledialog=46
  x=386
  y=189
  cx=339
- cy=251
+ cy=289
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -887,15 +890,17 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=uos_free
+finddtext=addfromfile
 findhistory=20
+ addfromfile
+ inputseek
  uos_free
+ AddFromSynth
  getbpm
  java_
  uos_loadlib
  loadlib
  library
- inputseek
  DSPVolume
  OU_FileName
  filter
@@ -907,58 +912,31 @@ findhistory=20
  terminate
  thethread
  evPause
- Tuos_Player.Create
- theparent
 findoptions=1
-editpos=10
- 0,910
+editpos=5
  0,-1073741823
+ 0,809
  0,10
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,2140
- 0,-1073741823
+ 42,998
+ 0,6
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-sourcefiles=10
+sourcefiles=5
  ${PROJECTDIR}/uoslib.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uoslib.pas
-relpaths=10
+ ${PROJECTDIR}/uos.pas
+relpaths=5
  uoslib.pas
  uos_flat.pas
  define.inc
- uos.pas
- uos_flat.pas
- uos_flat.pas
- uos.pas
- uos.pas
- uos_flat.pas
  uoslib.pas
-ismoduletexts=10
- 0
- 0
- 0
- 0
- 0
+ uos.pas
+ismoduletexts=5
  0
  0
  0
@@ -973,19 +951,14 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=10
+order=5
  0
  7
- 8
- 5
- 6
- 4
  2
- 9
- 3
  1
-firsttab=0
-index=6
+ 3
+firsttab=1
+index=4
 [layout]
 windowlayout=562
  [mainfo.basedock]
@@ -1000,8 +973,8 @@ windowlayout=562
  ncy=0
  x=0
  y=0
- cx=1147
- cy=604
+ cx=1356
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -1013,16 +986,16 @@ windowlayout=562
  ny=0
  ncx=0
  ncy=0
- x=126
- y=69
+ x=123
+ y=70
  cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1147,604
+  basedock,0,0,1356,694
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1119,7 +1092,7 @@ windowlayout=562
  ncy=0
  x=239
  y=115
- cx=678
+ cx=1037
  cy=414
  rcx=0
  rcy=0
@@ -1136,7 +1109,7 @@ windowlayout=562
  x=0
  y=0
  cx=205
- cy=455
+ cy=523
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1146,8 +1119,8 @@ windowlayout=562
  width1=82
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=4
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1345,9 +1318,9 @@ windowlayout=562
  ncx=0
  ncy=0
  x=0
- y=512
- cx=1147
- cy=92
+ y=588
+ cx=1356
+ cy=106
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1446,8 +1419,8 @@ windowlayout=562
  ncy=0
  x=0
  y=0
- cx=1147
- cy=51
+ cx=1356
+ cy=59
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1462,8 +1435,8 @@ windowlayout=562
  ncy=54
  x=0
  y=0
- cx=1147
- cy=54
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1473,7 +1446,7 @@ windowlayout=562
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uoslib/src/define.inc
+ value=/home/fred/uoslib/src/uoslib.pas
  history=0
  [debuggerfo.project_options]
  value=1
@@ -1491,8 +1464,8 @@ windowlayout=562
  ncy=0
  x=208
  y=0
- cx=939
- cy=455
+ cx=1148
+ cy=523
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1526,15 +1499,15 @@ windowlayout=562
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1147
- cy=455
+ y=62
+ cx=1356
+ cy=523
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
