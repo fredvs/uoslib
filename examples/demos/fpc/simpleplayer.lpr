@@ -12,8 +12,6 @@ uses
   forms,
   main_sp;
 
-{$r *.res}
-
 begin
   Application.Title:='SimplePlayer';
   application.initialize;

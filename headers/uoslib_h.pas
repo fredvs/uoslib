@@ -2,42 +2,12 @@
 unit uoslib_h;
 
 {This is the Dynamic loading version of uos library wrapper.
-Load uos library and friends (PortAudio, SndFile, Mpg123, SoundTouch)
+Load uos library and friends (PortAudio, SndFile, Mpg123, AAC, Opus, BS2B, SoundTouch)
 with uos_loadlibs() and release it with uos_unloadlibs().
 
 With reference counter too...
-
- Fred van Stappen / fiens@hotmail.com
 }
-///////////////////////////////////////////////////////////////////////////////
-//                                                                           //
-//           uos pascal wrapper for accessing routines from FPC              //
-//                                                                           //
-//            Many thanks to Sandro Cumerlato and Tomas Hajny                //
-//                                                                           //
-//                                                                           //
-///////////////////////////////////////////////////////////////////////////////
-// License :
-
-//  uos audio processing library
-//  Copyright (c) Fred van Stappen
-
-//  This library is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU Lesser General Public
-//  License as published by the Free Software Foundation; either
-//  version 2.1 of the License, or (at your option) any later version.
-
-//  This library is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-//  Lesser General Public License for more details.
-
-//  You should have received a copy of the GNU Lesser General Public
-//  License along with this library; if not, write to the Free Software
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-////////////////////////////////////////////////////////////////////////////////
-
+ 
 interface
 //{$MODE objfpc}
 uses
@@ -77,6 +47,8 @@ var
 
    uos_addfromurl: function(playerindex: longint; URL: PChar; OutputIndex: LongInt;
    SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
+
+   uos_addfromurldef: function(playerindex: longint; URL: PChar): LongInt; cdecl;
   
     uos_addfromfiledef: function(playerindex: longint; filename: pchar): longint; cdecl;
 
@@ -91,31 +63,31 @@ var
 
   uos_addfromdevindef: function(playerindex: longint): longint; cdecl;
 
-  uos_adddspvolumein: procedure(playerindex: longint; inputindex: longint; volleft: double;
+  uos_inputadddspvolume: procedure(playerindex: longint; inputindex: longint; volleft: double;
                 volright: double); cdecl;
 
-  uos_adddspvolumeout: procedure(playerindex: longint; outputindex: longint; volleft: double;
+  uos_outputadddspvolume: procedure(playerindex: longint; outputindex: longint; volleft: double;
                  volright: double); cdecl;
 
-  uos_setdspvolumein: procedure(playerindex: longint; inputindex: longint;
+  uos_inputsetdspvolume: procedure(playerindex: longint; inputindex: longint;
                  volleft: double; volright: double; enable: boolean); cdecl;
 
-  uos_setdspvolumeout: procedure(playerindex: longint; outputindex: longint;
+  uos_outputsetdspvolume: procedure(playerindex: longint; outputindex: longint;
                  volleft: double; volright: double; enable: boolean); cdecl;
 
-  uos_addfilterin: function(playerindex: longint; inputindex: longint; lowfrequency: longint;
+  uos_inputaddfilter: function(playerindex: longint; inputindex: longint; lowfrequency: longint;
                     highfrequency: longint; gain: cfloat; typefilter: longint;
                     alsobuf: boolean; loopproc: tproc): longint; cdecl;
 
-  uos_setfilterin: procedure(playerindex: longint; inputindex: longint; filterindex: longint;
+  uos_inputsetfilter: procedure(playerindex: longint; inputindex: longint; filterindex: longint;
                     lowfrequency: longint; highfrequency: longint; gain: cfloat;
                     typefilter: longint; alsobuf: boolean; enable: boolean; loopproc: tproc); cdecl;
 
-  uos_addfilterout: function(playerindex: longint; outputindex: longint; lowfrequency: longint;
+  uos_outputaddfilter: function(playerindex: longint; outputindex: longint; lowfrequency: longint;
                     highfrequency: longint; gain: cfloat; typefilter: longint;
                     alsobuf: boolean; loopproc: tproc): longint; cdecl;
 
-  uos_setfilterout: procedure(playerindex: longint; outputindex: longint; filterindex: longint;
+  uos_outputsetfilter: procedure(playerindex: longint; outputindex: longint; filterindex: longint;
                     lowfrequency: longint; highfrequency: longint; gain: cfloat;
                     typefilter: longint; alsobuf: boolean; enable: boolean; loopproc: tproc); cdecl;
 
@@ -127,11 +99,11 @@ var
 
   uos_getstatus: function(playerindex: longint) : longint; cdecl;
 
-  uos_seek: procedure(playerindex: longint; inputindex: longint; pos: {$if defined(cpu64)} cint64 {$else} cint32 {$endif}); cdecl;
+  uos_inputseek: procedure(playerindex: longint; inputindex: longint; pos: {$if defined(cpu64)} cint64 {$else} cint32 {$endif}); cdecl;
 
-  uos_seekseconds: procedure(playerindex: longint; inputindex: longint; pos: cfloat); cdecl;
+  uos_inputseekseconds: procedure(playerindex: longint; inputindex: longint; pos: cfloat); cdecl;
 
-  uos_seektime: procedure(playerindex: longint; inputindex: longint; pos: ttime); cdecl;
+  uos_inputseektime: procedure(playerindex: longint; inputindex: longint; pos: ttime); cdecl;
 
   uos_inputlength: function(playerindex: longint; inputindex: longint): longint; cdecl;
 
@@ -171,14 +143,16 @@ var
 
   uos_checksynchro: procedure(); cdecl;
 
-  uos_unloadlibcust: procedure(portaudio : boolean; sndfile: boolean; mpg123: boolean;  Mp4ffFileName: boolean; FaadFileName: boolean); cdecl;
+  uos_unloadlibcust: procedure(portaudio : boolean; sndfile: boolean; mpg123: boolean;  Mp4ffFileName: boolean; FaadFileName: boolean ; OpusFileName: boolean); cdecl;
 
   ///// this functions should not be used, use uos_loadlibs and uos_unloadlibs instead...
-  uos_loadlib: function(portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName: pchar): longint; cdecl;
+  uos_loadlib: function(portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName, OpusFileName: pchar): longint; cdecl;
 
   uos_loadplugin: function(PluginName, PluginFilename: pchar): longint; cdecl;
 
   uos_unloadlib: procedure(); cdecl;
+
+  uos_free: procedure(); cdecl;
 
   uos_unloadPlugin: procedure(PluginName: pchar); cdecl;
   ////////////////////////
@@ -189,7 +163,7 @@ var
   referencecounter: longint = 0;  // reference counter
 
 function uos_isloaded: boolean; inline;
-function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName: pchar): boolean;
+function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName, OpusFileName: pchar): boolean;
 // load the all the libraries (if filename = '' => do not load that library)
 
 procedure uos_unloadlibs();
@@ -222,7 +196,7 @@ begin
   result := (libhandle <> dynlibs.nilhandle);
 end;
 
-function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName: pchar): boolean;
+function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName, opusFileName: pchar): boolean;
 begin
   result := false;
   if libhandle <> 0 then
@@ -242,6 +216,9 @@ begin
 
         pointer(uos_loadlib) :=
           getprocaddress(libhandle, 'uos_loadlib');
+
+        pointer(uos_free) :=
+          getprocaddress(libhandle, 'uos_free');
 
         pointer(uos_unloadlib) :=
           getprocaddress(libhandle, 'uos_unloadlib');
@@ -270,11 +247,12 @@ begin
         pointer(uos_addfromfiledef) :=
           getprocaddress(libhandle, 'uos_addfromfiledef');
 
-         {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
-          pointer(uos_addfromurl) :=
+        pointer(uos_addfromurl) :=
           getprocaddress(libhandle, 'uos_addfromurl');
-         {$endif}
 
+        pointer(uos_addfromurldef) :=
+          getprocaddress(libhandle, 'uos_addfromurldef');
+        
         pointer(uos_addfromfile) :=
           getprocaddress(libhandle, 'uos_addfromfile');
 
@@ -290,29 +268,29 @@ begin
         pointer(uos_addfromdevindef) :=
          getprocaddress(libhandle, 'uos_addfromdevindef');
 
-          pointer(uos_adddspvolumein) :=
-       getprocaddress(libhandle, 'uos_adddspvolumein');
+          pointer(uos_inputadddspvolume) :=
+       getprocaddress(libhandle, 'uos_inputadddspvolume');
 
-         pointer(uos_setdspvolumein) :=
-          getprocaddress(libhandle, 'uos_setdspvolumein');
+         pointer(uos_inputsetdspvolume) :=
+          getprocaddress(libhandle, 'uos_inputsetdspvolume');
 
-          pointer(uos_adddspvolumeout) :=
-          getprocaddress(libhandle, 'uos_adddspvolumeout');
+          pointer(uos_outputadddspvolume) :=
+          getprocaddress(libhandle, 'uos_outputadddspvolume');
 
-         pointer(uos_setdspvolumeout) :=
-          getprocaddress(libhandle, 'uos_setdspvolumeout');
+         pointer(uos_outputsetdspvolume) :=
+          getprocaddress(libhandle, 'uos_outputsetdspvolume');
 
-        pointer(uos_addfilterin) :=
-          getprocaddress(libhandle, 'uos_addfilterin');
+        pointer(uos_inputaddfilter) :=
+          getprocaddress(libhandle, 'uos_inputaddfilter');
 
-        pointer(uos_addfilterout) :=
-          getprocaddress(libhandle, 'uos_addfilterout');
+        pointer(uos_outputaddfilter) :=
+          getprocaddress(libhandle, 'uos_outputaddfilter');
 
-        pointer(uos_setfilterin) :=
-          getprocaddress(libhandle, 'uos_setfilterin');
+        pointer(uos_inputsetfilter) :=
+          getprocaddress(libhandle, 'uos_inputsetfilter');
 
-        pointer(uos_setfilterout) :=
-          getprocaddress(libhandle, 'uos_setfilterout');
+        pointer(uos_outputsetfilter) :=
+          getprocaddress(libhandle, 'uos_outputsetfilter');
 
         pointer(uos_addplugin) :=
           getprocaddress(libhandle, 'uos_addplugin');
@@ -323,14 +301,14 @@ begin
         pointer(uos_getstatus) :=
           getprocaddress(libhandle, 'uos_getstatus');
 
-         pointer(uos_seek) :=
-          getprocaddress(libhandle, 'uos_seek');
+         pointer(uos_inputseek) :=
+          getprocaddress(libhandle, 'uos_inputseek');
 
-        pointer(uos_seekseconds) :=
-          getprocaddress(libhandle, 'uos_seekseconds');
+        pointer(uos_inputseekseconds) :=
+          getprocaddress(libhandle, 'uos_inputseekseconds');
 
-        pointer(uos_seektime) :=
-          getprocaddress(libhandle, 'uos_seektime');
+        pointer(uos_inputseektime) :=
+          getprocaddress(libhandle, 'uos_inputseektime');
 
         pointer(uos_inputlength) :=
           getprocaddress(libhandle, 'uos_inputlength');
@@ -418,7 +396,7 @@ begin
         referencecounter := 1;
 
         ///// load the audio libraries
-       uos_loadlib(pchar(portaudiofilename), pchar(sndfilefilename), pchar(mpg123filename),  pchar(Mp4ffFileName), pchar(FaadFileName));
+       uos_loadlib(pchar(portaudiofilename), pchar(sndfilefilename), pchar(mpg123filename),  pchar(Mp4ffFileName), pchar(FaadFileName), pchar(opusFileName));
 
         result := uos_isloaded;
       except

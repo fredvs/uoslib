@@ -161,13 +161,13 @@ begin
   edit1.text := ordir + 'lib\windows\64bit\LibPortaudio-64.dll';
   edit2.text := ordir + 'lib\windows\64bit\libsndfile-64.dll';
   edit3.text := ordir + 'lib\windows\64bit\libmpg123-64.dll';
-  edit5.text := ordir + 'lib\windows\64bit\libsoundtouch-64.dll';
+  edit5.text := ordir + 'lib\windows\64bit\plugin\libsoundtouch-64.dll';
 {$else}
    uoslibfilename  := ordir + 'uoslib.dll';
   edit1.text := ordir + 'lib\windows\32bit\LibPortaudio-32.dll';
   edit2.text := ordir + 'lib\windows\32bit\libsndfile-32.dll';
   edit3.text := ordir + 'lib\windows\32bit\libmpg123-32.dll';
-  edit5.text := ordir + 'lib\windows\32bit\libsoundtouch-32.dll';
+  edit5.text := ordir + 'lib\windows\32bit\plugin\libsoundtouch-32.dll';
    {$endif}
   edit4.text := ordir + 'sound\test.mp3';
  {$endif}
@@ -179,23 +179,23 @@ begin
   edit1.text := opath + '/lib/mac/32bit/libportaudio-32.dylib';
   edit2.text := opath + '/lib/mac/32bit/libsndfile-32.dylib';
   edit3.text := opath + '/lib/mac/32bit/libmpg123-32.dylib';
-  edit5.text := opath + '/lib/mac/32bit/libsoundtouch-32.dylib';
+  edit5.text := opath + '/lib/mac/32bit/plugin/libsoundtouch-32.dylib';
   edit4.text := opath + 'sound/test.mp3';
             {$endif}
 
    {$ifdef linux}
     {$if defined(cpu64)}
-    uoslibfilename  := ordir + 'libuoslib.so';
+    uoslibfilename  := ordir + 'libuos.so';
      Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
      Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
      Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
- Edit5.Text := ordir + 'lib/Linux/64bit/libSoundTouch-64.so';
+ Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
 {$else}
-  uoslibfilename  := ordir + 'libuoslib.so';
+  uoslibfilename  := ordir + 'libuos.so';
   edit1.text := ordir + 'lib/linux/32bit/LibPortaudio-32.so';
   edit2.text := ordir + 'lib/linux/32bit/LibSndFile-32.so';
   edit3.text := ordir + 'lib/linux/32bit/LibMpg123-32.so';
-  edit5.text := ordir + 'lib/linux/32bit/LibSoundTouch-32.so';
+  edit5.text := ordir + 'lib/linux/32bit/plugin/LibSoundTouch-32.so';
 {$endif}
   edit4.text := ordir + 'sound/test.mp3';
             {$endif}
@@ -234,7 +234,7 @@ end;
 procedure tform1.trackbar1change(sender: tobject);
 begin
   if (button3.enabled = false) then
-    uos_setdspvolumein(playerindex1, in1index, trackbar1.position / 100,
+    uos_inputsetdspvolume(playerindex1, in1index, trackbar1.position / 100,
       trackbar3.position / 100, true);
 end;
 
@@ -248,7 +248,7 @@ procedure tform1.trackbar2mouseup(sender: tobject; button: tmousebutton;
   shift: tshiftstate; x, y: integer);
 begin
   timer1.enabled:=false;
-  uos_seek(playerindex1, in1index, trackbar2.position);
+  uos_inputseek(playerindex1, in1index, trackbar2.position);
   timer1.enabled:=true;
   trackbar2.tag := 0;
 end;
@@ -258,8 +258,10 @@ begin
   // load the libraries
   // function uos_loadlib(portaudiofilename: string; sndfilefilename: string; mpg123filename: string; soundtouchfilename: string) : integer;
   // you may load one or more libraries . when you want... :
-if (uos_loadlibs(pchar(uoslibfilename), pchar(edit1.text), pchar(edit2.text), pchar(edit3.text), nil, nil)) and
-(uos_loadplugin('soundtouch', pchar(edit5.text)) > -1 ) then
+if (uos_loadlibs(pchar(uoslibfilename), pchar(edit1.text), pchar(edit2.text), pchar(edit3.text),
+ nil, nil,nil))
+  and (uos_loadplugin('soundtouch', pchar(edit5.text)) > -1 )
+  then
   begin
     hide;
     button1.caption :=
@@ -351,14 +353,14 @@ begin
 
        uos_inputsetpositionenable(PlayerIndex1, in1index, 1) ;
 
-          uos_adddspvolumein(PlayerIndex1, in1index, 1, 1);
+          uos_inputadddspvolume(PlayerIndex1, in1index, 1, 1);
     ///// dsp volume changer
     ////////// playerindex1 : index of a existing player
     ////////// in1index : inputindex of a existing input
     ////////// volleft : left volume  ( from 0 to 1 => gain > 1 )
     ////////// volright : right volume
 
-       uos_setdspvolumein(playerindex1, in1index, trackbar1.position / 100,
+       uos_inputsetdspvolume(playerindex1, in1index, trackbar1.position / 100,
       trackbar3.position / 100, true); /// set volume
     ////////// playerindex1 : index of a existing player
     ////////// in1index : inputindex of a existing input

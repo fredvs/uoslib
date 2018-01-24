@@ -78,7 +78,7 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (Button2.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex1, In1Index, TrackBar1.position / 100,
+    uos_inputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
       TrackBar3.position / 100, True);
 end;
 
@@ -113,11 +113,11 @@ begin
 
    {$IFDEF linux}
     {$if defined(cpu64)}
-     uoslibfilename  := application.Location + 'libuoslib.so';
+     uoslibfilename  := application.Location + 'libuos.so';
   edit1.Text := application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
   edit2.Text := application.Location + 'lib/Linux/64bit/LibSndFile-64.so';
 {$else}
-    uoslibfilename  := application.Location + 'libuoslib.so';
+    uoslibfilename  := application.Location + 'libuos.so';
   edit1.Text := application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
   edit2.Text := application.Location + 'lib/Linux/32bit/LibSndFile-64.so';
 {$endif}
@@ -135,8 +135,7 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // Load the libraries
-  // function uos_LoadLibs(uoslibfilename: Pchar; PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
-  if uos_LoadLibs(Pchar(uoslibfilename), Pchar(edit1.Text), Pchar(edit2.Text), nil, nil)  then
+  if uos_LoadLibs(Pchar(uoslibfilename), Pchar(edit1.Text), Pchar(edit2.Text), nil, nil, nil,nil)  then
   begin
     form1.hide;
     button1.Caption := 'uos, PortAudio and SndFile libraries are loaded...';
@@ -199,14 +198,14 @@ begin
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
 
-    uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+    uos_inputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
     ///// DSP Volume changer
     //////////// PlayerIndex : Index of a existing Player
     ////////// In1Index : InputIndex of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-    uos_SetDSPVolumeIn(PlayerIndex1, In1Index, TrackBar1.position / 100,
+    uos_inputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
       TrackBar3.position / 100, True); /// Set volume
 
 
@@ -257,7 +256,7 @@ begin
   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
 
-  uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+  uos_inputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
   ///// DSP Volume changer
   //////////// PlayerIndex : Index of a existing Player
   ////////// In1Index : InputIndex of a existing input
@@ -265,7 +264,7 @@ begin
   ////////// VolRight : Right volume
   //  result : -1 nothing created, otherwise index of DSPIn in array
 
-  uos_SetDSPVolumeIn(PlayerIndex1, In1Index, TrackBar1.position / 100,
+  uos_inputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
     TrackBar3.position / 100, True); /// Set volume
 
 
