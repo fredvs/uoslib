@@ -203,6 +203,9 @@ begin
 end;
 {$endif}
 
+
+{$IF DEFINED(webstream)}
+
 {$IF DEFINED(java)}
 function uos_AddFromURLDef(PPEnv: PJNIEnv; Obj: JObject ; PlayerIndex: LongInt; URL: PChar): LongInt; cdecl;
     /////// Add a Input from Audio URL
@@ -237,6 +240,8 @@ function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
  begin
  result :=  uos_flat.uos_AddFromURL(PlayerIndex, URL, OutputIndex, SampleFormat, FramesCount, AudioFormat , ICYon );
  end;
+{$ENDIF}
+
 {$ENDIF}
 
 {$IF DEFINED(java)}
@@ -996,8 +1001,10 @@ uos_getinfodevicestr name 'Java_uos_getinfodevicestr',
 uos_createplayer name 'Java_uos_createplayer',
 uos_addintodevout name 'Java_uos_addintodevout',
 uos_addintodevoutdef name 'Java_uos_addintodevoutdef',
+{$IF DEFINED(webstream)}
 uos_addfromurl name 'Java_uos_addfromurl',
 uos_addfromurldef name 'Java_uos_addfromurldef',
+{$ENDIF}
 uos_addfromsynth name 'Java_uos_addfromsynth',
 uos_inputsetsynth name 'Java_uos_inputsetsynth',
 uos_addfromfile name 'Java_uos_addfromfile',
@@ -1076,8 +1083,10 @@ uos_addfromfile name 'uos_addfromfile',
 uos_addfromfiledef name 'uos_addfromfiledef',
 uos_addintofile name 'uos_addintofile',
 uos_addintofiledef name 'uos_addintofiledef',
+{$IF DEFINED(webstream)}
 uos_addfromurl name 'uos_addfromurl',
 uos_addfromurldef name 'uos_addfromurldef',
+{$ENDIF}
 uos_addfromendlessmuted name 'uos_addfromendlessmuted',
 uos_addfromdevin name 'uos_addfromdevin',
 uos_addfromdevindef name 'uos_addfromdevindef',

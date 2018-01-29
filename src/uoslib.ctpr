@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="10"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+      <Title Value="uos"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+      <ActiveWindowIndexAtStart Value="1"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <BuildModes Count="1" Active="Default">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <Units Count="21">
+      <Unit0>
+        <Filename Value="uoslib.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="9"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="416"/>
+        <CursorPos X="93" Y="430"/>
+        <UsageCount Value="62"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="uos.pas"/>
+        <EditorIndex Value="8"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="800"/>
+        <CursorPos X="20" Y="829"/>
+        <UsageCount Value="29"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="uos_soundtouch.pas"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="154"/>
+        <CursorPos X="54" Y="174"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/inc/objpash.inc"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="27"/>
+        <CursorPos X="23" Y="51"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/classes/classesh.inc"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="1592"/>
+        <CursorPos X="26" Y="1598"/>
+        <UsageCount Value="14"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/sysutils/sysutilh.inc"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="300"/>
+        <CursorPos X="23" Y="312"/>
+        <UsageCount Value="11"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/sysutils/systhrdh.inc"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="54" Y="10"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="uoslib_h.pas"/>
+        <EditorIndex Value="7"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="60"/>
+        <CursorPos X="53" Y="72"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="uos_flat.pas"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="273"/>
+        <CursorPos X="49" Y="287"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="../../fpGUIlib/src/fpgui.pas"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="173"/>
+        <CursorPos X="29" Y="177"/>
+        <UsageCount Value="24"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="../../uos/examples/main_sp_nf.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="98" Y="329"/>
+        <UsageCount Value="11"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="uos_jni.pas"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="538"/>
+        <CursorPos X="54" Y="558"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="../../fpGUIlib/src/fpglib_class.pas"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="77"/>
+        <CursorPos X="46" Y="95"/>
+        <UsageCount Value="22"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="../../fpGUIlib/src/jni.pas"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="260"/>
+        <CursorPos X="31" Y="285"/>
+        <UsageCount Value="18"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="../../fpGUIlib/src/sakfpg.pas"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="297"/>
+        <CursorPos X="122" Y="130"/>
+        <UsageCount Value="18"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="uos_mpg123.pas"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="815"/>
+        <CursorPos X="10" Y="818"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="uos_httpgetthread.pas"/>
+        <EditorIndex Value="4"/>
+        <WindowIndex Value="1"/>
+        <CursorPos X="28" Y="15"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/packages/fcl-process/src/pipes.pp"/>
+        <UnitName Value="Pipes"/>
+        <EditorIndex Value="5"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="49"/>
+        <CursorPos X="2" Y="63"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/packages/fcl-process/src/unix/pipes.inc"/>
+        <EditorIndex Value="6"/>
+        <WindowIndex Value="1"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="define.inc"/>
+        <EditorIndex Value="3"/>
+        <WindowIndex Value="1"/>
+        <CursorPos X="3" Y="25"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="uos_dsp_noiseremoval.pas"/>
+        <EditorIndex Value="10"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="275"/>
+        <CursorPos X="63" Y="276"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit20>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="uos.pas"/>
+        <Caret Line="578" Column="20" TopLine="559"/>
+      </Position1>
+      <Position2>
+        <Filename Value="uos.pas"/>
+        <Caret Line="829" Column="24" TopLine="800"/>
+      </Position2>
+      <Position3>
+        <Filename Value="uos.pas"/>
+        <Caret Line="831" Column="32" TopLine="802"/>
+      </Position3>
+      <Position4>
+        <Filename Value="uos.pas"/>
+        <Caret Line="832" Column="15" TopLine="803"/>
+      </Position4>
+      <Position5>
+        <Filename Value="uos.pas"/>
+        <Caret Line="838" Column="32" TopLine="809"/>
+      </Position5>
+      <Position6>
+        <Filename Value="uos.pas"/>
+        <Caret Line="839" Column="15" TopLine="810"/>
+      </Position6>
+      <Position7>
+        <Filename Value="uos.pas"/>
+        <Caret Line="844" Column="40" TopLine="815"/>
+      </Position7>
+      <Position8>
+        <Filename Value="uos.pas"/>
+        <Caret Line="1523" Column="22" TopLine="1492"/>
+      </Position8>
+      <Position9>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4517" Column="36" TopLine="4486"/>
+      </Position9>
+      <Position10>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4519" Column="32" TopLine="4488"/>
+      </Position10>
+      <Position11>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4520" Column="15" TopLine="4489"/>
+      </Position11>
+      <Position12>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4526" Column="40" TopLine="4495"/>
+      </Position12>
+      <Position13>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4594" Column="54" TopLine="4564"/>
+      </Position13>
+      <Position14>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4624" Column="46" TopLine="4594"/>
+      </Position14>
+      <Position15>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4626" Column="41" TopLine="4596"/>
+      </Position15>
+      <Position16>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4698" Column="35" TopLine="4668"/>
+      </Position16>
+      <Position17>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4751" Column="54" TopLine="4721"/>
+      </Position17>
+      <Position18>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4778" Column="91" TopLine="4748"/>
+      </Position18>
+      <Position19>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4780" Column="34" TopLine="4750"/>
+      </Position19>
+      <Position20>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4815" Column="35" TopLine="4785"/>
+      </Position20>
+      <Position21>
+        <Filename Value="uos.pas"/>
+        <Caret Line="7447" Column="30" TopLine="7416"/>
+      </Position21>
+      <Position22>
+        <Filename Value="uos.pas"/>
+        <Caret Line="7821" Column="10" TopLine="7792"/>
+      </Position22>
+      <Position23>
+        <Filename Value="uos.pas"/>
+        <Caret Line="578" Column="20" TopLine="559"/>
+      </Position23>
+      <Position24>
+        <Filename Value="uos.pas"/>
+        <Caret Line="829" Column="20" TopLine="800"/>
+      </Position24>
+      <Position25>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/packages/fcl-process/src/pipes.pp"/>
+        <Caret Line="63" Column="2" TopLine="49"/>
+      </Position25>
+      <Position26>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="430" Column="93" TopLine="416"/>
+      </Position26>
+      <Position27>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="419" Column="84" TopLine="416"/>
+      </Position27>
+      <Position28>
+        <Filename Value="uoslib.pas"/>
+        <Caret Line="430" Column="93" TopLine="416"/>
+      </Position28>
+      <Position29>
+        <Filename Value="uos_dsp_noiseremoval.pas"/>
+        <Caret Line="288" Column="18" TopLine="274"/>
+      </Position29>
+      <Position30>
+        <Filename Value="uos_dsp_noiseremoval.pas"/>
+        <Caret Line="276" Column="63" TopLine="275"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <Target>
+      <Filename Value="uoslib"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="/usr/local/codetyphon/fpc/fpc64/units/x86_64-linux/;/usr/local/codetyphon/fpc/fpc64/units/aarch64-linux/"/>
+      <UnitOutputDirectory Value="units"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+      <RelocatableUnit Value="True"/>
+      <TargetCPU Value="arm"/>
+      <TargetOS Value="android"/>
+      <Optimizations>
+        <OptimizationLevel Value="3"/>
+      </Optimizations>
+      <SmallerCode Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <DebugInfoType Value="dsDwarf3"/>
+        <UseValgrind Value="True"/>
+        <StripSymbols Value="True"/>
+        <UseExternalDbgSyms Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
+      <Options>
+        <ExecutableType Value="Library"/>
+      </Options>
+    </Linking>
+    <Other>
+      <WriteFPCLogo Value="False"/>
+      <ConfigFile>
+        <DontUseConfigFile Value="True"/>
+        <CustomConfigFile Value="True"/>
+        <ConfigFilePath Value="fpcct.cfg"/>
+      </ConfigFile>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

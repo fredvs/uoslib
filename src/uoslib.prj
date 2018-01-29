@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uoslib/src
 projectfilename=/home/fred/uoslib/src/uoslib.prj
-findinfiledialog=49
+findinfiledialog=55
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -40,19 +40,25 @@ findinfiledialog=49
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/msegui/lib/
+  /home/fred/fpc-2.6.4-src/
  filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=1
+ filehistory=2
+  /usr/lib/fpc/
   /home/fred/msegui/lib/
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=mr_all
- history=10
+ value=LIBC_SO
+ history=15
+  LIBC_SO
+  libc.
+  x11.
+  libx11
+  libx11.so
   mr_all
   confirmation
   defined(cpu64) and if defined(linux)
@@ -913,30 +919,75 @@ findhistory=20
  thethread
  evPause
 findoptions=1
-editpos=5
+editpos=14
  0,-1073741823
  0,-1073741823
- 0,4
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 3,310
+ 0,-1073741823
+ 0,0
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+bookmarks6=0
+bookmarks7=0
+bookmarks8=0
+bookmarks9=0
+bookmarks10=0
+bookmarks11=0
+bookmarks12=0
+bookmarks13=0
+sourcefiles=14
  ${PROJECTDIR}/uoslib.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uoslib.pas
  ${PROJECTDIR}/uos.pas
-relpaths=5
+ /home/fred/fpcsrc/3.0.3/packages/sdl/src/sdl_ttf.pas
+ /home/fred/fpc-2.6.4-src/packages/x11/src/xlib.pp
+ /home/fred/lib_namesh.inc
+ /home/fred/uoslib/examples/demos/java/ReadMe.txt
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+ ${PROJECTDIR}/uoslib.pas
+relpaths=14
  uoslib.pas
  uos_flat.pas
  define.inc
  uoslib.pas
  uos.pas
-ismoduletexts=5
+ fpcsrc/3.0.3/packages/sdl/src/sdl_ttf.pas
+ fpc-2.6.4-src/packages/x11/src/xlib.pp
+ lib_namesh.inc
+ examples/demos/java/ReadMe.txt
+ define.inc
+ uos_portaudio.pas
+ uos_libsndfile.pas
+ uos_mpg123.pas
+ uoslib.pas
+ismoduletexts=14
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -951,10 +1002,25 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
+order=14
+ 0
+ 1
+ 2
+ 5
+ 6
+ 7
+ 9
+ 10
+ 12
+ 13
+ 11
+ 3
+ 8
+ 4
 firsttab=1
-index=2
+index=9
 [layout]
-windowlayout=562
+windowlayout=612
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -980,8 +1046,8 @@ windowlayout=562
  ny=0
  ncx=0
  ncy=0
- x=125
- y=46
+ x=127
+ y=44
  cx=1157
  cy=621
  rcx=0
@@ -1084,10 +1150,10 @@ windowlayout=562
  ny=0
  ncx=0
  ncy=0
- x=239
- y=115
- cx=678
- cy=414
+ x=3
+ y=24
+ cx=1360
+ cy=709
  rcx=0
  rcy=0
  [projecttreefo]
@@ -1113,8 +1179,8 @@ windowlayout=562
  width1=82
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=4
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1425,8 +1491,8 @@ windowlayout=562
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1147
+ ncy=54
  x=0
  y=0
  cx=1147
@@ -1440,10 +1506,60 @@ windowlayout=562
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uoslib/src/define.inc
- history=0
+ value=/home/fred/uoslib/src/uoslib.pas
+ history=50
+  /home/fred/uoslib/src/uos_libsndfile.pas
+  /home/fred/uoslib/src/uos_portaudio.pas
+  /home/fred/uoslib/examples/demos/java/ReadMe.txt
+  /home/fred/lib_namesh.inc
+  /home/fred/uos/examples/uos.pas
+  /home/fred/ideu/src/msewidgets.pas
+  /home/fred/msewidgets.pas
+  /home/fred/ideu/src/ideusettings.pas
+  /home/fred/ideu/src/confideu.pas
+  /home/fred/uoslib/src/uoslib.pas
+  /home/fred/strumpract/src/define.inc
+  /home/fred/strumpract/src/uos.pas
+  /home/fred/mseconsts.pas
+  /home/fred/ideu/src/mseconsts.pas
+  /home/fred/msegui/lib/common/kernel/mseconsts.pas
+  /home/fred/uos/examples/multiplayer_fpGUI.pas
+  /home/fred/uos/examples/uos_dsp_utils.pas
+  /home/fred/uos/src/uos_flat.pas
+  /home/fred/uos/src/uos_mpg123.pas
+  /home/fred/uos/src/uos.pas
+  /home/fred/uos/src/uos_aac.pas
+  /home/fred/strumpract/src/strumpract.pas
+  /home/fred/strumpract/src/config.pas
+  /home/fred/uos/examples/SimplePlayer_MSE.pas
+  /home/fred/uos/examples/consolebpmdetect.pas
+  /home/fred/strumpract/src/songplayer2.pas
+  /home/fred/strumpract/src/drums.pas
+  /home/fred/strumpract/src/infos.pas
+  /home/fred/uos/src/uos_soundtouch.pas
+  /home/fred/uos/examples/uos_soundtouch.pas
+  /home/fred/uos/examples/consoleplaymemorybuffer.pas
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/strumpract/src/main.pas
+  /home/fred/strumpract/src/filelistform.pas
+  /home/fred/strumpract/src/songplayer.pas
+  /home/fred/strumpract/src/commander.pas
+  /home/fred/ideu/src/dialogfiles.pas
+  /home/fred/ideu/src/confmsegui.pas
+  /home/fred/ideu/src/conffpgui.pas
+  /home/fred/ideu/src/confdebugger.pas
+  /home/fred/ideu/src/confcompiler.pas
+  /home/fred/ideu/src/aboutform.pas
+  /home/fred/ideu_15_7_17/src/msedesigner.pas
+  /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
+  /home/fred/ideu/src/msedesigner.pas
+  /home/fred/strumpract/src/recorder.pas
+  /home/fred/strumpract/src/uos_soundtouch.pas
+  /home/fred/strumpract/src/uos_portaudio.pas
+  /home/fred/strumpract/src/msefiledialog.pas
+  /home/fred/uos/examples/simplerecorder_fpGUI.pas
  [debuggerfo.project_options]
- value=1
+ value=2
  [debuggerfo.hints]
  value=0
  [sourcefo]
