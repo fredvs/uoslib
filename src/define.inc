@@ -8,7 +8,8 @@
 
 {.$DEFINE consoleapp} // if FPC version < 2.7.1 uncomment for console application
 {$DEFINE library}   // uncomment for building uos library (native and java)
-{$DEFINE java}   // uncomment for building uos java library
+{.$DEFINE java}   // uncomment for building uos java library
+{.$DEFINE android}   // uncomment for building uos android library (must uncomment {$DEFINE java} too)
 {.$DEFINE fpgui}   // uncomment if FPC version < 2.7.1 and using fpGUI widget
 {.$DEFINE mse}   // uncomment when using a mse project, use mse mseThread in place of fpc TThread.
 
@@ -22,7 +23,7 @@
 {$DEFINE soundtouch} // uncomment to enable Soundtouch tempo plugin
 {$DEFINE bs2b} // uncomment to enable bs2b stereo to binaural plugin
 
-{$DEFINE webstream} // uncomment to enable Internet Audio Streaming
+{:$DEFINE webstream} // uncomment to enable Internet Audio Streaming
 
 {.$DEFINE shout} // uncomment to enable IceCast-Shout audio web server.
 

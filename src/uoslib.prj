@@ -202,7 +202,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -919,7 +919,7 @@ findhistory=20
  thethread
  evPause
 findoptions=1
-editpos=14
+editpos=12
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -932,8 +932,6 @@ editpos=14
  0,-1073741823
  3,310
  0,-1073741823
- 0,0
- 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -946,9 +944,7 @@ bookmarks8=0
 bookmarks9=0
 bookmarks10=0
 bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-sourcefiles=14
+sourcefiles=12
  ${PROJECTDIR}/uoslib.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -959,11 +955,9 @@ sourcefiles=14
  /home/fred/lib_namesh.inc
  /home/fred/uoslib/examples/demos/java/ReadMe.txt
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_portaudio.pas
+ /home/fred/uoslib/src/uos_portaudio.pas
  ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uoslib.pas
-relpaths=14
+relpaths=12
  uoslib.pas
  uos_flat.pas
  define.inc
@@ -976,11 +970,7 @@ relpaths=14
  define.inc
  uos_portaudio.pas
  uos_libsndfile.pas
- uos_mpg123.pas
- uoslib.pas
-ismoduletexts=14
- 0
- 0
+ismoduletexts=12
  0
  0
  0
@@ -1002,7 +992,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=14
+order=12
  0
  1
  2
@@ -1011,14 +1001,12 @@ order=14
  7
  9
  10
- 12
- 13
  11
  3
  8
  4
 firsttab=1
-index=9
+index=7
 [layout]
 windowlayout=612
  [mainfo.basedock]
@@ -1180,7 +1168,7 @@ windowlayout=612
  sortdescend1=0
  sorted=0
  col=0
- row=4
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1506,9 +1494,8 @@ windowlayout=612
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uoslib/src/uoslib.pas
+ value=/home/fred/uoslib/src/uos_portaudio.pas
  history=50
-  /home/fred/uoslib/src/uos_libsndfile.pas
   /home/fred/uoslib/src/uos_portaudio.pas
   /home/fred/uoslib/examples/demos/java/ReadMe.txt
   /home/fred/lib_namesh.inc
@@ -1558,6 +1545,7 @@ windowlayout=612
   /home/fred/strumpract/src/uos_portaudio.pas
   /home/fred/strumpract/src/msefiledialog.pas
   /home/fred/uos/examples/simplerecorder_fpGUI.pas
+  /home/fred/uos/examples/mainmse_sp.pas
  [debuggerfo.project_options]
  value=2
  [debuggerfo.hints]

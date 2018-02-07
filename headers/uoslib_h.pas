@@ -38,7 +38,7 @@ var
 
   uos_addintodevout: function(playerindex: longint; device: longint;
   latency: cdouble; samplerate: longint; channels: longint;
-  sampleformat: shortint; framescount: longint): longint; cdecl;
+  sampleformat: shortint; framescount: longint; chunkcount: longint): longint; cdecl;
 
   uos_addintodevoutdef: function(playerindex: longint): longint; cdecl;
 
@@ -59,7 +59,7 @@ var
 
   uos_addfromdevin: function(playerindex: longint; device: longint; latency: cdouble;
              samplerate: longint; outputindex: longint;
-             sampleformat: shortint; framescount : longint): longint; cdecl;
+             sampleformat: shortint; framescount : longint; chunkcount: longint): longint; cdecl;
 
   uos_addfromdevindef: function(playerindex: longint): longint; cdecl;
 
@@ -119,9 +119,8 @@ var
 
   uos_inputsetlevelenable: procedure(playerindex: longint; inputindex: longint; enable: longint); cdecl;
 
+   uos_inputsetlevelarrayenable: procedure(playerindex: longint; inputindex: longint; enable: longint); cdecl;
   uos_inputsetpositionenable: procedure(playerindex: longint; inputindex: longint; enable: longint); cdecl;
-
-  uos_inputsetarraylevelenable: procedure(playerindex: longint; inputindex: longint; levelcalc : longint); cdecl;
 
   // todo => function uos_inputgetarraylevel(playerindex: cint32; inputindex: longint) : tdarfloat;
 
@@ -324,6 +323,9 @@ begin
 
         pointer(uos_inputsetlevelenable) :=
           getprocaddress(libhandle, 'uos_inputsetlevelenable');
+
+        pointer(uos_inputsetlevelarrayenable) :=
+          getprocaddress(libhandle, 'uos_inputsetlevelarrayenable');
 
          pointer(uos_inputsetpositionenable) :=
           getprocaddress(libhandle, 'uos_inputsetpositionenable');

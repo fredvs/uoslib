@@ -7,7 +7,7 @@ public class uos {
   public static native int addfromfiledef(int pl, String fn);
   public static native int addfromfile(int pl, String fn, int oi, int sf, int fc);
   public static native int addfromdevindef(int pl);
-  public static native int addfromdevin(int pl, int de, float la, int sr, int ch, int oi, int sf, int fc );
+  public static native int addfromdevin(int pl, int de, float la, int sr, int ch, int oi, int sf, int fc, int cc );
   public static native int addfromurldef(int pl, String sturl);
   public static native int addfromurl(int pl, String sturl, int outind, int spf, int frc, int auf, int icy);
   public static native int addfromsynth(int pl, float freq, float vol, float vor, int dur, int oui, int saf, int sar, int frc);
@@ -16,7 +16,7 @@ public class uos {
   public static native int addintofiledef(int pl, String fn);
   public static native int addintofile(int pl, String fn, int sr, int ch, int sf, int fc);
   public static native int addintodevoutdef(int pl);
-  public static native int addintodevout(int pl, int de, float la, int sr, int ch, int sf, int fc );
+  public static native int addintodevout(int pl, int de, float la, int sr, int ch, int sf, int fc, int cc );
   
   public static native void inputsetsynth(int pl, int in, float freq, float vol, float vor, int dur, boolean en);
     
@@ -39,7 +39,7 @@ public class uos {
   public static native float inputgetlevelright(int pl, int in);
   
   public static native void inputsetlevelenable(int pl, int in, int en);
-  public static native void inputsetarraylevelenable(int pl, int in, int en);
+  public static native void inputsetlevelarrayenable(int pl, int in, int en);
   public static native void inputsetpositionenable(int pl, int in, int en);
          
   public static native int inputadddspvolume(int pl, int in, float vl, float vr);
