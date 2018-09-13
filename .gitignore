@@ -1,0 +1,6 @@
+__history
+*.o
+*.ppu
+*.compiled
+*.dbg
+uoslib.dll
