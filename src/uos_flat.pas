@@ -156,7 +156,7 @@ function uos_GetInfoDeviceStr() : Pansichar ;
 
 function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
 // load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...  
-// PortAudio => needed for dealing with audio-device
+// PortAudio => needed for dealing with audio-device input/output
 // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
 // Mpg123 => needed for dealing with mp* audio-files
 // Mp4ff and Faad => needed for dealing with acc, m4a audio-files
@@ -168,14 +168,13 @@ function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
 // for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName)
   
 procedure uos_unloadlib();
-// Unload all libraries... Do not forget to call it before close application...
-
+// Unload all libraries...
 procedure uos_free();  
 // Free uos;
-// To use when program terminate.
+// To use when program terminate. Do not forget to call it before close application...
 
 procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
-// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
+// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
 // load plugin...
@@ -191,6 +190,8 @@ procedure uos_unloadServerLib();
   
 procedure uos_UnloadPlugin(PluginName: PChar);
 
+// PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, soundcard, ...)
+// If PlayerIndex already exists, it will be overwriten...
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
 function uos_CreatePlayer(PlayerIndex: cint32; AParent: TObject) : boolean;
 {$else}
@@ -199,23 +200,21 @@ function uos_CreatePlayer(PlayerIndex: cint32): boolean;
 
 {$IF DEFINED(portaudio)}
 function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
-// PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, soundcard, ...)
-// If PlayerIndex already exists, it will be overwriten...
 
 // Add a Output into Device Output with custom parameters
 function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32 ): cint32;
-// Add a Output into Device Output with default parameters
-// PlayerIndex : Index of a existing Player
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+   FramesCount: cint32 ; ChunkCount: cint32): cint32;
+// Add a Output into Device Output
 // Device ( -1 is default device )
-// Latency  ( -1 is latency suggested ) )
+// Latency  ( -1 is latency suggested )
 // SampleRate : delault : -1 (44100)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 65536)
 // ChunkCount : default : -1 (= 512)
-//  result : Output Index in array  , -1 = error
-// example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1, -1, 0,-1,-1);
+//  result :  Output Index in array  -1 = error
+// example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
  {$endif}
  
 function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar): cint32;
@@ -337,9 +336,7 @@ function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
 // FileName : filename of saved audio wav file
 
 {$IF DEFINED(portaudio)}
-function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; OutputIndex: cint32;
-  SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
+function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;  SampleRate: cint32; OutputIndex: cint32;  SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
 // Add a Input from Device Input with custom parameters
 // PlayerIndex : Index of a existing Player
 // Device ( -1 is default Input device )
@@ -457,7 +454,7 @@ procedure uos_OutputAddDSPVolume(PlayerIndex: cint32; OutputIndex: cint32; VolLe
 // VolLeft : Left volume
 // VolRight : Right volume
 //  result : -1 nothing created, otherwise index of DSPIn in array
-// example  DSPIndex1 := uos_OutputAddDSPVolume(o,oututIndex1,1,1);
+// example  DSPIndex1 := uos_OutputAddDSPVolume(0,oututIndex1,1,1);
 
 procedure uos_InputSetDSPVolume(PlayerIndex: cint32; InputIndex: cint32;
   VolLeft: double; VolRight: double; Enable: boolean);
@@ -596,7 +593,6 @@ procedure uos_SetPluginGetBPM(PlayerIndex: cint32; PluginIndex: cint32; numoffra
 // PluginIndex : PluginIndex Index of a existing Plugin.  
 // numofframes: number of frames to analyse (-1 = 512 x frames)
 // loop: do new detection after previous.  
-  
 {$endif}
 
 {$IF DEFINED(bs2b)}
@@ -778,12 +774,21 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
 // typeout : Type of out file (-1:default=wav, 0:wav, 1:pcm, 2:custom)  
 // example : InputIndex1 := uos_File2File(edit5.Text,0,buffmem); 
 
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan, samplerate : integer);
+// Create a audio wav file from a TMemoryStream.
+// FileName : filename of wav saved file
+// data : the memorystream
+// BitsPerSample : 16 or 32 (bit)
+// chan : number of channels
+// samplerate : sample rate
+
 var
   uosDeviceInfos: array of Tuos_DeviceInfos;
   uosLoadResult: Tuos_LoadResult;
   uosDeviceCount: cint32;
   uosDefaultDeviceIn: cint32;
   uosDefaultDeviceOut: cint32;
+  //firstload : boolean = true;
  
 implementation
 
@@ -1332,7 +1337,8 @@ end;
 
 {$IF DEFINED(portaudio)}
  function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32 ): cint32;
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+   FramesCount: cint32 ; ChunkCount: cint32): cint32;
 // Add a Output into Device Output with custom parameters
 begin
   result := -1 ;
@@ -1341,16 +1347,6 @@ begin
   if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddIntoDevOut(Device, Latency, SampleRate, Channels, SampleFormat , FramesCount, ChunkCount);
 end;
-// PlayerIndex : Index of a existing Player
-// Device ( -1 is default device )
-// Latency  ( -1 is latency suggested ) )
-// SampleRate : delault : -1 (44100)
-// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-// FramesCount : default : -1 (= 65536)
-// ChunkCount : default : -1 (= 512)
-//  result : -1 nothing created, otherwise Output Index in array
-// example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1,-1,0,-1,-1);
 
 function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
 // Add a Output into Device Output with default parameters
@@ -2021,6 +2017,17 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
   uos.uos_File2File(FilenameIN, FilenameOUT, SampleFormat, typeout);
   end;
   
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan, samplerate : integer);
+// Create a audio wav file from a TMemoryStream.
+// FileName : filename of wav saved file
+// data : the memorystream
+// BitsPerSample : 16 or 32 (bit)
+// chan : number of channels
+// samplerate : sample rate 
+  begin
+  uos.uos_MemStream2Wavfile(FileName,Data,BitsPerSample, chan, samplerate);
+  end; 
+  
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   begin
 result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName)  ;
@@ -2133,6 +2140,8 @@ nt : integer = 200;
 begin
 result := false;
 
+uos_stop(PlayerIndex); // cannot hurt !
+
 if PlayerIndex >= 0 then 
 begin
 if PlayerIndex + 1 > length(uosPlayers) then
@@ -2193,6 +2202,7 @@ if length(uosPlayers) > 0 then
   if assigned(uosPlayers[x]) then
   begin
   uosPlayers[x].nofree := false;
+  uos_playpaused(x);
   uos_stop(x);
   end;
 

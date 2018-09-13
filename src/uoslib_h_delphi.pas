@@ -1,5 +1,10 @@
 
-unit uoslib_h;
+unit uoslib_h_delphi;
+
+/// This is a uoaslib_h variant for Delphi >= 2009
+///  adapted to latest version of uos (2180729)
+/// - PAnsiChar instead of PChar (to match single byte strings of uos)
+/// - stubs replacements for dynlibs and ctypes
 
 {This is the Dynamic loading version of uos library wrapper.
 Load uos library and friends (PortAudio, SndFile, Mpg123, SoundTouch)
@@ -41,16 +46,30 @@ With reference counter too...
 interface
 //{$MODE objfpc}
 uses
-   {$IFDEF UNIX}
-  cthreads,
-  cwstring, {$ENDIF}
-  DynLibs, ctypes;
+   Windows;
+
+const
+   LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 4096;
+   LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 256;
 
 type
 TProc = procedure of object ;
+cint32 = LongInt;
+cdouble = Double;
+cfloat = Single;
+tlibhandle = THandle;
+
+const nilhandle : tlibhandle  = 0;
+
+type
+   DynLibs = class
+  public
+      class function loadlibrary(aDllName : PAnsiChar): tlibhandle;
+      class procedure UnloadLibrary(aLibHandle : tlibhandle);
+  end;
 
 var
-  uos_getinfodevicestr: function() : pansichar ; cdecl;
+  uos_getinfodevicestr: function() : pPAnsiChar ; cdecl;
 
   uos_createplayer: procedure(playerindex: longint); cdecl;
 
@@ -72,20 +91,20 @@ var
 
   uos_addintodevoutdef: function(playerindex: cint32): cint32; cdecl;
 
-  uos_addfromfile: function(playerindex: longint; filename: pchar;
+  uos_addfromfile: function(playerindex: longint; filename: PAnsiChar;
   outputindex: longint; sampleformat: shortint; framescount: longint): longint; cdecl;
 
-   {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
-  uos_addfromurl: function(playerindex: longint; URL: PChar; OutputIndex: LongInt;
+  uos_addfromurl: function(playerindex: longint; URL: PAnsiChar; OutputIndex: LongInt;
    SampleFormat: LongInt ; FramesCount: LongInt): LongInt; cdecl;
-    {$endif}
 
-    uos_addfromfiledef: function(playerindex: longint; filename: pchar): longint; cdecl;
+   uos_addfromurldef: function(playerindex: longint; URL: PAnsiChar): LongInt; cdecl;
 
-  uos_addintofile: function(playerindex: longint; filename: pchar; samplerate: longint;
+    uos_addfromfiledef: function(playerindex: longint; filename: PAnsiChar): longint; cdecl;
+
+  uos_addintofile: function(playerindex: longint; filename: PAnsiChar; samplerate: longint;
         channels: longint; sampleformat: shortint ; framescount: longint): longint; cdecl;
 
-  uos_addintofiledef: function(playerindex: longint; filename: pchar): longint; cdecl;
+  uos_addintofiledef: function(playerindex: longint; filename: PAnsiChar): longint; cdecl;
 
   uos_addfromdevin: function(playerindex: longint; device: longint; latency: cdouble;
              samplerate: longint; outputindex: longint;
@@ -121,7 +140,7 @@ var
                     lowfrequency: longint; highfrequency: longint; gain: cfloat;
                     typefilter: longint; alsobuf: boolean; enable: boolean; loopproc: tproc); cdecl;
 
-  uos_addplugin: function(playerindex: longint; plugname: pchar; samplerate: longint;
+  uos_addplugin: function(playerindex: longint; plugname: PAnsiChar; samplerate: longint;
                        channels: longint): longint; cdecl;
 
   uos_setpluginsoundtouch: procedure(playerindex: longint; pluginindex: longint; tempo: cfloat;
@@ -175,24 +194,24 @@ var
   uos_unloadlibcust: procedure(portaudio : boolean; sndfile: boolean; mpg123: boolean;  Mp4ffFileName: boolean; FaadFileName: boolean ; OpusFileName: boolean); cdecl;
 
   ///// this functions should not be used, use uos_loadlibs and uos_unloadlibs instead...
-  uos_loadlib: function(portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName, OpusFileName: PChar): longint; cdecl;
+  uos_loadlib: function(portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName, OpusFileName: PAnsiChar): longint; cdecl;
 
-  uos_loadplugin: function(PluginName, PluginFilename: pchar): longint; cdecl;
+  uos_loadplugin: function(PluginName, PluginFilename: PAnsiChar): longint; cdecl;
 
   uos_unloadlib: procedure(); cdecl;
 
   uos_free: procedure(); cdecl;
 
-  uos_unloadPlugin: procedure(PluginName: pchar); cdecl;
+  uos_unloadPlugin: procedure(PluginName: PAnsiChar); cdecl;
   ////////////////////////
 
   uos_getversion:  function(): longint ; cdecl;    /// uos version
 
-  libhandle: tlibhandle = dynlibs.nilhandle; // this will hold our handle for the uoslib
+  libhandle: tlibhandle = 0; // this will hold our handle for the uoslib
   referencecounter: longint = 0;  // reference counter
 
 function uos_isloaded: boolean; inline;
-function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName, OpusFileName: PChar): boolean;
+function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName, OpusFileName: PAnsiChar): boolean;
 // load the all the libraries (if filename = '' => do not load that library)
 
 procedure uos_unloadlibs();
@@ -222,10 +241,10 @@ implementation
 
 function uos_isloaded: boolean;
 begin
-  result := (libhandle <> dynlibs.nilhandle);
+  result := (libhandle <> 0);
 end;
 
-function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName, opusFileName: PChar): boolean;
+function uos_loadlibs(const uoslibfilename, portaudiofilename, sndfilefilename, mpg123filename,  Mp4ffFileName, FaadFileName, opusFileName: PAnsiChar): boolean;
 var
   loadresult : Integer;
 begin
@@ -239,7 +258,7 @@ begin
   begin
     if length(uoslibfilename) = 0 then exit;
     libhandle := dynlibs.loadlibrary(uoslibfilename); // obtain the handle we want
-    if libhandle <> dynlibs.nilhandle then
+    if libhandle <> nilhandle then
     begin
       try
         @uos_checksynchro := getprocaddress(libhandle, 'uos_checksynchro');
@@ -275,11 +294,9 @@ begin
 
         @uos_addfromfiledef :=
           getprocaddress(libhandle, 'uos_addfromfiledef');
-
-         {$IF DEFINED(UNIX) and (FPC_FULLVERSION >= 20701)}
-          pointer(uos_addfromurl) :=
+        // FIXME
+        @uos_addfromurl :=
           getprocaddress(libhandle, 'uos_addfromurl');
-         {$endif}
 
         // FIXME
         @uos_addfromurldef :=
@@ -451,11 +468,31 @@ begin
     exit;
   // >
   uos_unloadlib();
-   if LibHandle <> DynLibs.NilHandle then
+   if LibHandle <> 0 then
   begin
     DynLibs.UnloadLibrary(LibHandle);
-    LibHandle := DynLibs.NilHandle;
+    LibHandle := 0;
   end;
+end;
+
+{ DynLibs }
+
+
+
+class function DynLibs.loadlibrary(aDllName: PAnsiChar): tlibhandle;
+var
+   dllName : string;
+begin
+   dllName := aDllName;
+   Result:= LoadLibraryExW(PWideChar(dllName),
+         0,
+         LOAD_LIBRARY_SEARCH_DEFAULT_DIRS or LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR);
+end;
+
+
+class procedure DynLibs.UnloadLibrary(aLibHandle: tlibhandle);
+begin
+   FreeLibrary(aLibHandle);
 end;
 
 end.
