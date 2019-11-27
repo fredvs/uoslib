@@ -432,11 +432,12 @@ newfosources=2
 newfoforms=2
  
  
-forcezorder=-1
+forcezorder=1
 stripmessageesc=0
 copymessages=0
 closemessages=0
 enablepurpose=0
+enablesource=0
 checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
@@ -530,10 +531,10 @@ makeoptionson=9
  62
  63
 compilerusedon=29
- 4039
+ 4035
  0
  8
- 16
+ 20
  32
  0
  0
@@ -650,9 +651,9 @@ fontoptions=0
 fontxscales=0
 expandprojectfilemacros=4
  1
- -1
- -1
- -1
+ 1
+ 1
+ 1
 loadprojectfile=4
  1
  0
@@ -864,14 +865,14 @@ units=
   a=0,8196,0,define.inc
   )
   (
-  file=uos_flat.pas
-  kind=1
-  a=0,8196,0,uos_flat.pas
-  )
-  (
   file=uos.pas
   kind=1
   a=0,8196,0,uos.pas
+  )
+  (
+  file=uos_flat.pas
+  kind=1
+  a=0,8196,0,uos_flat.pas
   )
   (
   file=uoslib.pas
@@ -928,7 +929,12 @@ findhistory=20
  thethread
  evPause
 findoptions=1
-editpos=12
+editpos=13
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -936,10 +942,6 @@ editpos=12
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,296
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -953,7 +955,8 @@ bookmarks8=0
 bookmarks9=0
 bookmarks10=0
 bookmarks11=0
-sourcefiles=12
+bookmarks12=0
+sourcefiles=13
  ${PROJECTDIR}/uoslib.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -966,7 +969,8 @@ sourcefiles=12
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_libsndfile.pas
-relpaths=12
+ ${PROJECTDIR}/uos.pas
+relpaths=13
  uoslib.pas
  uos_flat.pas
  define.inc
@@ -979,7 +983,9 @@ relpaths=12
  define.inc
  uos_portaudio.pas
  uos_libsndfile.pas
-ismoduletexts=12
+ uos.pas
+ismoduletexts=13
+ 0
  0
  0
  0
@@ -1001,42 +1007,31 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=12
+order=13
  0
  1
- 2
- 5
+ 4
+ 12
  6
  7
  9
- 10
  11
  3
  8
- 4
+ 2
+ 10
+ 5
 firsttab=1
-index=7
+index=2
 [layout]
-windowlayout=583
+windowlayout=588
  [mainfo.basedock]
  splitdir=2
- useroptions=11395
- parent=mainfo.container
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=668
- ncy=0
- x=0
- y=0
- cx=1147
- cy=606
- rcx=0
- rcy=0
+ useroptions=268450944
  [mainfo]
  splitdir=0
- useroptions=301990009
+ useroptions=301990011
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1091,7 +1086,7 @@ windowlayout=583
  [memoryfo]
  splitdir=0
  useroptions=268451963
- stackedunder=componentpalettefo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1118,7 +1113,7 @@ windowlayout=583
  [disassfo]
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1137,7 +1132,7 @@ windowlayout=583
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=disassfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1163,7 +1158,7 @@ windowlayout=583
  x=0
  y=0
  cx=205
- cy=457
+ cy=450
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1174,8 +1169,8 @@ windowlayout=583
  sortdescend1=0
  sorted=0
  col=0
- row=1
- rowheight=16
+ row=2
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1255,7 +1250,7 @@ windowlayout=583
  [objectinspectorfo]
  splitdir=0
  useroptions=268451947
- stackedunder=findinfilefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1280,7 +1275,7 @@ windowlayout=583
  [symbolfo]
  splitdir=0
  useroptions=268451963
- stackedunder=objectinspectorfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1376,15 +1371,15 @@ windowlayout=583
  ncx=0
  ncy=0
  x=0
- y=514
+ y=506
  cx=1147
- cy=92
+ cy=90
  rcx=0
  rcy=0
  [componentstorefo]
  splitdir=0
  useroptions=268460155
- stackedunder=symbolfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1447,7 +1442,7 @@ windowlayout=583
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=componentstorefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1478,7 +1473,7 @@ windowlayout=583
  x=0
  y=0
  cx=1147
- cy=51
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1490,11 +1485,11 @@ windowlayout=583
  nx=0
  ny=0
  ncx=1147
- ncy=54
+ ncy=53
  x=0
  y=0
  cx=1147
- cy=54
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1504,8 +1499,9 @@ windowlayout=583
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uoslib/src/uos_portaudio.pas
+ value=/home/fred/uoslib/src/uos.pas
  history=20
+  /home/fred/uoslib/src/uos.pas
   /home/fred/uoslib/src/uos_portaudio.pas
   /home/fred/uoslib/examples/demos/java/ReadMe.txt
   /home/fred/lib_namesh.inc
@@ -1525,7 +1521,6 @@ windowlayout=583
   /home/fred/uos/src/uos_flat.pas
   /home/fred/uos/src/uos_mpg123.pas
   /home/fred/uos/src/uos.pas
-  /home/fred/uos/src/uos_aac.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1543,14 +1538,31 @@ windowlayout=583
  x=208
  y=0
  cx=939
- cy=457
+ cy=450
  rcx=0
  rcy=0
+ [sourcefo.files_tab]
+ order=13
+  0
+  1
+  4
+  12
+  6
+  7
+  9
+  11
+  3
+  8
+  2
+  10
+  5
+ firsttab=1
+ index=2
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=breakpointsfo
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0
@@ -1577,9 +1589,9 @@ windowlayout=583
  ncx=0
  ncy=0
  x=0
- y=54
+ y=53
  cx=1147
- cy=457
+ cy=450
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
@@ -1592,8 +1604,8 @@ windowlayout=583
  ny=0
  ncx=0
  ncy=0
- x=99
- y=135
+ x=251
+ y=194
  cx=493
  cy=132
  rcx=0
